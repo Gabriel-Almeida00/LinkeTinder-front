@@ -2,7 +2,9 @@ import Empresa from "../modelo/empresa";
 import EmpresaService from "../service/empresaService";
 import Vaga from "../modelo/vaga";
 import Competencia from "../modelo/competencia";
-import NivelCompetencia from "../modelo/nivelCompetencia";
+import NivelCompetencia from "../modelo/enum/nivelCompetencia";
+import NivelFormacao from "../modelo/enum/nivelFormacao";
+import NivelExperiencia from "../modelo/enum/nivelExperiencia";
 
 
 class EmpresaUI {
@@ -66,11 +68,13 @@ class EmpresaUI {
     
         itensVagas.forEach(item => {
             const partes = item.innerHTML.split("<br>");
-            if (partes.length >= 3) {
+            if (partes.length >= 4) {
                 const nome = partes[0].replace("<strong>", "").replace("</strong>", "");
                 const descricao = partes[1];
                 const competenciasTexto = partes[2].replace("Competências: ", "");
                 const competenciasPartes = competenciasTexto.split(", ");
+                const nivelExperienciaTexto = partes[3].replace("Nível de Experiência: ", "");
+                const nivelFormacaoTexto = partes[4].replace("Nível de Formação: ", "");
     
                 const competencias: Competencia[] = competenciasPartes.map(competenciaTexto => {
                     const partesCompetencia = competenciaTexto.split(" - ");
@@ -87,13 +91,20 @@ class EmpresaUI {
                     }
                 });
     
-                const vaga = new Vaga(nome, descricao, competencias);
+                // Extrair o nível de experiência e formação
+                const nivelExperiencia = nivelExperienciaTexto.trim() as NivelExperiencia;
+                const nivelFormacao = nivelFormacaoTexto.trim() as NivelFormacao;
+    
+                const vaga = new Vaga(nome, descricao, competencias,nivelFormacao, nivelExperiencia);
                 vagas.push(vaga);
             }
         });
     
         return vagas;
     }
+    
+    
+    
     
     
     listarVagas(): void {

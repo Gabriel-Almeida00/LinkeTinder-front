@@ -141,3 +141,54 @@ body {
     margin-top: 10px; 
     list-style-type: none;
 }
+
+/* Estilos para Formação e Experiência */
+.formacao-container,
+.experiencia-container {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.formacao-container h3,
+.experiencia-container h3 {
+    margin-bottom: 10px;
+}
+
+.formacao-form,
+.experiencia-form {
+    margin-bottom: 10px;
+}
+
+.formacao-form .input-group,
+.experiencia-form .input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.form-label,
+.form-input {
+    width: 100%;
+}
+
+.add-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.add-button:hover {
+    background-color: #0056b3;
+}
+
+/* Ajustar margem superior para as outras seções */
+.competencias-container,
+.formacao-container,
+.experiencia-container {
+    margin-top: 20px;
+}

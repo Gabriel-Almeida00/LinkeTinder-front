@@ -161,3 +161,38 @@ body {
 .submit-button:hover {
     background-color: #0056b3;
 }
+
+/* Estilo para os campos de seleção de nível */
+.input-group .input-block select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Estilo para o botão de adicionar competência */
+#adicionar-competencia-vaga {
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#adicionar-competencia-vaga:hover {
+    background-color: #45a049;
+}
+
+/* Estilo para os títulos de nível de experiência e nível de formação */
+.competencias-vaga h3 {
+    margin-top: 10px;
+}
+
+/* Estilo para a lista de vagas adicionadas */
+.vagas-adicionadas {
+    margin-top: 20px;
+}

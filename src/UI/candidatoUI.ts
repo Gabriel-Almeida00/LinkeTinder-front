@@ -1,8 +1,12 @@
 import Candidato from "../modelo/candidato";
 import CandidatoService from "../service/candidatoService";
 import Competencia from "../modelo/competencia";
-import NivelCompetencia from "../modelo/nivelCompetencia";
+import NivelCompetencia from "../modelo/enum/nivelCompetencia";
+import NivelExperiencia from "../modelo/enum/nivelExperiencia";
+import NivelFormacao from "../modelo/enum/nivelFormacao";
 import Chart from 'chart.js/auto';
+import Formacao from "../modelo/formacao";
+import Experiencia from "../modelo/experiencia";
 
 
 export class CandidatoUI {
@@ -36,6 +40,8 @@ export class CandidatoUI {
         const descricaoInput = document.getElementById('descricao') as HTMLInputElement;
 
         const competencias: Competencia[] = this.obterCompetencias();
+        const formacoes: Formacao[] = this.obterFormacoes(); 
+        const experiencias: Experiencia[] = this.obterExperiencias();
 
         const novoCandidato = new Candidato(
             nomeInput.value,
@@ -45,7 +51,9 @@ export class CandidatoUI {
             parseInt(idadeInput.value),
             estadoInput.value,
             descricaoInput.value,
-            competencias
+            competencias,
+            formacoes,
+            experiencias
         );
 
         this.candidatoService.cadastrarCandidato(novoCandidato);
@@ -61,6 +69,63 @@ export class CandidatoUI {
        
         console.log(novoCandidato)
     }
+
+    private obterFormacoes(): Formacao[] {
+        const formacoes: Formacao[] = [];
+        const listaFormacoes = document.getElementById('lista-formacoes') as HTMLUListElement;
+    
+        const itensFormacoes = listaFormacoes.querySelectorAll('li');
+    
+        itensFormacoes.forEach(item => {
+            const textoFormacao = item.textContent || '';
+            const partes = textoFormacao.split(' - ');
+    
+            if (partes.length === 4) {
+                const curso = partes[0];
+                const faculdade = partes[1];
+                const nivelTexto = partes[2];
+                
+                // Mapeie o texto do nível para o enum NivelFormacao
+                const nivel = NivelFormacao[nivelTexto as keyof typeof NivelFormacao] || NivelFormacao.Graduacao;
+    
+                const anoConclusao = parseInt(partes[3]); // Obtém o ano de conclusão
+    
+                const formacao = new Formacao(curso, faculdade, nivel, anoConclusao);
+                formacoes.push(formacao);
+            }
+        });
+    
+        return formacoes;
+    }
+    
+    
+    private obterExperiencias(): Experiencia[] {
+        const experiencias: Experiencia[] = [];
+        const listaExperiencias = document.getElementById('lista-experiencias') as HTMLUListElement;
+    
+        const itensExperiencias = listaExperiencias.querySelectorAll('li');
+    
+        itensExperiencias.forEach(item => {
+            const textoExperiencia = item.textContent || '';
+            const partes = textoExperiencia.split(' - ');
+    
+            if (partes.length === 3) {
+                const cargo = partes[0];
+                const empresa = partes[1];
+    
+                const nivelTexto = partes[2]; 
+                const nivel = NivelExperiencia[nivelTexto as keyof typeof NivelExperiencia] || NivelExperiencia.Junior;
+    
+                const experiencia = new Experiencia(cargo, empresa, nivel);
+                experiencias.push(experiencia);
+            }
+        });
+    
+        return experiencias;
+    }
+    
+    
+    
 
     private obterCompetencias(): Competencia[] {
         const competencias: Competencia[] = [];

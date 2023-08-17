@@ -1,4 +1,4 @@
-import NivelCompetencia from "./nivelCompetencia";
+import NivelCompetencia from "./enum/nivelCompetencia";
 
 class Competencia {
   nome: string;

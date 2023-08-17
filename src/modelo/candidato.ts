@@ -1,4 +1,6 @@
 import Competencia from './competencia';
+import Experiencia from './experiencia';
+import Formacao from './formacao';
 
 class Candidato {
   nome: string;
@@ -9,6 +11,8 @@ class Candidato {
   estado: string;
   descricaoPessoal: string;
   competencias: Competencia[]; 
+  formacoes: Formacao[];
+  experiencias: Experiencia[]
 
   constructor(
     nome: string,
@@ -18,7 +22,9 @@ class Candidato {
     idade: number,
     estado: string,
     descricaoPessoal: string,
-    competencias: Competencia[] 
+    competencias: Competencia[],
+    formacoes: Formacao[],
+    experiencias: Experiencia[]
   ) {
     this.nome = nome;
     this.email = email;
@@ -28,6 +34,8 @@ class Candidato {
     this.estado = estado;
     this.descricaoPessoal = descricaoPessoal;
     this.competencias = competencias; 
+    this.formacoes = formacoes;
+    this.experiencias = experiencias;
   }
 
   obterCompetencias(): Competencia[] {
