@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro.css">
+    <title>Cadastro de Empresas</title>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="logo-container">
+                <img src="/src/img/jovens-colegas-trabalhando-juntos-em-um-cafe.jpg" alt="Logo da Empresa">
+            </div>
+            <div class="form-content">
+                <form class="cadastro-form">
+                    <!-- Parte 1: Informações da Empresa -->
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="nomeEmpresa" class="form-label">Nome da Empresa</label>
+                            <input type="text" id="nomeEmpresa" class="form-input" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="emailEmpresa" class="form-label">Email da Empresa</label>
+                            <input type="email" id="emailEmpresa" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="cepEmpresa" class="form-label">CEP da Empresa</label>
+                            <input type="text" id="cepEmpresa" class="form-input">
+                        </div>
+                        <div class="input-block">
+                            <label for="cnpjEmpresa" class="form-label">CNPJ da Empresa</label>
+                            <input type="text" id="cnpjEmpresa" class="form-input">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="paisEmpresa" class="form-label">País da Empresa</label>
+                            <input type="text" id="paisEmpresa" class="form-input">
+                        </div>
+                        <div class="input-block">
+                            <label for="estadoEmpresa" class="form-label">Estado da Empresa</label>
+                            <input type="text" id="estadoEmpresa" class="form-input">
+                        </div>
+                    </div>
+                    <div class="input-block">
+                        <label for="descricaoEmpresa" class="form-label">Descrição da Empresa</label>
+                        <textarea id="descricaoEmpresa" class="form-textarea"></textarea>
+                    </div>
+                    
+                    <!-- Parte 2: Vagas -->
+                    <div class="form-section">
+                        <h2>Vagas</h2>
+                        <div class="vagas-container">
+                            <div class="vaga-form">
+                                <div class="input-group">
+                                    <div class="input-block">
+                                        <label for="nomeVaga" class="form-label">Nome da Vaga</label>
+                                        <input type="text" id="nomeVaga" class="form-input" required>
+                                    </div>
+                                    <div class="input-block">
+                                        <label for="descricaoVaga" class="form-label">Descrição da Vaga</label>
+                                        <textarea id="descricaoVaga" class="form-textarea"></textarea>
+                                    </div>
+                                </div>
+                                <div class="competencias-vaga">
+                                    <h3>Competências da Vaga</h3>
+                                    <ul id="lista-competencias-vaga"></ul>
+                                    <div class="input-group">
+                                        <div class="input-block">
+                                            <label for="nomeCompetenciaVaga" class="form-label"></label>
+                                            <input type="text" id="nomeCompetenciaVaga" class="form-input" required>
+                                        </div>
+                                        <div class="input-block">
+                                            <label for="nivelCompetenciaVaga" class="form-label"></label>
+                                            <select id="nivelCompetenciaVaga" class="form-input">
+                                                <option value="Basico">Básico</option>
+                                                <option value="Intermediario">Intermediário</option>
+                                                <option value="Avancado">Avançado</option>
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+                                    <button type="button" id="adicionar-competencia-vaga" class="add-button">Adicionar Competência</button>
+                                </div>
+                                <button type="button" id="adicionar-vaga" class="add-button">Adicionar Vaga</button>
+                            </div>
+                            <div class="vagas-adicionadas">
+                                <h3>Vagas Adicionadas:</h3>
+                                <ul id="lista-vagas"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="button-container">
+                        <button onclick="history.back()" class="back-button">Voltar</button>
+                        <button id="cadastrar-empresa-button" type="button"  class="submit-button">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/dist/app.min.js"></script>
+</body>
+</html>
