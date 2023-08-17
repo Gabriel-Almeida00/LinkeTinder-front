@@ -109,7 +109,7 @@ export class CandidatoUI {
     
         this.candidatoService.listarCandidatos().forEach(candidato => {
             candidato.competencias.forEach(competencia => {
-                const nomeCompetencia = competencia.obterNome();
+                const nomeCompetencia = competencia.nome;
                 if (!competenciasCount[nomeCompetencia]) {
                     competenciasCount[nomeCompetencia] = 0;
                 }
@@ -121,9 +121,9 @@ export class CandidatoUI {
     }
 
     criarGraficoCompetencias(dadosCompetencias: { [competencia: string]: number }): void {
-        const canvas = document.getElementById('grafico-chart') as HTMLCanvasElement;
+        const canvas = document.getElementById('competencias-chart') as HTMLCanvasElement;
         if (!canvas) {
-            console.error("Element with ID 'grafico-competencias' not found.");
+            console.error("Element with ID 'competencias-chart' not found.");
             return;
         }
     

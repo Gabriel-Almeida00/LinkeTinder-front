@@ -29,6 +29,10 @@ class Candidato {
     this.descricaoPessoal = descricaoPessoal;
     this.competencias = competencias; 
   }
+
+  obterCompetencias(): Competencia[] {
+    return this.competencias;
+  }
 }
 
 export default Candidato;
