@@ -27,6 +27,7 @@ export class CandidatoUI {
             this.listarCandidatos();
             const dadosCompetencias = this.obterContagemCompetencias();
             this.criarGraficoCompetencias(dadosCompetencias);
+            this.associarEventosInformacoesCandidato();
         });
     }
 
@@ -159,15 +160,66 @@ export class CandidatoUI {
     
         listaCandidatos.innerHTML = '';
     
-        candidatosInfo.forEach(candidatoInfo => {
+        candidatosInfo.forEach((candidatoInfo, index) => { 
             const li = document.createElement('li');
+            li.setAttribute("class", "candidato-item"); 
+            li.setAttribute("data-index", index.toString()); 
             li.innerHTML = `
-                <strong>Descrição Pessoal:</strong> ${candidatoInfo.descricaoPessoal}<br>
-                <strong>Competências:</strong> ${candidatoInfo.competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(', ')}
-            `;
+            <div class="informacoes-candidato hidden">
+                <p class="formacao-candidato">Formação: ${candidatoInfo.formacoes.map(formacao => `${formacao.curso} - ${formacao.instituicao}`).join(', ')}</p>
+                <p class="experiencia-candidato">Experiência: ${candidatoInfo.experiencias.map(experiencia => `${experiencia.cargo} - ${experiencia.empresa}`).join(', ')}</p>
+            </div>
+            <br>
+            <strong>Descrição Pessoal:</strong> ${candidatoInfo.descricaoPessoal}<br>
+            <strong>Competências:</strong> ${candidatoInfo.competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(', ')}
+        `;
             listaCandidatos.appendChild(li);
         });
     }
+    
+
+    associarEventosInformacoesCandidato() {
+        const listaCandidatos = document.getElementById("lista-candidatos");
+        const candidatosInfos = this.candidatoService.listarCandidatosInfo(); 
+
+        if (listaCandidatos) {
+            listaCandidatos.addEventListener("mouseover", (event) => {
+                const candidatoItem = this.encontrarCandidatoItem(event.target as HTMLElement);
+                if (candidatoItem) {
+                    const index = parseInt(candidatoItem.getAttribute("data-index") || "");
+                    const candidatoInfo = candidatosInfos[index];
+
+                    if (candidatoInfo) {
+                        const informacoesCandidato = candidatoItem.querySelector(".informacoes-candidato");
+                        if (informacoesCandidato) {
+                            informacoesCandidato.classList.remove("hidden");
+                        }
+                    }
+                }
+            });
+
+            listaCandidatos.addEventListener("mouseout", (event) => {
+                const candidatoItem = this.encontrarCandidatoItem(event.target as HTMLElement);
+                if (candidatoItem) {
+                    const informacoesCandidato = candidatoItem.querySelector(".informacoes-candidato");
+                    if (informacoesCandidato) {
+                        informacoesCandidato.classList.add("hidden");
+                    }
+                }
+            });
+        }
+    }
+
+    encontrarCandidatoItem(element: HTMLElement | null): HTMLElement | null {
+        while (element) {
+            if (element.tagName === "LI") {
+                return element;
+            }
+            element = element.parentElement;
+        }
+        return null;
+    }
+    
 
     obterContagemCompetencias(): { [competencia: string]: number } {
         const competenciasCount: { [competencia: string]: number } = {};

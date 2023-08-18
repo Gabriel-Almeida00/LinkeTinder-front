@@ -1,5 +1,5 @@
 import Candidato from "../modelo/candidato";
-import CandidatoInfo from "../modelo/candidatoInfo";
+import CandidatoInfo from "../modelo/dto/candidatoInfo";
 import localStorageService from "./localStorageService";
 
 class CandidatoService {
@@ -27,9 +27,15 @@ class CandidatoService {
     }
 
     listarCandidatosInfo(): CandidatoInfo[] {
-        return this.candidatos.map(candidato => new CandidatoInfo
-            (candidato.descricaoPessoal, candidato.competencias));
+        return this.candidatos.map(candidato => new CandidatoInfo(
+            candidato.descricaoPessoal,
+            candidato.competencias,
+            candidato.formacoes, 
+            candidato.experiencias 
+        ));
     }
+
+  
     
 
     cadastrarCandidato(candidato: Candidato): void {

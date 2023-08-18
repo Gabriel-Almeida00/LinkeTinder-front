@@ -13,5 +13,6 @@ candidatoUI.listarCandidatos();
 document.addEventListener('DOMContentLoaded', () => {
     const dadosCompetencias = candidatoUI.obterContagemCompetencias();
     candidatoUI.criarGraficoCompetencias(dadosCompetencias);
+    candidatoUI.associarEventosInformacoesCandidato();
 });
 
