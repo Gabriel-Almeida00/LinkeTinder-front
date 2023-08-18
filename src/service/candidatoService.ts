@@ -1,5 +1,6 @@
 import Candidato from "../modelo/candidato";
 import CandidatoInfo from "../modelo/dto/candidatoInfo";
+import Vaga from "../modelo/vaga";
 import localStorageService from "./localStorageService";
 
 class CandidatoService {
@@ -36,11 +37,41 @@ class CandidatoService {
     }
 
   
-    
-
     cadastrarCandidato(candidato: Candidato): void {
         this.candidatos.push(candidato);
         this.salvarCandidatosNoLocalStorage();
+    }
+
+    calcularAfinidadeCandidatoComVaga(candidato: CandidatoInfo, vagas: Vaga[]): number {
+        let totalAfinidade = 0;
+
+        vagas.forEach(vaga => {
+            let afinidade = 0;
+    
+            vaga.requisitos.forEach(requisito => {
+                const competenciaCandidato = candidato.competencias.find(competencia => competencia.nome === requisito.nome);
+                if (competenciaCandidato && competenciaCandidato.nivel === requisito.nivel) {
+                    afinidade += 3; 
+                }
+            });
+    
+            const experienciaCandidato = candidato.experiencias.find(experiencia => experiencia.nivel === vaga.experienciaMinima);
+            if (experienciaCandidato) {
+                afinidade += 3;
+            }
+    
+            const formacaoCandidato = candidato.formacoes.find(formacao => formacao.nivel === vaga.formacaoMinima);
+            if (formacaoCandidato) {
+                afinidade += 3;
+            }
+    
+            const maxAfinidade = (3 * vaga.requisitos.length) + 3 + 3; 
+            const afinidadePercentual = (afinidade / maxAfinidade) * 100;
+    
+            totalAfinidade += afinidadePercentual;
+        });
+    
+        return totalAfinidade / vagas.length;
     }
 
     

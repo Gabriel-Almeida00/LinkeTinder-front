@@ -1,3 +1,5 @@
+import Candidato from "../modelo/candidato";
+import Empresa from "../modelo/empresa";
 import tipoUsuario from "../modelo/enum/tipoUsuario";
 import Usuario from "../modelo/usuario";
 
@@ -18,6 +20,24 @@ class usuarioService{
             console.log('Login falhou');
             return null;
         }
+    }
+
+    obterCandidatoLogado(): Candidato | null {
+        const candidatoLogadoJson = localStorage.getItem('usuarioLogado');
+        if (candidatoLogadoJson) {
+            const candidatoLogado = JSON.parse(candidatoLogadoJson);
+            return candidatoLogado as Candidato;
+        }
+        return null;
+    }
+
+    obterEmpresaLogado(): Empresa | null {
+        const empresaLogadoJson = localStorage.getItem('usuarioLogado');
+        if (empresaLogadoJson) {
+            const empresaLogado = JSON.parse(empresaLogadoJson);
+            return empresaLogado as Empresa;
+        }
+        return null;
     }
 
 }

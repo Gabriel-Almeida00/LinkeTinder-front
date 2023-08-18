@@ -7,13 +7,16 @@ import NivelFormacao from "../modelo/enum/nivelFormacao";
 import Chart from 'chart.js/auto';
 import Formacao from "../modelo/formacao";
 import Experiencia from "../modelo/experiencia";
+import usuarioService from "../service/usuarioService";
 
 
 export class CandidatoUI {
     private candidatoService: CandidatoService;
+    usuarioService: usuarioService;
 
     constructor() {
         this.candidatoService = new CandidatoService();
+        this.usuarioService = new usuarioService();
 
         const cadastrarButton = document.getElementById('cadastrar-candidato-button');
 
@@ -68,7 +71,7 @@ export class CandidatoUI {
         descricaoInput.value = '';
 
        
-        console.log(novoCandidato)
+        window.location.href = '../../paginas/login/login.html';
     }
 
     private obterFormacoes(): Formacao[] {
@@ -154,28 +157,42 @@ export class CandidatoUI {
     }
     
 
-    listarCandidatos() {
+    listarCandidatos(): void {
         const candidatosInfo = this.candidatoService.listarCandidatosInfo();
         const listaCandidatos = document.getElementById('lista-candidatos') as HTMLUListElement;
     
         listaCandidatos.innerHTML = '';
     
-        candidatosInfo.forEach((candidatoInfo, index) => { 
+        candidatosInfo.forEach((candidatoInfo, index) => {
             const li = document.createElement('li');
             li.setAttribute("class", "candidato-item"); 
             li.setAttribute("data-index", index.toString()); 
-            li.innerHTML = `
-            <div class="informacoes-candidato hidden">
-                <p class="formacao-candidato">Formação: ${candidatoInfo.formacoes.map(formacao => `${formacao.curso} - ${formacao.instituicao}`).join(', ')}</p>
-                <p class="experiencia-candidato">Experiência: ${candidatoInfo.experiencias.map(experiencia => `${experiencia.cargo} - ${experiencia.empresa}`).join(', ')}</p>
-            </div>
-            <br>
-            <strong>Descrição Pessoal:</strong> ${candidatoInfo.descricaoPessoal}<br>
-            <strong>Competências:</strong> ${candidatoInfo.competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(', ')}
-        `;
+    
+            // Calcular e exibir a afinidade do candidato com as vagas da empresa
+            const empresaLogada = this.usuarioService.obterEmpresaLogado();
+            if (empresaLogada) {
+                let afinidadesHtml = '';
+                empresaLogada.vagas.forEach(vaga => {
+                    const afinidade = this.candidatoService.calcularAfinidadeCandidatoComVaga(candidatoInfo, [vaga]);
+                    afinidadesHtml += `<p>Afinidade com ${vaga.nome}: ${afinidade.toFixed(2)}%</p>`;
+                });
+    
+                li.innerHTML = `
+                    <div class="informacoes-candidato hidden">
+                        <p class="formacao-candidato">Formação: ${candidatoInfo.formacoes.map(formacao => `${formacao.curso} - ${formacao.instituicao}`).join(', ')}</p>
+                        <p class="experiencia-candidato">Experiência: ${candidatoInfo.experiencias.map(experiencia => `${experiencia.cargo} - ${experiencia.empresa}`).join(', ')}</p>
+                        ${afinidadesHtml}
+                    </div>
+                    <br>
+                    <strong>Descrição Pessoal:</strong> ${candidatoInfo.descricaoPessoal}<br>
+                    <strong>Competências:</strong> ${candidatoInfo.competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(', ')}
+                `;
+            } 
+    
             listaCandidatos.appendChild(li);
         });
     }
+    
     
 
     associarEventosInformacoesCandidato() {

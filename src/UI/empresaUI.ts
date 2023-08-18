@@ -5,13 +5,16 @@ import Competencia from "../modelo/competencia";
 import NivelCompetencia from "../modelo/enum/nivelCompetencia";
 import NivelFormacao from "../modelo/enum/nivelFormacao";
 import NivelExperiencia from "../modelo/enum/nivelExperiencia";
+import usuarioService from "../service/usuarioService";
 
 
 class EmpresaUI {
     private empresaService: EmpresaService;
+    private usuarioService: usuarioService;
 
     constructor() {
         this.empresaService = new EmpresaService();
+        this.usuarioService = new usuarioService();
 
         const cadastrarButton = document.getElementById('cadastrar-empresa-button');
 
@@ -58,7 +61,7 @@ class EmpresaUI {
         estadoInput.value = '';
         descricaoInput.value = '';
 
-        console.log(novaEmpresa);
+        window.location.href = '../../paginas/login/login.html';
     }
 
     private obterVagas(): Vaga[] {
@@ -109,19 +112,24 @@ class EmpresaUI {
     
         listaVagas.innerHTML = '';
     
+        const candidatoLogado = this.usuarioService.obterCandidatoLogado();
+    
         vagas.forEach((vaga, index) => { 
             const li = document.createElement('li');
             li.setAttribute("class", "vaga-item"); 
             li.setAttribute("data-index", index.toString());
     
             const competenciasTexto = vaga.requisitos.map(comp => `${comp.nome} - ${comp.nivel}`).join(", ");
+            
+            const afinidade = this.empresaService.calcularAfinidadeVagaComCandidato(vaga);
     
             li.innerHTML = `
                 <div class="informacoes-vaga hidden">
                     <p class="formacao-vaga">Formação Mínima: ${vaga.formacaoMinima}</p>
                     <p class="experiencia-vaga">Experiência Mínima: ${vaga.experienciaMinima}</p>
                 </div><br>
-                <strong>${vaga.titulo}</strong><br>${vaga.descricao}<br>Competências: ${competenciasTexto}
+                <strong>${vaga.nome}</strong><br>${vaga.descricao}<br>Competências: ${competenciasTexto}
+                <br>Afinidade: ${afinidade.toFixed(2)}%
             `;
     
             listaVagas.appendChild(li);

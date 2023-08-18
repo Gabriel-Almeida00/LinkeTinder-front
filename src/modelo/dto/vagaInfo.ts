@@ -1,23 +1,25 @@
 import Competencia from '../competencia';
 
 export default class VagaInfo {
-    titulo: string;
+    nome: string;
     descricao: string;
     experienciaMinima: string;
     formacaoMinima: string;
     requisitos: Competencia[];
 
     constructor(
-        titulo: string,
+        nome: string,
         descricao: string,
         experienciaMinima: string,
         formacaoMinima: string,
         requisitos: Competencia[]
     ) {
-        this.titulo = titulo;
+        this.nome = nome;
         this.descricao = descricao;
         this.experienciaMinima = experienciaMinima;
         this.formacaoMinima = formacaoMinima;
         this.requisitos = requisitos;
     }
+
+    
 }

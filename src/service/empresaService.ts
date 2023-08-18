@@ -1,14 +1,29 @@
 import VagaInfo from "../modelo/dto/vagaInfo";
 import Empresa from "../modelo/empresa";
 import LocalStorageService from "./localStorageService";
+import usuarioService from "./usuarioService";
 
 class EmpresaService {
     private empresas: Empresa[] = []
     private localStorageService: LocalStorageService;
+    usuarioService: usuarioService;
 
     constructor(){
         this.localStorageService = new LocalStorageService('empresas');
+        this.usuarioService = new usuarioService();
         this.carregarEmpresasDoLocalStorage();
+       
+    }
+
+    private salvarEmpresasNoLocalStorage(): void {
+        this.localStorageService.salvarDados(this.empresas);
+    }
+
+    private carregarEmpresasDoLocalStorage(): void{
+        const empresas = this.localStorageService.carregarDados();
+        if(empresas){
+            this.empresas = empresas;
+        }
     }
 
     listarVagasInfo(): VagaInfo[] {
@@ -34,15 +49,40 @@ class EmpresaService {
         this.salvarEmpresasNoLocalStorage();
     }
 
-    private salvarEmpresasNoLocalStorage(): void {
-        this.localStorageService.salvarDados(this.empresas);
-    }
+   
 
-    private carregarEmpresasDoLocalStorage(): void{
-        const empresas = this.localStorageService.carregarDados();
-        if(empresas){
-            this.empresas = empresas;
+    calcularAfinidadeVagaComCandidato(vaga: VagaInfo): number {
+        const candidatoLogado = this.usuarioService.obterCandidatoLogado();
+
+        if (!candidatoLogado) {
+            return 0; 
         }
+
+      
+        let afinidade = 0;
+
+        vaga.requisitos.forEach(requisito => {
+            const competenciaCandidato = candidatoLogado.competencias.find(competencia => competencia.nome === requisito.nome);
+            if (competenciaCandidato && competenciaCandidato.nivel === requisito.nivel) {
+                afinidade += 3; 
+            }
+        });
+
+        const experienciaCandiato = candidatoLogado.experiencias[0].nivel;
+        if (vaga.experienciaMinima === experienciaCandiato) {
+            afinidade += 3;
+        }
+
+        const formacaoCandidato = candidatoLogado.formacoes[0].nivel;
+        if (vaga.formacaoMinima === formacaoCandidato) {
+            afinidade += 3;
+        }
+
+       
+        const maxAfinidade = (3 * vaga.requisitos.length) + 3 + 3; 
+        const afinidadePercentual = (afinidade / maxAfinidade) * 100;
+
+        return afinidadePercentual;
     }
 }
 
