@@ -7,7 +7,9 @@ const candidatoUI = new CandidatoUI();
 const empresaUi = new EmpresaUI();
 
 empresaUi.listarVagas();
+empresaUi.associarEventosInformacoesVaga();
 candidatoUI.listarCandidatos();
+
 
 
 document.addEventListener('DOMContentLoaded', () => {

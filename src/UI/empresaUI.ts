@@ -82,7 +82,7 @@ class EmpresaUI {
                         const nomeCompetencia = partesCompetencia[0];
                         const nivelCompetenciaTexto = partesCompetencia[1];
     
-                        // Extrair o nível de competência corretamente
+                  
                         const nivelCompetencia = nivelCompetenciaTexto.trim() as NivelCompetencia;
     
                         return new Competencia(nomeCompetencia, nivelCompetencia);
@@ -91,7 +91,6 @@ class EmpresaUI {
                     }
                 });
     
-                // Extrair o nível de experiência e formação
                 const nivelExperiencia = nivelExperienciaTexto.trim() as NivelExperiencia;
                 const nivelFormacao = nivelFormacaoTexto.trim() as NivelFormacao;
     
@@ -104,27 +103,74 @@ class EmpresaUI {
     }
     
     
-    
-    
-    
     listarVagas(): void {
-        const vagas = this.empresaService.listarVagas();
+        const vagas = this.empresaService.listarVagasInfo();
         const listaVagas = document.getElementById('vagas') as HTMLUListElement;
     
         listaVagas.innerHTML = '';
     
-        vagas.forEach(vaga => {
+        vagas.forEach((vaga, index) => { 
             const li = document.createElement('li');
+            li.setAttribute("class", "vaga-item"); 
+            li.setAttribute("data-index", index.toString());
     
-            // Aqui, estamos mapeando cada competência para seu nome e nível
             const competenciasTexto = vaga.requisitos.map(comp => `${comp.nome} - ${comp.nivel}`).join(", ");
     
-            li.innerHTML = `<strong>${vaga.nome}</strong><br>${vaga.descricao}<br>Competências: ${competenciasTexto}`;
+            li.innerHTML = `
+                <div class="informacoes-vaga hidden">
+                    <p class="formacao-vaga">Formação Mínima: ${vaga.formacaoMinima}</p>
+                    <p class="experiencia-vaga">Experiência Mínima: ${vaga.experienciaMinima}</p>
+                </div><br>
+                <strong>${vaga.titulo}</strong><br>${vaga.descricao}<br>Competências: ${competenciasTexto}
+            `;
+    
             listaVagas.appendChild(li);
         });
     }
-
     
+
+    associarEventosInformacoesVaga() {
+        const listaVagas = document.getElementById("vagas");
+        const vagasInfos = this.empresaService.listarVagasInfo(); 
+    
+        if (listaVagas) {
+            listaVagas.addEventListener("mouseover", (event) => {
+                const vagaItem = this.encontrarVagaItem(event.target as HTMLElement);
+                if (vagaItem) {
+                    const index = parseInt(vagaItem.getAttribute("data-index") || "");
+                    const vagaInfo = vagasInfos[index];
+    
+                    if (vagaInfo) {
+                        const informacoesVaga = vagaItem.querySelector(".informacoes-vaga");
+                        if (informacoesVaga) {
+                            informacoesVaga.classList.remove("hidden");
+                        }
+                    }
+                }
+            });
+    
+            listaVagas.addEventListener("mouseout", (event) => {
+                const vagaItem = this.encontrarVagaItem(event.target as HTMLElement);
+                if (vagaItem) {
+                    const informacoesVaga = vagaItem.querySelector(".informacoes-vaga");
+                    if (informacoesVaga) {
+                        informacoesVaga.classList.add("hidden");
+                    }
+                }
+            });
+        }
+    }
+    
+
+    encontrarVagaItem(element: HTMLElement | null): HTMLElement | null {
+        while (element) {
+            if (element.tagName === "LI") {
+                return element;
+            }
+            element = element.parentElement;
+        }
+        return null;
+    }
     
 }
 

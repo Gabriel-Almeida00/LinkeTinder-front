@@ -1,3 +1,4 @@
+import VagaInfo from "../modelo/dto/vagaInfo";
 import Empresa from "../modelo/empresa";
 import Vaga from "../modelo/vaga";
 import localStorageService from "./localStorageService";
@@ -11,14 +12,24 @@ class EmpresaService {
         this.carregarEmpresasDoLocalStorage();
     }
 
-    listarVagas(): Vaga[] {
-        const vagas: Vaga[] = [];
+    listarVagasInfo(): VagaInfo[] {
+        const vagasInfo: VagaInfo[] = [];
         this.empresas.forEach(empresa => {
-            vagas.push(...empresa.vagas);
+            empresa.vagas.forEach(vaga => {
+                const vagaInfo = new VagaInfo(
+                    vaga.nome,
+                    vaga.descricao,
+                    vaga.experienciaMinima,
+                    vaga.formacaoMinima,
+                    vaga.requisitos 
+                );
+                vagasInfo.push(vagaInfo);
+            });
         });
-        return vagas;
+        return vagasInfo;
     }
-
+    
+    
     cadastrarEmpresa(empresa: Empresa):void {
         this.empresas.push(empresa);
         this.salvarEmpresasNoLocalStorage();
