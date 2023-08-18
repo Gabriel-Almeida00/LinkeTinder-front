@@ -1,4 +1,4 @@
-class localStorageService{
+class LocalStorageService{
     private key: string;
 
     constructor(key: string) {
@@ -18,4 +18,4 @@ class localStorageService{
     }
 }
 
-export default localStorageService;
+export default LocalStorageService;

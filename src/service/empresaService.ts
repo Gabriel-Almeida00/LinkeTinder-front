@@ -1,14 +1,13 @@
 import VagaInfo from "../modelo/dto/vagaInfo";
 import Empresa from "../modelo/empresa";
-import Vaga from "../modelo/vaga";
-import localStorageService from "./localStorageService";
+import LocalStorageService from "./localStorageService";
 
 class EmpresaService {
     private empresas: Empresa[] = []
-    private localStorageService: localStorageService;
+    private localStorageService: LocalStorageService;
 
     constructor(){
-        this.localStorageService = new localStorageService('empresas');
+        this.localStorageService = new LocalStorageService('empresas');
         this.carregarEmpresasDoLocalStorage();
     }
 
