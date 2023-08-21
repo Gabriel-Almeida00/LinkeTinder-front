@@ -9,6 +9,8 @@ class Candidato {
   cpf: string;
   idade: number;
   estado: string;
+  telefone:number;
+  redeSocial: string;
   descricaoPessoal: string;
   competencias: Competencia[]; 
   formacoes: Formacao[];
@@ -21,6 +23,8 @@ class Candidato {
     cpf: string,
     idade: number,
     estado: string,
+    telefone:number,
+    redeSocial:string,
     descricaoPessoal: string,
     competencias: Competencia[],
     formacoes: Formacao[],
@@ -32,7 +36,9 @@ class Candidato {
     this.cpf = cpf;
     this.idade = idade;
     this.estado = estado;
+    this.telefone = telefone;
     this.descricaoPessoal = descricaoPessoal;
+    this.redeSocial = redeSocial;
     this.competencias = competencias; 
     this.formacoes = formacoes;
     this.experiencias = experiencias;

@@ -40,6 +40,30 @@ class EmpresaUI {
 
         const vagas: Vaga[] = this.obterVagas();
 
+        const cnpjRegex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+        const nomeRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const cepRegex = /^\d{5}-\d{3}$/;
+
+        if (!cnpjRegex.test(cnpjInput.value)) {
+            alert('Cnpj inválido');
+            return;
+        }
+
+        if (!nomeRegex.test(nomeInput.value)) {
+            alert('Nome inválido');
+            return;
+        }
+
+        if (!emailRegex.test(emailInput.value)) {
+            alert('E-mail inválido');
+            return;
+        }
+        if (!cepRegex.test(cepInput.value)) {
+            alert('Cep inválido')
+            return;
+        }
+
         const novaEmpresa = new Empresa(
             nomeInput.value,
             emailInput.value,

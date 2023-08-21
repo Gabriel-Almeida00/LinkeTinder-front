@@ -42,10 +42,43 @@ export class CandidatoUI {
         const idadeInput = document.getElementById('idade') as HTMLInputElement;
         const estadoInput = document.getElementById('estado') as HTMLInputElement;
         const descricaoInput = document.getElementById('descricao') as HTMLInputElement;
+        const telefoneInput = document.getElementById('telefone') as HTMLInputElement;
+        const LinkedlnInput = document.getElementById('linkedin') as HTMLInputElement;
 
         const competencias: Competencia[] = this.obterCompetencias();
         const formacoes: Formacao[] = this.obterFormacoes(); 
         const experiencias: Experiencia[] = this.obterExperiencias();
+
+        const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+        const nomeRegex = /^[a-zA-Z\s]+$/;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        const telefoneRegex = /^(\(?\d{2}\)?\s?)?(\d{4,5}-?\d{4})$/;
+        const linkedinRegex = /^https:\/\/www\.linkedin\.com\/in\/[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=]+$/;
+
+
+        if (!cpfRegex.test(cpfInput.value)) {
+            alert('CPF inválido');
+            return;
+        }
+
+        if (!nomeRegex.test(nomeInput.value)) {
+            alert('Nome inválido');
+            return;
+        }
+
+        if (!emailRegex.test(emailInput.value)) {
+            alert('E-mail inválido');
+            return;
+        }
+        if (!telefoneRegex.test(telefoneInput.value)) {
+            alert('Telefone inválido')
+            return;
+        }
+        
+        if (!linkedinRegex.test(LinkedlnInput.value)) {
+            alert('Link inválido')
+            return;
+        }
 
         const novoCandidato = new Candidato(
             nomeInput.value,
@@ -54,6 +87,8 @@ export class CandidatoUI {
             cpfInput.value,
             parseInt(idadeInput.value),
             estadoInput.value,
+            parseInt(telefoneInput.value),
+            LinkedlnInput.value,
             descricaoInput.value,
             competencias,
             formacoes,
