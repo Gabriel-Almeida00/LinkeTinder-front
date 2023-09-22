@@ -1,6 +1,6 @@
 import Competencia from '../competencia';
 
-export default class VagaInfo {
+export default class VagaDTO {
     nome: string;
     descricao: string;
     experienciaMinima: string;

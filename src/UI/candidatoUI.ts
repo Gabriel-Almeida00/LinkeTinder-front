@@ -124,10 +124,9 @@ export class CandidatoUI {
                 const faculdade = partes[1];
                 const nivelTexto = partes[2];
                 
-                // Mapeie o texto do nível para o enum NivelFormacao
                 const nivel = NivelFormacao[nivelTexto as keyof typeof NivelFormacao] || NivelFormacao.Graduacao;
     
-                const anoConclusao = parseInt(partes[3]); // Obtém o ano de conclusão
+                const anoConclusao = parseInt(partes[3]);
     
                 const formacao = new Formacao(curso, faculdade, nivel, anoConclusao);
                 formacoes.push(formacao);
@@ -180,7 +179,7 @@ export class CandidatoUI {
                 const nome = partes[0];
                 const nivelTexto = partes[1];
                 
-                // Mapeie o texto do nível para o enum NivelCompetencia
+               
                 const nivel = NivelCompetencia[nivelTexto as keyof typeof NivelCompetencia] || NivelCompetencia.Basico;
     
                 const competencia = new Competencia(nome, nivel);
@@ -193,34 +192,34 @@ export class CandidatoUI {
     
 
     listarCandidatos(): void {
-        const candidatosInfo = this.candidatoService.listarCandidatosInfo();
+        const candidatosDTO= this.candidatoService.listarCandidatosDTO();
         const listaCandidatos = document.getElementById('lista-candidatos') as HTMLUListElement;
     
         listaCandidatos.innerHTML = '';
     
-        candidatosInfo.forEach((candidatoInfo, index) => {
+        candidatosDTO.forEach((candidatoDTO, index) => {
             const li = document.createElement('li');
             li.setAttribute("class", "candidato-item"); 
             li.setAttribute("data-index", index.toString()); 
     
-            // Calcular e exibir a afinidade do candidato com as vagas da empresa
+          
             const empresaLogada = this.usuarioService.obterEmpresaLogado();
             if (empresaLogada) {
                 let afinidadesHtml = '';
                 empresaLogada.vagas.forEach(vaga => {
-                    const afinidade = this.candidatoService.calcularAfinidadeCandidatoComVaga(candidatoInfo, [vaga]);
+                    const afinidade = this.candidatoService.calcularAfinidadeCandidatoComVaga(candidatoDTO, [vaga]);
                     afinidadesHtml += `<p>Afinidade com ${vaga.nome}: ${afinidade.toFixed(2)}%</p>`;
                 });
     
                 li.innerHTML = `
                     <div class="informacoes-candidato hidden">
-                        <p class="formacao-candidato">Formação: ${candidatoInfo.formacoes.map(formacao => `${formacao.curso} - ${formacao.instituicao}`).join(', ')}</p>
-                        <p class="experiencia-candidato">Experiência: ${candidatoInfo.experiencias.map(experiencia => `${experiencia.cargo} - ${experiencia.empresa}`).join(', ')}</p>
+                        <p class="formacao-candidato">Formação: ${candidatoDTO.formacoes.map(formacao => `${formacao.curso} - ${formacao.instituicao}`).join(', ')}</p>
+                        <p class="experiencia-candidato">Experiência: ${candidatoDTO.experiencias.map(experiencia => `${experiencia.cargo} - ${experiencia.empresa}`).join(', ')}</p>
                         ${afinidadesHtml}
                     </div>
                     <br>
-                    <strong>Descrição Pessoal:</strong> ${candidatoInfo.descricaoPessoal}<br>
-                    <strong>Competências:</strong> ${candidatoInfo.competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(', ')}
+                    <strong>Descrição Pessoal:</strong> ${candidatoDTO.descricaoPessoal}<br>
+                    <strong>Competências:</strong> ${candidatoDTO.competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(', ')}
                 `;
             } 
     
@@ -232,7 +231,7 @@ export class CandidatoUI {
 
     associarEventosInformacoesCandidato() {
         const listaCandidatos = document.getElementById("lista-candidatos");
-        const candidatosInfos = this.candidatoService.listarCandidatosInfo(); 
+        const candidatosInfos = this.candidatoService.listarCandidatosDTO(); 
 
         if (listaCandidatos) {
             listaCandidatos.addEventListener("mouseover", (event) => {

@@ -131,7 +131,7 @@ class EmpresaUI {
     
     
     listarVagas(): void {
-        const vagas = this.empresaService.listarVagasInfo();
+        const vagas = this.empresaService.listarVagasDTO();
         const listaVagas = document.getElementById('vagas') as HTMLUListElement;
     
         listaVagas.innerHTML = '';
@@ -163,7 +163,7 @@ class EmpresaUI {
 
     associarEventosInformacoesVaga() {
         const listaVagas = document.getElementById("vagas");
-        const vagasInfos = this.empresaService.listarVagasInfo(); 
+        const vagasInfos = this.empresaService.listarVagasDTO(); 
     
         if (listaVagas) {
             listaVagas.addEventListener("mouseover", (event) => {

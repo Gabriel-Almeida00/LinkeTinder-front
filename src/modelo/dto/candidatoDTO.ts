@@ -2,7 +2,7 @@ import Competencia from '../competencia';
 import Formacao from '../formacao';
 import Experiencia from '../experiencia';
 
-export default class CandidatoInfo {
+export default class CandidatoDTO {
     descricaoPessoal: string;
     competencias: Competencia[];
     formacoes: Formacao[]; 

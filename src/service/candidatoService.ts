@@ -1,5 +1,5 @@
 import Candidato from "../modelo/candidato";
-import CandidatoInfo from "../modelo/dto/candidatoInfo";
+import CandidatoDTO from "../modelo/dto/candidatoDTO";
 import Vaga from "../modelo/vaga";
 import localStorageService from "./localStorageService";
 
@@ -27,8 +27,8 @@ class CandidatoService {
         return this.candidatos;
     }
 
-    listarCandidatosInfo(): CandidatoInfo[] {
-        return this.candidatos.map(candidato => new CandidatoInfo(
+    listarCandidatosDTO(): CandidatoDTO[] {
+        return this.candidatos.map(candidato => new CandidatoDTO(
             candidato.descricaoPessoal,
             candidato.competencias,
             candidato.formacoes, 
@@ -42,7 +42,7 @@ class CandidatoService {
         this.salvarCandidatosNoLocalStorage();
     }
 
-    calcularAfinidadeCandidatoComVaga(candidato: CandidatoInfo, vagas: Vaga[]): number {
+    calcularAfinidadeCandidatoComVaga(candidato: CandidatoDTO, vagas: Vaga[]): number {
         let totalAfinidade = 0;
 
         vagas.forEach(vaga => {

@@ -1,4 +1,4 @@
-import VagaInfo from "../modelo/dto/vagaInfo";
+import VagaDTO from "../modelo/dto/vagaDTO";
 import Empresa from "../modelo/empresa";
 import LocalStorageService from "./localStorageService";
 import usuarioService from "./usuarioService";
@@ -26,11 +26,11 @@ class EmpresaService {
         }
     }
 
-    listarVagasInfo(): VagaInfo[] {
-        const vagasInfo: VagaInfo[] = [];
+    listarVagasDTO(): VagaDTO[] {
+        const vagasInfo: VagaDTO[] = [];
         this.empresas.forEach(empresa => {
             empresa.vagas.forEach(vaga => {
-                const vagaInfo = new VagaInfo(
+                const vagaInfo = new VagaDTO(
                     vaga.nome,
                     vaga.descricao,
                     vaga.experienciaMinima,
@@ -51,7 +51,7 @@ class EmpresaService {
 
    
 
-    calcularAfinidadeVagaComCandidato(vaga: VagaInfo): number {
+    calcularAfinidadeVagaComCandidato(vaga: VagaDTO): number {
         const candidatoLogado = this.usuarioService.obterCandidatoLogado();
 
         if (!candidatoLogado) {
