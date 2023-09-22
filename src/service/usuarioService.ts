@@ -1,45 +1,51 @@
+import TipoUsuario from "../modelo/enum/tipoUsuario";
 import Candidato from "../modelo/candidato";
 import Empresa from "../modelo/empresa";
-import tipoUsuario from "../modelo/enum/tipoUsuario";
-import Usuario from "../modelo/usuario";
+import Usuario from "../modelo/UsuarioLogado";
 
-class usuarioService{
+class UsuarioService {
     constructor() {}
 
-    login(email: string, nome: string, userType: tipoUsuario): Usuario | null {
-        const userKey = userType === tipoUsuario.Candidato ? 'candidatos' : 'empresas';
-        const usersJson = localStorage.getItem(userKey);
-        const users: Usuario[] = usersJson ? JSON.parse(usersJson) : [];
+    login(email: string, nome: string, userType: TipoUsuario): Usuario | null {
+        const users = this.getUsuariosPorTipo(userType);
 
         const existingUser = users.find((user: Usuario) => user.email === email && user.nome === nome);
 
         if (existingUser) {
-            localStorage.setItem('usuarioLogado', JSON.stringify(existingUser));
+            this.setUsuarioLogado(existingUser);
             return existingUser;
         } else {
-            console.log('Login falhou');
-            return null;
+            throw new UsuarioNaoEncontradoException('Usuário não encontrado.');
         }
     }
 
-    obterCandidatoLogado(): Candidato | null {
+    obterCandidatoLogado(): Candidato  {
         const candidatoLogadoJson = localStorage.getItem('usuarioLogado');
         if (candidatoLogadoJson) {
             const candidatoLogado = JSON.parse(candidatoLogadoJson);
             return candidatoLogado as Candidato;
         }
-        return null;
+        throw new UsuarioNaoEncontradoException('Usuário não encontrado.');
     }
 
-    obterEmpresaLogado(): Empresa | null {
+    obterEmpresaLogado(): Empresa  {
         const empresaLogadoJson = localStorage.getItem('usuarioLogado');
         if (empresaLogadoJson) {
             const empresaLogado = JSON.parse(empresaLogadoJson);
             return empresaLogado as Empresa;
         }
-        return null;
+        throw new UsuarioNaoEncontradoException('Usuário não encontrado.');
     }
 
+    private getUsuariosPorTipo(userType: TipoUsuario): Usuario[] {
+        const userKey = userType === TipoUsuario.Candidato ? 'candidatos' : 'empresas';
+        const usersJson = localStorage.getItem(userKey);
+        return usersJson ? JSON.parse(usersJson) : [];
+    }
+
+    private setUsuarioLogado(usuario: Usuario): void {
+        localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+    }
 }
 
-export default usuarioService;
+export default UsuarioService;

@@ -1,20 +1,21 @@
-class LocalStorageService{
+class LocalStorageService<T> {
     private key: string;
 
     constructor(key: string) {
         this.key = key;
     }
 
-    salvarDados(dados: any): void {
-        localStorage.setItem(this.key, JSON.stringify(dados));
+    salvarDados(dados: T[]): void {
+        const dadosJSON = JSON.stringify(dados);
+        localStorage.setItem(this.key, dadosJSON);
     }
 
-    carregarDados(): any {
+    carregarDados(): T[] | [] {
         const dadosJSON = localStorage.getItem(this.key);
         if (dadosJSON) {
-            return JSON.parse(dadosJSON);
+            return JSON.parse(dadosJSON) as T[];
         }
-        return null;
+        return [];
     }
 }
 

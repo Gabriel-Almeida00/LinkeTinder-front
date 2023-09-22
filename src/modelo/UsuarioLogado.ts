@@ -1,11 +1,11 @@
-import tipoUsuario from "./enum/tipoUsuario";
+import TipoUsuario from "./enum/tipoUsuario";
 
 class Usuario {
     nome: string;
     email: string;
-    userType: tipoUsuario;
+    userType: TipoUsuario;
     
-    constructor(nome: string, email:string, userType: tipoUsuario) {
+    constructor(nome: string, email:string, userType: TipoUsuario) {
         this.nome = nome;
         this.email = email;
         this.userType = userType;

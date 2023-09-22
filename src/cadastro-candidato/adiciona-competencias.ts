@@ -17,7 +17,7 @@ if (adicionarCompetenciaButton && listaCompetencias) {
         const nivelCompetenciaSelect = document.getElementById('nivelCompetencia') as HTMLSelectElement;
 
         const nomeCompetencia = nomeCompetenciaInput.value;
-        const nivelCompetencia = nivelCompetenciaSelect.value as NivelCompetencia; // Use o enum NivelCompetencia
+        const nivelCompetencia = nivelCompetenciaSelect.value as NivelCompetencia; 
 
         if (nomeCompetencia && nivelCompetencia) {
             const novaCompetencia = document.createElement('li');
@@ -25,7 +25,7 @@ if (adicionarCompetenciaButton && listaCompetencias) {
             listaCompetencias.appendChild(novaCompetencia);
 
             nomeCompetenciaInput.value = '';
-            nivelCompetenciaSelect.value = nivelCompetencia; // Defina o valor padrão diretamente usando a variável nivelCompetencia
+            nivelCompetenciaSelect.value = nivelCompetencia; 
         }
     });
 }

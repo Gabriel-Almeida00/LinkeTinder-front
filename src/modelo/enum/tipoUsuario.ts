@@ -1,6 +1,6 @@
-enum tipoUsuario {
+enum TipoUsuario {
     Candidato = 'candidato',
     Empresa = 'empresa'
 }
 
-export default tipoUsuario;
+export default TipoUsuario;

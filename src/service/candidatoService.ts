@@ -1,14 +1,19 @@
 import Candidato from "../modelo/candidato";
-import CandidatoDTO from "../modelo/dto/candidatoDTO";
+import Competencia from "../modelo/competencia";
 import Vaga from "../modelo/vaga";
+
+import NivelExperiencia from "../modelo/enum/nivelExperiencia";
+import NivelFormacao from "../modelo/enum/nivelFormacao";
+
+import CandidatoDTO from "../modelo/dto/candidatoDTO";
 import localStorageService from "./localStorageService";
 
 class CandidatoService {
     private candidatos: Candidato[] = [];
-    private localStorageService: localStorageService;
+    private localStorageService: localStorageService<Candidato>;
 
     constructor() {
-        this.localStorageService = new localStorageService('candidatos');
+        this.localStorageService = new localStorageService<Candidato>('candidatos');
         this.carregarCandidatosDoLocalStorage();
     }
 
@@ -18,7 +23,7 @@ class CandidatoService {
 
     private carregarCandidatosDoLocalStorage(): void {
         const candidatos = this.localStorageService.carregarDados();
-        if (candidatos) {
+        if (candidatos.length > 0) {
             this.candidatos = candidatos;
         }
     }
@@ -42,38 +47,52 @@ class CandidatoService {
         this.salvarCandidatosNoLocalStorage();
     }
 
-    calcularAfinidadeCandidatoComVaga(candidato: CandidatoDTO, vagas: Vaga[]): number {
-        let totalAfinidade = 0;
 
-        vagas.forEach(vaga => {
-            let afinidade = 0;
-    
-            vaga.requisitos.forEach(requisito => {
-                const competenciaCandidato = candidato.competencias.find(competencia => competencia.nome === requisito.nome);
-                if (competenciaCandidato && competenciaCandidato.nivel === requisito.nivel) {
-                    afinidade += 3; 
-                }
-            });
-    
-            const experienciaCandidato = candidato.experiencias.find(experiencia => experiencia.nivel === vaga.experienciaMinima);
-            if (experienciaCandidato) {
+     calcularAfinidadeCompetencias(candidato: CandidatoDTO, requisitos: Competencia[]): number {
+        let afinidade = 0;
+        requisitos.forEach(requisito => {
+            const competenciaCandidato = candidato.competencias.find(competencia => competencia.nome === requisito.nome);
+            if (competenciaCandidato && competenciaCandidato.nivel === requisito.nivel) {
                 afinidade += 3;
             }
-    
-            const formacaoCandidato = candidato.formacoes.find(formacao => formacao.nivel === vaga.formacaoMinima);
-            if (formacaoCandidato) {
-                afinidade += 3;
-            }
-    
-            const maxAfinidade = (3 * vaga.requisitos.length) + 3 + 3; 
-            const afinidadePercentual = (afinidade / maxAfinidade) * 100;
-    
-            totalAfinidade += afinidadePercentual;
         });
+        return afinidade;
+    }
+    
+     calcularAfinidadeExperiencia(candidato: CandidatoDTO, nivelExperiencia: NivelExperiencia): number {
+        const experienciaCandidato = candidato.experiencias.find(experiencia => experiencia.nivel === nivelExperiencia);
+        return experienciaCandidato ? 3 : 0;
+    }
+    
+     calcularAfinidadeFormacao(candidato: CandidatoDTO, nivelFormacao: NivelFormacao): number {
+        const formacaoCandidato = candidato.formacoes.find(formacao => formacao.nivel === nivelFormacao);
+        return formacaoCandidato ? 3 : 0;
+    }
+    
+     calcularAfinidadeVaga(candidato: CandidatoDTO, vaga: Vaga): number {
+        const afinidadeCompetencias = this.calcularAfinidadeCompetencias(candidato, vaga.requisitos);
+        const afinidadeExperiencia = this.calcularAfinidadeExperiencia(candidato, vaga.experienciaMinima);
+        const afinidadeFormacao = this.calcularAfinidadeFormacao(candidato, vaga.formacaoMinima);
+    
+        const maxAfinidade = (3 * vaga.requisitos.length) + 3 + 3;
+        const afinidadeTotal = afinidadeCompetencias + afinidadeExperiencia + afinidadeFormacao;
+        const afinidadePercentual = (afinidadeTotal / maxAfinidade) * 100;
+    
+        return afinidadePercentual;
+    }
+    
+     calcularAfinidadeCandidatoComVaga(candidato: CandidatoDTO, vagas: Vaga[]): number {
+        if (vagas.length === 0) {
+            return 0;
+        }
+    
+        const totalAfinidade = vagas.reduce((acumulador, vaga) => {
+            const afinidadeVaga = this.calcularAfinidadeVaga(candidato, vaga);
+            return acumulador + afinidadeVaga;
+        }, 0);
     
         return totalAfinidade / vagas.length;
     }
-
     
 }
 

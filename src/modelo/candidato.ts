@@ -2,7 +2,7 @@ import Competencia from './competencia';
 import Experiencia from './experiencia';
 import Formacao from './formacao';
 
-class Candidato {
+class Candidato  {
   nome: string;
   email: string;
   cep: string;

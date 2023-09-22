@@ -7,17 +7,24 @@ import NivelFormacao from "../modelo/enum/nivelFormacao";
 import Chart from 'chart.js/auto';
 import Formacao from "../modelo/formacao";
 import Experiencia from "../modelo/experiencia";
-import usuarioService from "../service/usuarioService";
+import UsuarioService from "../service/usuarioService";
+import CandidatoDTO from "../modelo/dto/candidatoDTO";
+import Vaga from "../modelo/vaga";
 
 
 export class CandidatoUI {
     private candidatoService: CandidatoService;
-    usuarioService: usuarioService;
+    private usuarioService: UsuarioService;
 
-    constructor() {
-        this.candidatoService = new CandidatoService();
-        this.usuarioService = new usuarioService();
+    constructor(candidatoService: CandidatoService, usuarioService: UsuarioService) {
+        this.candidatoService = candidatoService;
+        this.usuarioService = usuarioService;
+        
+        this.setupEventListeners();
+        this.onDOMContentLoaded();
+    }
 
+    private setupEventListeners(): void {
         const cadastrarButton = document.getElementById('cadastrar-candidato-button');
 
         if (cadastrarButton) {
@@ -25,7 +32,9 @@ export class CandidatoUI {
                 this.cadastrarCandidato();
             });
         }
+    }
 
+    private onDOMContentLoaded(): void {
         document.addEventListener('DOMContentLoaded', () => {
             this.listarCandidatos();
             const dadosCompetencias = this.obterContagemCompetencias();
@@ -33,8 +42,32 @@ export class CandidatoUI {
             this.associarEventosInformacoesCandidato();
         });
     }
-
-    cadastrarCandidato(): void {
+    private validarCPF(cpf: string): boolean {
+        const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+        return cpfRegex.test(cpf);
+    }
+    
+    private validarNome(nome: string): boolean {
+        const nomeRegex = /^[a-zA-Z\s]+$/;
+        return nomeRegex.test(nome);
+    }
+    
+    private validarEmail(email: string): boolean {
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return emailRegex.test(email);
+    }
+    
+    private validarTelefone(telefone: string): boolean {
+        const telefoneRegex = /^(\(?\d{2}\)?\s?)?(\d{4,5}-?\d{4})$/;
+        return telefoneRegex.test(telefone);
+    }
+    
+    private validarLinkedin(linkedin: string): boolean {
+        const linkedinRegex = /^https:\/\/www\.linkedin\.com\/in\/[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=]+$/;
+        return linkedinRegex.test(linkedin);
+    }
+    
+    private obterValoresDosCampos(): Candidato | null {
         const nomeInput = document.getElementById('nome') as HTMLInputElement;
         const emailInput = document.getElementById('email') as HTMLInputElement;
         const cepInput = document.getElementById('cep') as HTMLInputElement;
@@ -43,44 +76,24 @@ export class CandidatoUI {
         const estadoInput = document.getElementById('estado') as HTMLInputElement;
         const descricaoInput = document.getElementById('descricao') as HTMLInputElement;
         const telefoneInput = document.getElementById('telefone') as HTMLInputElement;
-        const LinkedlnInput = document.getElementById('linkedin') as HTMLInputElement;
-
+        const linkedinInput = document.getElementById('linkedin') as HTMLInputElement;
+    
+        if (
+            !this.validarCPF(cpfInput.value) ||
+            !this.validarNome(nomeInput.value) ||
+            !this.validarEmail(emailInput.value) ||
+            !this.validarTelefone(telefoneInput.value) ||
+            !this.validarLinkedin(linkedinInput.value)
+        ) {
+            alert('Por favor, preencha os campos corretamente.');
+            return null;
+        }
+    
         const competencias: Competencia[] = this.obterCompetencias();
-        const formacoes: Formacao[] = this.obterFormacoes(); 
+        const formacoes: Formacao[] = this.obterFormacoes();
         const experiencias: Experiencia[] = this.obterExperiencias();
-
-        const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-        const nomeRegex = /^[a-zA-Z\s]+$/;
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        const telefoneRegex = /^(\(?\d{2}\)?\s?)?(\d{4,5}-?\d{4})$/;
-        const linkedinRegex = /^https:\/\/www\.linkedin\.com\/in\/[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=]+$/;
-
-
-        if (!cpfRegex.test(cpfInput.value)) {
-            alert('CPF inválido');
-            return;
-        }
-
-        if (!nomeRegex.test(nomeInput.value)) {
-            alert('Nome inválido');
-            return;
-        }
-
-        if (!emailRegex.test(emailInput.value)) {
-            alert('E-mail inválido');
-            return;
-        }
-        if (!telefoneRegex.test(telefoneInput.value)) {
-            alert('Telefone inválido')
-            return;
-        }
-        
-        if (!linkedinRegex.test(LinkedlnInput.value)) {
-            alert('Link inválido')
-            return;
-        }
-
-        const novoCandidato = new Candidato(
+    
+        return new Candidato(
             nomeInput.value,
             emailInput.value,
             cepInput.value,
@@ -88,47 +101,43 @@ export class CandidatoUI {
             parseInt(idadeInput.value),
             estadoInput.value,
             parseInt(telefoneInput.value),
-            LinkedlnInput.value,
+            linkedinInput.value,
             descricaoInput.value,
             competencias,
             formacoes,
             experiencias
         );
-
-        this.candidatoService.cadastrarCandidato(novoCandidato);
-
-        nomeInput.value = '';
-        emailInput.value = '';
-        cepInput.value = '';
-        cpfInput.value = '';
-        idadeInput.value = '';
-        estadoInput.value = '';
-        descricaoInput.value = '';
-
-       
-        window.location.href = '../../paginas/login/login.html';
     }
+    
+    public cadastrarCandidato(): void {
+        const novoCandidato = this.obterValoresDosCampos();
+        
+        if (novoCandidato) {
+            this.candidatoService.cadastrarCandidato(novoCandidato);
+            this.limparCamposDoFormulario();
+            window.location.href = '../../paginas/login/login.html';
+        }
+    }
+    
+    private limparCamposDoFormulario(): void {
+        const camposParaLimpar = ['nome', 'email', 'cep', 'cpf', 'idade', 'estado', 'descricao', 'telefone', 'linkedin'];
+        
+        camposParaLimpar.forEach((campo) => {
+            const elemento = document.getElementById(campo) as HTMLInputElement;
+            elemento.value = '';
+        });
+    }
+    
 
     private obterFormacoes(): Formacao[] {
         const formacoes: Formacao[] = [];
         const listaFormacoes = document.getElementById('lista-formacoes') as HTMLUListElement;
     
         const itensFormacoes = listaFormacoes.querySelectorAll('li');
-    
+        
         itensFormacoes.forEach(item => {
-            const textoFormacao = item.textContent || '';
-            const partes = textoFormacao.split(' - ');
-    
-            if (partes.length === 4) {
-                const curso = partes[0];
-                const faculdade = partes[1];
-                const nivelTexto = partes[2];
-                
-                const nivel = NivelFormacao[nivelTexto as keyof typeof NivelFormacao] || NivelFormacao.Graduacao;
-    
-                const anoConclusao = parseInt(partes[3]);
-    
-                const formacao = new Formacao(curso, faculdade, nivel, anoConclusao);
+            const formacao = this.parseFormacao(item.textContent || '');
+            if (formacao) {
                 formacoes.push(formacao);
             }
         });
@@ -136,25 +145,28 @@ export class CandidatoUI {
         return formacoes;
     }
     
+    private parseFormacao(textoFormacao: string): Formacao | null {
+        const partes = textoFormacao.split(' - ');
+    
+        if (partes.length !== 4) {
+            return null;
+        }
+    
+        const [curso, faculdade, nivelTexto, anoConclusaoStr] = partes;
+        const nivel = NivelFormacao[nivelTexto as keyof typeof NivelFormacao] || NivelFormacao.Graduacao;
+        const anoConclusao = parseInt(anoConclusaoStr);
+    
+        return new Formacao(curso, faculdade, nivel, anoConclusao);
+    }
     
     private obterExperiencias(): Experiencia[] {
         const experiencias: Experiencia[] = [];
         const listaExperiencias = document.getElementById('lista-experiencias') as HTMLUListElement;
-    
         const itensExperiencias = listaExperiencias.querySelectorAll('li');
-    
+        
         itensExperiencias.forEach(item => {
-            const textoExperiencia = item.textContent || '';
-            const partes = textoExperiencia.split(' - ');
-    
-            if (partes.length === 3) {
-                const cargo = partes[0];
-                const empresa = partes[1];
-    
-                const nivelTexto = partes[2]; 
-                const nivel = NivelExperiencia[nivelTexto as keyof typeof NivelExperiencia] || NivelExperiencia.Junior;
-    
-                const experiencia = new Experiencia(cargo, empresa, nivel);
+            const experiencia = this.parseExperienciaFromItem(item);
+            if (experiencia) {
                 experiencias.push(experiencia);
             }
         });
@@ -162,27 +174,32 @@ export class CandidatoUI {
         return experiencias;
     }
     
+    private parseExperienciaFromItem(item: Element): Experiencia | null {
+        const textoExperiencia = item.textContent || '';
+        const partes = textoExperiencia.split(' - ');
+    
+        if (partes.length !== 3) {
+            return null; 
+        }
+    
+        const cargo = partes[0];
+        const empresa = partes[1];
+        const nivelTexto = partes[2];
+        
+        const nivel = NivelExperiencia[nivelTexto as keyof typeof NivelExperiencia] || NivelExperiencia.Junior;
+        
+        return new Experiencia(cargo, empresa, nivel);
+    }
     
     
-
     private obterCompetencias(): Competencia[] {
         const competencias: Competencia[] = [];
         const listaCompetencias = document.getElementById('lista-competencias') as HTMLUListElement;
-    
         const itensCompetencias = listaCompetencias.querySelectorAll('li');
-    
+        
         itensCompetencias.forEach(item => {
-            const textoCompetencia = item.textContent || '';
-            const partes = textoCompetencia.split(' - ');
-    
-            if (partes.length === 2) {
-                const nome = partes[0];
-                const nivelTexto = partes[1];
-                
-               
-                const nivel = NivelCompetencia[nivelTexto as keyof typeof NivelCompetencia] || NivelCompetencia.Basico;
-    
-                const competencia = new Competencia(nome, nivel);
+            const competencia = this.parseCompetenciaFromItem(item);
+            if (competencia) {
                 competencias.push(competencia);
             }
         });
@@ -190,74 +207,125 @@ export class CandidatoUI {
         return competencias;
     }
     
-
+    private parseCompetenciaFromItem(item: Element): Competencia | null {
+        const textoCompetencia = item.textContent || '';
+        const partes = textoCompetencia.split(' - ');
+    
+        if (partes.length !== 2) {
+            return null; 
+        }
+    
+        const nome = partes[0];
+        const nivelTexto = partes[1];
+        
+        const nivel = NivelCompetencia[nivelTexto as keyof typeof NivelCompetencia] || NivelCompetencia.Basico;
+    
+        return new Competencia(nome, nivel);
+    }
+    
+    
     listarCandidatos(): void {
-        const candidatosDTO= this.candidatoService.listarCandidatosDTO();
+        const candidatosDTO = this.candidatoService.listarCandidatosDTO();
         const listaCandidatos = document.getElementById('lista-candidatos') as HTMLUListElement;
     
         listaCandidatos.innerHTML = '';
     
         candidatosDTO.forEach((candidatoDTO, index) => {
-            const li = document.createElement('li');
-            li.setAttribute("class", "candidato-item"); 
-            li.setAttribute("data-index", index.toString()); 
-    
-          
-            const empresaLogada = this.usuarioService.obterEmpresaLogado();
-            if (empresaLogada) {
-                let afinidadesHtml = '';
-                empresaLogada.vagas.forEach(vaga => {
-                    const afinidade = this.candidatoService.calcularAfinidadeCandidatoComVaga(candidatoDTO, [vaga]);
-                    afinidadesHtml += `<p>Afinidade com ${vaga.nome}: ${afinidade.toFixed(2)}%</p>`;
-                });
-    
-                li.innerHTML = `
-                    <div class="informacoes-candidato hidden">
-                        <p class="formacao-candidato">Formação: ${candidatoDTO.formacoes.map(formacao => `${formacao.curso} - ${formacao.instituicao}`).join(', ')}</p>
-                        <p class="experiencia-candidato">Experiência: ${candidatoDTO.experiencias.map(experiencia => `${experiencia.cargo} - ${experiencia.empresa}`).join(', ')}</p>
-                        ${afinidadesHtml}
-                    </div>
-                    <br>
-                    <strong>Descrição Pessoal:</strong> ${candidatoDTO.descricaoPessoal}<br>
-                    <strong>Competências:</strong> ${candidatoDTO.competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(', ')}
-                `;
-            } 
-    
+            const li = this.criarCandidatoElement(candidatoDTO, index);
             listaCandidatos.appendChild(li);
         });
     }
     
+    private criarCandidatoElement(candidatoDTO: CandidatoDTO, index: number): HTMLElement {
+        const li = document.createElement('li');
+        li.setAttribute("class", "candidato-item");
+        li.setAttribute("data-index", index.toString());
     
-
+        const empresaLogada = this.usuarioService.obterEmpresaLogado();
+        if (empresaLogada) {
+            const afinidadesHtml = this.obterAfinidadesHtml(candidatoDTO, empresaLogada.vagas);
+            const informacoesCandidatoHtml = this.obterInformacoesCandidatoHtml(candidatoDTO);
+    
+            li.innerHTML = `
+                <div class="informacoes-candidato hidden">
+                    ${informacoesCandidatoHtml}
+                    ${afinidadesHtml}
+                </div>
+                <br>
+                <strong>Descrição Pessoal:</strong> ${candidatoDTO.descricaoPessoal}<br>
+                <strong>Competências:</strong> ${this.obterCompetenciasTexto(candidatoDTO.competencias)}
+            `;
+        }
+    
+        return li;
+    }
+    
+    private obterAfinidadesHtml(candidatoDTO: CandidatoDTO, vagas: Vaga[]): string {
+        let afinidadesHtml = '';
+        vagas.forEach(vaga => {
+            const afinidade = this.candidatoService.calcularAfinidadeCandidatoComVaga(candidatoDTO, [vaga]);
+            afinidadesHtml += `<p>Afinidade com ${vaga.nome}: ${afinidade.toFixed(2)}%</p>`;
+        });
+        return afinidadesHtml;
+    }
+    
+    private obterInformacoesCandidatoHtml(candidatoDTO: CandidatoDTO): string {
+        return `
+            <p class="formacao-candidato">Formação: ${this.obterFormacoesTexto(candidatoDTO.formacoes)}</p>
+            <p class="experiencia-candidato">Experiência: ${this.obterExperienciasTexto(candidatoDTO.experiencias)}</p>
+        `;
+    }
+    
+    private obterFormacoesTexto(formacoes: Formacao[]): string {
+        return formacoes.map(formacao => `${formacao.curso} - ${formacao.instituicao}`).join(', ');
+    }
+    
+    private obterExperienciasTexto(experiencias: Experiencia[]): string {
+        return experiencias.map(experiencia => `${experiencia.cargo} - ${experiencia.empresa}`).join(', ');
+    }
+    
+    private obterCompetenciasTexto(competencias: Competencia[]): string {
+        return competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(', ');
+    }
+    
+    
     associarEventosInformacoesCandidato() {
         const listaCandidatos = document.getElementById("lista-candidatos");
-        const candidatosInfos = this.candidatoService.listarCandidatosDTO(); 
-
+        const candidatosInfos = this.candidatoService.listarCandidatosDTO();
+    
         if (listaCandidatos) {
             listaCandidatos.addEventListener("mouseover", (event) => {
-                const candidatoItem = this.encontrarCandidatoItem(event.target as HTMLElement);
-                if (candidatoItem) {
-                    const index = parseInt(candidatoItem.getAttribute("data-index") || "");
-                    const candidatoInfo = candidatosInfos[index];
-
-                    if (candidatoInfo) {
-                        const informacoesCandidato = candidatoItem.querySelector(".informacoes-candidato");
-                        if (informacoesCandidato) {
-                            informacoesCandidato.classList.remove("hidden");
-                        }
-                    }
-                }
+                this.mostrarInformacoesCandidato(event, candidatosInfos);
             });
-
+    
             listaCandidatos.addEventListener("mouseout", (event) => {
-                const candidatoItem = this.encontrarCandidatoItem(event.target as HTMLElement);
-                if (candidatoItem) {
-                    const informacoesCandidato = candidatoItem.querySelector(".informacoes-candidato");
-                    if (informacoesCandidato) {
-                        informacoesCandidato.classList.add("hidden");
-                    }
-                }
+                this.ocultarInformacoesCandidato(event);
             });
+        }
+    }
+    
+    mostrarInformacoesCandidato(event: MouseEvent, candidatosInfos: CandidatoDTO[]) {
+        const candidatoItem = this.encontrarCandidatoItem(event.target as HTMLElement);
+        if (candidatoItem) {
+            const index = parseInt(candidatoItem.getAttribute("data-index") || "");
+            const candidatoInfo = candidatosInfos[index];
+    
+            if (candidatoInfo) {
+                const informacoesCandidato = candidatoItem.querySelector(".informacoes-candidato");
+                if (informacoesCandidato) {
+                    informacoesCandidato.classList.remove("hidden");
+                }
+            }
+        }
+    }
+    
+    ocultarInformacoesCandidato(event: MouseEvent) {
+        const candidatoItem = this.encontrarCandidatoItem(event.target as HTMLElement);
+        if (candidatoItem) {
+            const informacoesCandidato = candidatoItem.querySelector(".informacoes-candidato");
+            if (informacoesCandidato) {
+                informacoesCandidato.classList.add("hidden");
+            }
         }
     }
 
@@ -271,7 +339,6 @@ export class CandidatoUI {
         return null;
     }
     
-
     obterContagemCompetencias(): { [competencia: string]: number } {
         const competenciasCount: { [competencia: string]: number } = {};
     
@@ -295,8 +362,7 @@ export class CandidatoUI {
             return;
         }
     
-        const labels = Object.keys(dadosCompetencias);
-        const data = Object.values(dadosCompetencias);
+        const { labels, data } = this.obterDadosGrafico(dadosCompetencias);
     
         const ctx = canvas.getContext('2d');
         if (!ctx) {
@@ -304,6 +370,16 @@ export class CandidatoUI {
             return;
         }
     
+        this.inicializarGrafico(ctx, labels, data);
+    }
+    
+    obterDadosGrafico(dadosCompetencias: { [competencia: string]: number }): { labels: string[], data: number[] } {
+        const labels = Object.keys(dadosCompetencias);
+        const data = Object.values(dadosCompetencias);
+        return { labels, data };
+    }
+    
+    inicializarGrafico(ctx: CanvasRenderingContext2D, labels: string[], data: number[]): void {
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -320,13 +396,10 @@ export class CandidatoUI {
                 scales: {
                     y: {
                         beginAtZero: true,
-                   
                     }
                 }
             }
         });
-    }
-    
+    }    
 }
-
 export default CandidatoUI;
