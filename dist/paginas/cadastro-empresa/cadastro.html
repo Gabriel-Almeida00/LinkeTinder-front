@@ -8,13 +8,14 @@
 </head>
 <body>
     <div class="container">
-        <div class="form-container">
-            <div class="logo-container">
-                <img src="../../imgs/vista-lateral-de-uma-mulher-sorridente-trabalhando-com-um-laptop-no-escritorio.jpg" alt="Logo da Empresa">
-            </div>
-            <div class="form-content">
-                <form class="cadastro-form">
-                    <!-- Parte 1: Informações da Empresa -->
+        <header>
+            <h1>Cadastro de Empresas</h1>
+        </header>
+        <main>
+            <form class="cadastro-form">
+                <!-- Parte 1: Informações da Empresa -->
+                <div class="form-section">
+                    <h2>Informações da Empresa</h2>
                     <div class="input-group">
                         <div class="input-block">
                             <label for="nomeEmpresa" class="form-label">Nome da Empresa</label>
@@ -49,83 +50,13 @@
                         <label for="descricaoEmpresa" class="form-label">Descrição da Empresa</label>
                         <textarea id="descricaoEmpresa" class="form-textarea"></textarea>
                     </div>
-                    
-                    <!-- Parte 2: Vagas -->
-                    <div class="form-section">
-                        <h2>Vagas</h2>
-                        <div class="vagas-container">
-                            <div class="vaga-form">
-                                <div class="input-group">
-                                    <div class="input-block">
-                                        <label for="nomeVaga" class="form-label">Nome da Vaga</label>
-                                        <input type="text" id="nomeVaga" class="form-input" required>
-                                    </div>
-                                    <div class="input-block">
-                                        <label for="descricaoVaga" class="form-label">Descrição da Vaga</label>
-                                        <textarea id="descricaoVaga" class="form-textarea"></textarea>
-                                    </div>
-                                </div>
-                                <div class="competencias-vaga">
-                                    <h3>Competências da Vaga</h3>
-                                    <ul id="lista-competencias-vaga"></ul>
-                                    <div class="input-group">
-                                        <div class="input-block">
-                                            <label for="nomeCompetenciaVaga" class="form-label"></label>
-                                            <input type="text" id="nomeCompetenciaVaga" class="form-input" required>
-                                        </div>
-                                        <div class="input-block">
-                                            <label for="nivelCompetenciaVaga" class="form-label"></label>
-                                            <select id="nivelCompetenciaVaga" class="form-input">
-                                                <option value="Basico">Básico</option>
-                                                <option value="Intermediario">Intermediário</option>
-                                                <option value="Avancado">Avançado</option>
-                                            </select>
-                                            
-                                        </div>
-                                    </div>
-                                    <button type="button" id="adicionar-competencia-vaga" class="add-button">Adicionar Competência</button>
-                                </div>
-                                <button type="button" id="adicionar-vaga" class="add-button">Adicionar Vaga</button>
-                            </div>
-
-                            <div class="input-group">
-                                <div class="input-block">
-                                    <label for="nivelExperienciaVaga" class="form-label">Nível de Experiência</label>
-                                    <select id="nivelExperienciaVaga" class="form-input">
-                                        <option value="Estagio">Estágio</option>
-                                        <option value="Junior">Júnior</option>
-                                        <option value="Pleno">Pleno</option>
-                                        <option value="Senior">Sênior</option>
-                                        <option value="Gerente">Gerente</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="input-block">
-                                    <label for="nivelFormacaoVaga" class="form-label">Nível de Formação</label>
-                                    <select id="nivelFormacaoVaga" class="form-input">
-                                        <option value="Graduacao">Graduação</option>
-                                        <option value="PosGraduacao">Pós-Graduação</option>
-                                        <option value="Mestrado">Mestrado</option>
-                                        <option value="Doutorado">Doutorado</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-
-                            <div class="vagas-adicionadas">
-                                <h3>Vagas Adicionadas:</h3>
-                                <ul id="lista-vagas"></ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="button-container">
-                        <button onclick="history.back()" class="back-button">Voltar</button>
-                        <button id="cadastrar-empresa-button" type="button"  class="submit-button">Cadastrar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                </div>
+                <div class="button-container">
+                    <button onclick="history.back()" class="back-button">Voltar</button>
+                    <button id="cadastrar-empresa-button" type="button" class="submit-button">Cadastrar</button>
+                </div>
+            </form>
+        </main>
     </div>
     <script src="/dist/app.min.js"></script>
 </body>
