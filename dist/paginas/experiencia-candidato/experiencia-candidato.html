@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="formacao-candidato.css">
-    <title>Formações do Candidato</title>
+    <link rel="stylesheet" href="experiencia-candidato.css">
+    <title>Experiências do Candidato</title>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Formações do Candidato</h1>
+            <h1>Experiências do Candidato</h1>
         </header>
         <nav>
             <ul class="menu">
@@ -22,27 +22,26 @@
         </nav>
         <main>
             <form class="perfil-form">
-                <!-- Parte 1: Informações Pessoais -->
-                <!-- ... (seu código de informações pessoais) ... -->
+                <!-- ... (outras seções de informações pessoais) ... -->
                 
-                <!-- Parte 3: Formações -->
+                <!-- Parte 3: Experiências -->
                 <div class="form-section">
-                    <h2>Formações</h2>
-                    <table id="formacoes-table">
+                    <h2>Experiências</h2>
+                    <table id="experiencias-table">
                         <thead>
                             <tr>
-                                <th>Instituição</th>
-                                <th>Curso</th>
-                                <th>Nível</th>
+                                <th>Nome do Cargo</th>
+                                <th>Nome da Empresa</th>
+                                <th>Nível de Experiência</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="formacoes-list">
-                            <!-- Aqui serão inseridas as formações dinamicamente -->
+                        <tbody id="experiencias-list">
+                            <!-- Aqui serão inseridas as experiências dinamicamente -->
                             <tr>
-                                <td>Nome da Instituição</td>
-                                <td>Nome do Curso</td>
-                                <td>Graduação</td>
+                                <td>Cargo 1</td>
+                                <td>Empresa 1</td>
+                                <td>Sênior</td>
                                 <td>
                                     <button class="editar-button">Editar</button>
                                     <button class="excluir-button">Excluir</button>
@@ -53,23 +52,24 @@
                     </table>
                     <div class="input-group">
                         <div class="input-block">
-                            <label for="instituicaoFormacao" class="form-label">Nome da Instituição</label>
-                            <input type="text" id="instituicaoFormacao" class="form-input" required>
+                            <label for="cargoExperiencia" class="form-label">Nome do Cargo</label>
+                            <input type="text" id="cargoExperiencia" class="form-input" required>
                         </div>
                         <div class="input-block">
-                            <label for="cursoFormacao" class="form-label">Nome do Curso</label>
-                            <input type="text" id="cursoFormacao" class="form-input" required>
+                            <label for="empresaExperiencia" class="form-label">Nome da Empresa</label>
+                            <input type="text" id="empresaExperiencia" class="form-input" required>
                         </div>
                         <div class="input-block">
-                            <label for="nivelFormacao" class="form-label">Nível</label>
-                            <select id="nivelFormacao" class="form-input">
-                                <option value="Graduação">Graduação</option>
-                                <option value="Pós-graduação">Pós-graduação</option>
-                                <option value="Mestrado">Mestrado</option>
-                                <option value="Doutorado">Doutorado</option>
+                            <label for="nivelExperiencia" class="form-label">Nível de Experiência</label>
+                            <select id="nivelExperiencia" class="form-input">
+                                <option value="Estágio">Estágio</option>
+                                <option value="Júnior">Júnior</option>
+                                <option value="Pleno">Pleno</option>
+                                <option value="Sênior">Sênior</option>
+                                <option value="Gerente">Gerente</option>
                             </select>
                         </div>
-                        <button type="button" id="adicionar-formacao" class="add-button">Adicionar Formação</button>
+                        <button type="button" id="adicionar-experiencia" class="add-button">Adicionar Experiência</button>
                     </div>
                 </div>
                 <div class="button-container">

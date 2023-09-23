@@ -124,7 +124,6 @@ h2 {
     margin-top: 20px;
 }
 
-
 .submit-button,
 .back-button,
 .add-button,
@@ -159,4 +158,38 @@ h2 {
 .editar-button:hover,
 .excluir-button:hover {
     background-color: #999;
+}
+
+/* Estilos específicos para a tabela de Experiências */
+#experiencias-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#experiencias-table th,
+#experiencias-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+#experiencias-list tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#experiencias-list td {
+    vertical-align: middle;
+}
+
+/* Estilos para botões dentro da tabela */
+.editar-button,
+.excluir-button {
+    padding: 5px 10px;
+    margin: 0 5px;
+}
+
+/* Estilos para o formulário de adicionar Experiência */
+#adicionar-experiencia {
+    margin-top: 10px;
 }
