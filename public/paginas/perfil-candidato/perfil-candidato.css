@@ -1,4 +1,3 @@
-/* Reset de estilos */
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +9,27 @@ body {
     background-color: #f7f7f7;
 }
 
+.menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #007bff; 
+    padding: 5px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -17,8 +37,10 @@ body {
 }
 
 header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
     text-align: center;
-    margin-bottom: 20px;
 }
 
 h1 {
@@ -26,14 +48,39 @@ h1 {
     margin-bottom: 10px;
 }
 
-main {
+nav {
+    background-color: #007bff; 
+    color: #fff; 
+    padding: 10px;
+}
+
+.menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.perfil-form {
     background-color: white;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.vagas-section {
+.form-section {
     margin-bottom: 20px;
 }
 
@@ -42,32 +89,63 @@ h2 {
     margin-bottom: 10px;
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-li {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.input-block {
+    flex: 0 0 calc(50% - 10px);
     margin-bottom: 10px;
 }
 
-footer {
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-textarea {
+    height: 100px;
+}
+
+.button-container {
     text-align: center;
     margin-top: 20px;
 }
 
-a {
-    color: #007bff;
-    text-decoration: none;
+.submit-button,
+.back-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-a:hover {
-    text-decoration: underline;
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    margin-right: 10px;
 }
 
-.hidden  {
-    display: none;
+.back-button {
+    background-color: #ccc;
+    color: #333;
+}
+
+.submit-button:hover {
+    background-color: #0056b3; 
+}
+
+.back-button:hover {
+    background-color: #999; 
 }

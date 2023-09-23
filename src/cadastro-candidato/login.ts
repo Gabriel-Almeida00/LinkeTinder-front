@@ -33,7 +33,7 @@ function lidarComEnvioDeFormulario(event: Event) {
 
 function redirecionarParaPerfil(userType: TipoUsuario) {
     if (userType === TipoUsuario.Candidato) {
-        window.location.href = '../../paginas/perfil-candidato/perfil-candidato.html';
+        window.location.href = '../../paginas/vagas-cadastradas/vagas-cadastradas.html';
     } else if (userType === TipoUsuario.Empresa) {
         window.location.href = '../../paginas/perfil-empresa/perfil-empresa.html';
     }
