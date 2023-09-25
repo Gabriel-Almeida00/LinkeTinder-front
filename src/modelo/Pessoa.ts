@@ -23,8 +23,16 @@ class Pessoa {
         this.senha = senha;
     }
 
-    obterId(): number{
+    obterId(): number {
         return this.id
-       }
+    }
+
+    getNome(): string{
+        return this.nome
+    }
+
+    getDescricao(): string {
+        return this.descricao
+    }
 }
 export default Pessoa;

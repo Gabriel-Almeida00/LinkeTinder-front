@@ -18,6 +18,15 @@ class Formacao {
   obterId(): number {
     return this.id
   }
+  getNivel(): number {
+    return this.nivel
+  }
+  getInstituicao():string{
+    return this.instituicao
+  }
+  getCurso():string{
+    return this.curso
+  }
 }
 
 export default Formacao;

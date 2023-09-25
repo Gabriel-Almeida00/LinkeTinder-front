@@ -18,6 +18,9 @@ class Empresa extends Pessoa {
         this.cnpj = cnpj;
         this.vagas = [];
     }
+    getVagas():Vaga[]{
+        return this.vagas
+    }
 }
 
 export default Empresa;

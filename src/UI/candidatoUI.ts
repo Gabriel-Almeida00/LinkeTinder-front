@@ -1,15 +1,13 @@
 import Candidato from "../modelo/Candidato";
-import CandidatoService from "../service/candidatoService";
+import CandidatoService from "../service/CandidatoService";
 import Competencia from "../modelo/Competencia";
-import NivelCompetencia from "../modelo/enum/nivelCompetencia";
-import NivelExperiencia from "../modelo/enum/nivelExperiencia";
-import NivelFormacao from "../modelo/enum/nivelFormacao";
 import Chart from 'chart.js/auto';
 import Formacao from "../modelo/Formacao";
 import Experiencia from "../modelo/Experiencia";
 import UsuarioService from "../service/usuarioService";
 import CandidatoDTO from "../modelo/dto/CandidatoDTO";
 import Vaga from "../modelo/Vaga";
+import CandidatoCompetencia from "../modelo/CandidatoCompetencia";
 
 
 export class CandidatoUI {
@@ -70,15 +68,18 @@ export class CandidatoUI {
     
     private obterValoresDosCampos(): Candidato | null {
         const nomeInput = document.getElementById('nome') as HTMLInputElement;
+        const sobrenomeInput = document.getElementById('sobrenome') as HTMLInputElement;
+        const dataNascimentoInput = document.getElementById('dataNascimento') as HTMLInputElement;
         const emailInput = document.getElementById('email') as HTMLInputElement;
+        const paisInput = document.getElementById('pais') as HTMLInputElement;
         const cepInput = document.getElementById('cep') as HTMLInputElement;
         const cpfInput = document.getElementById('cpf') as HTMLInputElement;
-        const idadeInput = document.getElementById('idade') as HTMLInputElement;
-        const estadoInput = document.getElementById('estado') as HTMLInputElement;
         const descricaoInput = document.getElementById('descricao') as HTMLInputElement;
-        const telefoneInput = document.getElementById('telefone') as HTMLInputElement;
+        const senhaInput = document.getElementById('senha') as HTMLInputElement;
         const linkedinInput = document.getElementById('linkedin') as HTMLInputElement;
-    
+        const telefoneInput = document.getElementById('telefone') as HTMLInputElement;
+
+
         if (
             !this.validarCPF(cpfInput.value) ||
             !this.validarNome(nomeInput.value) ||
@@ -90,23 +91,21 @@ export class CandidatoUI {
             return null;
         }
     
-        const competencias: Competencia[] = this.obterCompetencias();
-        const formacoes: Formacao[] = this.obterFormacoes();
-        const experiencias: Experiencia[] = this.obterExperiencias();
+        const dataNascimentoValue = dataNascimentoInput.value;
+        const dataNascimento = new Date(dataNascimentoValue);
+
     
         return new Candidato(
-            nomeInput.value,
-            emailInput.value,
-            cepInput.value,
-            cpfInput.value,
-            parseInt(idadeInput.value),
-            estadoInput.value,
-            parseInt(telefoneInput.value),
-            linkedinInput.value,
-            descricaoInput.value,
-            competencias,
-            formacoes,
-            experiencias
+           nomeInput.value,
+           emailInput.value,
+           paisInput.value,
+           cepInput.value,
+           linkedinInput.value,
+           descricaoInput.value,
+           senhaInput.value,
+           sobrenomeInput.value,
+           dataNascimento,
+           cpfInput.value
         );
     }
     
@@ -129,101 +128,6 @@ export class CandidatoUI {
         });
     }
     
-
-    private obterFormacoes(): Formacao[] {
-        const formacoes: Formacao[] = [];
-        const listaFormacoes = document.getElementById('lista-formacoes') as HTMLUListElement;
-    
-        const itensFormacoes = listaFormacoes.querySelectorAll('li');
-        
-        itensFormacoes.forEach(item => {
-            const formacao = this.parseFormacao(item.textContent || '');
-            if (formacao) {
-                formacoes.push(formacao);
-            }
-        });
-    
-        return formacoes;
-    }
-    
-    private parseFormacao(textoFormacao: string): Formacao | null {
-        const partes = textoFormacao.split(' - ');
-    
-        if (partes.length !== 4) {
-            return null;
-        }
-    
-        const [curso, faculdade, nivelTexto, anoConclusaoStr] = partes;
-        const nivel = NivelFormacao[nivelTexto as keyof typeof NivelFormacao] || NivelFormacao.Graduacao;
-        const anoConclusao = parseInt(anoConclusaoStr);
-    
-        return new Formacao(curso, faculdade, nivel, anoConclusao);
-    }
-    
-    private obterExperiencias(): Experiencia[] {
-        const experiencias: Experiencia[] = [];
-        const listaExperiencias = document.getElementById('lista-experiencias') as HTMLUListElement;
-        const itensExperiencias = listaExperiencias.querySelectorAll('li');
-        
-        itensExperiencias.forEach(item => {
-            const experiencia = this.parseExperienciaFromItem(item);
-            if (experiencia) {
-                experiencias.push(experiencia);
-            }
-        });
-    
-        return experiencias;
-    }
-    
-    private parseExperienciaFromItem(item: Element): Experiencia | null {
-        const textoExperiencia = item.textContent || '';
-        const partes = textoExperiencia.split(' - ');
-    
-        if (partes.length !== 3) {
-            return null; 
-        }
-    
-        const cargo = partes[0];
-        const empresa = partes[1];
-        const nivelTexto = partes[2];
-        
-        const nivel = NivelExperiencia[nivelTexto as keyof typeof NivelExperiencia] || NivelExperiencia.Junior;
-        
-        return new Experiencia(cargo, empresa, nivel);
-    }
-    
-    
-    private obterCompetencias(): Competencia[] {
-        const competencias: Competencia[] = [];
-        const listaCompetencias = document.getElementById('lista-competencias') as HTMLUListElement;
-        const itensCompetencias = listaCompetencias.querySelectorAll('li');
-        
-        itensCompetencias.forEach(item => {
-            const competencia = this.parseCompetenciaFromItem(item);
-            if (competencia) {
-                competencias.push(competencia);
-            }
-        });
-    
-        return competencias;
-    }
-    
-    private parseCompetenciaFromItem(item: Element): Competencia | null {
-        const textoCompetencia = item.textContent || '';
-        const partes = textoCompetencia.split(' - ');
-    
-        if (partes.length !== 2) {
-            return null; 
-        }
-    
-        const nome = partes[0];
-        const nivelTexto = partes[1];
-        
-        const nivel = NivelCompetencia[nivelTexto as keyof typeof NivelCompetencia] || NivelCompetencia.Basico;
-    
-        return new Competencia(nome, nivel);
-    }
-    
     
     listarCandidatos(): void {
         const candidatosDTO = this.candidatoService.listarCandidatosDTO();
@@ -244,7 +148,7 @@ export class CandidatoUI {
     
         const empresaLogada = this.usuarioService.obterEmpresaLogado();
         if (empresaLogada) {
-            const afinidadesHtml = this.obterAfinidadesHtml(candidatoDTO, empresaLogada.vagas);
+            const afinidadesHtml = this.obterAfinidadesHtml(candidatoDTO, empresaLogada.getVagas());
             const informacoesCandidatoHtml = this.obterInformacoesCandidatoHtml(candidatoDTO);
     
             li.innerHTML = `
@@ -253,8 +157,8 @@ export class CandidatoUI {
                     ${afinidadesHtml}
                 </div>
                 <br>
-                <strong>Descrição Pessoal:</strong> ${candidatoDTO.descricaoPessoal}<br>
-                <strong>Competências:</strong> ${this.obterCompetenciasTexto(candidatoDTO.competencias)}
+                <strong>Descrição Pessoal:</strong> ${candidatoDTO.getDescricao()}<br>
+                <strong>Competências:</strong> ${this.obterCompetenciasTexto(candidatoDTO.getCompetencias())}
             `;
         }
     
@@ -265,28 +169,28 @@ export class CandidatoUI {
         let afinidadesHtml = '';
         vagas.forEach(vaga => {
             const afinidade = this.candidatoService.calcularAfinidadeCandidatoComVaga(candidatoDTO, [vaga]);
-            afinidadesHtml += `<p>Afinidade com ${vaga.nome}: ${afinidade.toFixed(2)}%</p>`;
+            afinidadesHtml += `<p>Afinidade com ${vaga.getNome()}: ${afinidade.toFixed(2)}%</p>`;
         });
         return afinidadesHtml;
     }
     
     private obterInformacoesCandidatoHtml(candidatoDTO: CandidatoDTO): string {
         return `
-            <p class="formacao-candidato">Formação: ${this.obterFormacoesTexto(candidatoDTO.formacoes)}</p>
-            <p class="experiencia-candidato">Experiência: ${this.obterExperienciasTexto(candidatoDTO.experiencias)}</p>
+            <p class="formacao-candidato">Formação: ${this.obterFormacoesTexto(candidatoDTO.getFormacoes())}</p>
+            <p class="experiencia-candidato">Experiência: ${this.obterExperienciasTexto(candidatoDTO.getExperiencias())}</p>
         `;
     }
     
     private obterFormacoesTexto(formacoes: Formacao[]): string {
-        return formacoes.map(formacao => `${formacao.curso} - ${formacao.instituicao}`).join(', ');
+        return formacoes.map(formacao => `${formacao.getCurso()} - ${formacao.getInstituicao()}`).join(', ');
     }
     
     private obterExperienciasTexto(experiencias: Experiencia[]): string {
-        return experiencias.map(experiencia => `${experiencia.cargo} - ${experiencia.empresa}`).join(', ');
+        return experiencias.map(experiencia => `${experiencia.getCargo()} - ${experiencia.getEmpresa()}`).join(', ');
     }
     
-    private obterCompetenciasTexto(competencias: Competencia[]): string {
-        return competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(', ');
+    private obterCompetenciasTexto(competencias: CandidatoCompetencia[]): string {
+        return competencias.map(comp => `${comp.getNivel()} `).join(', ');
     }
     
     
@@ -344,8 +248,8 @@ export class CandidatoUI {
         const competenciasCount: { [competencia: string]: number } = {};
     
         this.candidatoService.listarCandidatos().forEach(candidato => {
-            candidato.competencias.forEach(competencia => {
-                const nomeCompetencia = competencia.nome;
+            candidato.getCompetencias().forEach(competencia => {
+                const nomeCompetencia = competencia.getNivel();
                 if (!competenciasCount[nomeCompetencia]) {
                     competenciasCount[nomeCompetencia] = 0;
                 }

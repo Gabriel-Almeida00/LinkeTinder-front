@@ -3,8 +3,8 @@ import EmpresaUI from './UI/empresaUI';
 import './cadastro-candidato/adiciona-competencias';
 import './cadastro-candidato/adicionar-vagas';
 import './cadastro-candidato/login';
-import CandidatoService from './service/candidatoService';
-import EmpresaService from './service/empresaService';
+import CandidatoService from './service/CandidatoService';
+import EmpresaService from './service/EmpresaService';
 import UsuarioService from './service/usuarioService';
 
 

@@ -31,11 +31,12 @@ class EmpresaService {
 
     private converterVagaParaDTO(vaga: Vaga): VagaDTO {
         return new VagaDTO(
-            vaga.nome,
-            vaga.descricao,
-            vaga.experienciaMinima,
-            vaga.formacaoMinima,
-            vaga.requisitos
+            vaga.obterId(),
+            vaga.getNome(),
+            vaga.getDescricao(),
+            vaga.getFormacao(),
+            vaga.getExperiencia(),
+            vaga.getCompetencias()
         );
     }
     
@@ -43,7 +44,7 @@ class EmpresaService {
         const vagas: VagaDTO[] = [];
     
         this.empresas.forEach(empresa => {
-            empresa.vagas.forEach(vaga => {
+            empresa.getVagas().forEach(vaga => {
                 const vagaDTO = this.converterVagaParaDTO(vaga);
                 vagas.push(vagaDTO);
             });
@@ -70,7 +71,7 @@ class EmpresaService {
         const afinidadeExperiencia = this.calcularAfinidadeExperiencia(vaga, candidatoLogado);
         const afinidadeFormacao = this.calcularAfinidadeFormacao(vaga, candidatoLogado);
     
-        const maxAfinidade = (3 * vaga.requisitos.length) + 3 + 3;
+        const maxAfinidade = (3 * vaga.getVagas().length) + 3 + 3;
         const afinidadeTotal = afinidadeCompetencias + afinidadeExperiencia + afinidadeFormacao;
         const afinidadePercentual = (afinidadeTotal / maxAfinidade) * 100;
     
@@ -80,9 +81,10 @@ class EmpresaService {
     private calcularAfinidadeCompetencias(vaga: VagaDTO, candidato: Candidato): number {
         let afinidade = 0;
     
-        vaga.requisitos.forEach(requisito => {
-            const competenciaCandidato = candidato.competencias.find(competencia => competencia.nome === requisito.nome);
-            if (competenciaCandidato && competenciaCandidato.nivel === requisito.nivel) {
+        vaga.getVagas().forEach(requisito => {
+            const competenciaCandidato = candidato.getCompetencias().find(
+                competencia => competencia.getNivel() === requisito.getNivel());
+            if (competenciaCandidato && competenciaCandidato.getNivel() === requisito.getNivel()) {
                 afinidade += 3;
             }
         });
@@ -91,12 +93,14 @@ class EmpresaService {
     }
     
     private calcularAfinidadeExperiencia(vaga: VagaDTO, candidato: Candidato): number {
-        const experienciaCandidato = candidato.experiencias.find(experiencia => experiencia.nivel === vaga.experienciaMinima);
+        const experienciaCandidato = candidato.getExperiencias().find(
+            experiencia => experiencia.getNivel() === vaga.getExperiencia());
         return experienciaCandidato ? 3 : 0;
     }
     
     private calcularAfinidadeFormacao(vaga: VagaDTO, candidato: Candidato): number {
-        const formacaoCandidato = candidato.formacoes.find(formacao => formacao.nivel === vaga.formacaoMinima);
+        const formacaoCandidato = candidato.getFormacoes().find(
+            formacao => formacao.getNivel() === vaga.getFormacao());
         return formacaoCandidato ? 3 : 0;
     }
     

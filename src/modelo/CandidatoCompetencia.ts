@@ -1,4 +1,4 @@
-class CandidatoCompetencia{
+class CandidatoCompetencia {
     private id!: number;
     private idCandidato: number;
     private idCompetencia: number;
@@ -10,8 +10,14 @@ class CandidatoCompetencia{
         this.nivel = nivel;
     }
 
-    obterId(): number{
+    obterId(): number {
         return this.id
-       }
+    }
+
+    getNivel():number{
+        return this.nivel
+    }
+
+    
 }
 export default CandidatoCompetencia;

@@ -13,9 +13,19 @@ class Experiencia {
         this.nivel = nivel;
     }
 
-    obterId(): number{
+    obterId(): number {
         return this.id
-       }
+    }
+
+    getNivel(): number {
+        return this.nivel
+    }
+    getCargo():string{
+        return this.cargo
+    }
+    getEmpresa():string{
+        return this.empresa
+    }
 }
 
 export default Experiencia;

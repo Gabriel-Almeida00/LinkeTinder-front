@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="cadastro.css">
     <title>Cadastro de Candidato</title>
 </head>
+
 <body>
     <div class="container">
         <div class="form-container">
             <div class="logo-container">
-                <img src="../../imgs/vista-lateral-de-uma-mulher-sorridente-trabalhando-com-um-laptop-no-escritorio.jpg" alt="Logo do Linketinder">
+                <img src="../../imgs/vista-lateral-de-uma-mulher-sorridente-trabalhando-com-um-laptop-no-escritorio.jpg"
+                    alt="Logo do Linketinder">
             </div>
             <div class="form-content">
                 <form class="cadastro-form">
@@ -23,28 +26,38 @@
                                 <input type="text" id="nome" class="form-input" required>
                             </div>
                             <div class="input-block">
+                                <label for="sobrenome" class="form-label">Sobrenome</label>
+                                <input type="text" id="sobrenome" class="form-input" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-block">
+                                <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                                <input type="date" id="dataNascimento" class="form-input" required>
+                            </div>
+                            <div class="input-block">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" id="email" class="form-input" required>
                             </div>
                         </div>
                         <div class="input-group">
                             <div class="input-block">
-                                <label for="cep" class="form-label">CEP</label>
-                                <input type="text" id="cep" class="form-input">
+                                <label for="pais" class="form-label">País</label>
+                                <input type="text" id="pais" class="form-input">
                             </div>
                             <div class="input-block">
-                                <label for="cpf" class="form-label">CPF</label>
-                                <input type="text" id="cpf" class="form-input">
+                                <label for="cep" class="form-label">CEP</label>
+                                <input type="text" id="cep" class="form-input">
                             </div>
                         </div>
                         <div class="input-group">
                             <div class="input-block">
-                                <label for="idade" class="form-label">Idade</label>
-                                <input type="number" id="idade" class="form-input" required>
+                                <label for="cpf" class="form-label">CPF</label>
+                                <input type="text" id="cpf" class="form-input">
                             </div>
                             <div class="input-block">
-                                <label for="estado" class="form-label">Estado</label>
-                                <input type="text" id="estado" class="form-input">
+                                <label for="linkedin" class="form-label">LinkedIn</label>
+                                <input type="url" id="linkedin" class="form-input">
                             </div>
                         </div>
                         <div class="input-group">
@@ -59,22 +72,23 @@
                                 <input type="tel" id="telefone" class="form-input">
                             </div>
                             <div class="input-block">
-                                <label for="linkedin" class="form-label">LinkedIn</label>
-                                <input type="url" id="linkedin" class="form-input">
+                                <label for="senha" class="form-label">Senha</label>
+                                <input type="password" id="senha" class="form-input" required>
                             </div>
                         </div>
                     </div>
-                
-                    
+
+
                     <div class="button-container">
                         <button onclick="history.back()" class="back-button">Voltar</button>
-                        <button id="cadastrar-candidato-button" type="button"  class="submit-button">Cadastrar</button>
+                        <button id="cadastrar-candidato-button" type="button" class="submit-button">Cadastrar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <script src="/dist/app.min.js"></script>
-   
+
 </body>
+
 </html>
