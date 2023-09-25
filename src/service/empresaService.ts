@@ -1,7 +1,7 @@
-import VagaDTO from "../modelo/dto/vagaDTO";
-import Vaga from "../modelo/vaga";
-import Empresa from "../modelo/empresa";
-import Candidato from "../modelo/candidato";
+import VagaDTO from "../modelo/dto/VagaDTO";
+import Vaga from "../modelo/Vaga";
+import Empresa from "../modelo/Empresa";
+import Candidato from "../modelo/Candidato";
 
 import LocalStorageService from "./localStorageService";
 import UsuarioService from "./usuarioService";

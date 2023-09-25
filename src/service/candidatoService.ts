@@ -1,11 +1,11 @@
-import Candidato from "../modelo/candidato";
-import Competencia from "../modelo/competencia";
-import Vaga from "../modelo/vaga";
+import Candidato from "../modelo/Candidato";
+import Competencia from "../modelo/Competencia";
+import Vaga from "../modelo/Vaga";
 
 import NivelExperiencia from "../modelo/enum/nivelExperiencia";
 import NivelFormacao from "../modelo/enum/nivelFormacao";
 
-import CandidatoDTO from "../modelo/dto/candidatoDTO";
+import CandidatoDTO from "../modelo/dto/CandidatoDTO";
 import localStorageService from "./localStorageService";
 
 class CandidatoService {

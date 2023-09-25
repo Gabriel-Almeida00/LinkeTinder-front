@@ -1,6 +1,6 @@
 import TipoUsuario from "../modelo/enum/tipoUsuario";
-import Candidato from "../modelo/candidato";
-import Empresa from "../modelo/empresa";
+import Candidato from "../modelo/Candidato";
+import Empresa from "../modelo/Empresa";
 import Usuario from "../modelo/UsuarioLogado";
 
 class UsuarioService {

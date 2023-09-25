@@ -1,12 +1,12 @@
-import Empresa from "../modelo/empresa";
+import Empresa from "../modelo/Empresa";
 import EmpresaService from "../service/empresaService";
-import Vaga from "../modelo/vaga";
-import Competencia from "../modelo/competencia";
+import Vaga from "../modelo/Vaga";
+import Competencia from "../modelo/Competencia";
 import NivelCompetencia from "../modelo/enum/nivelCompetencia";
 import NivelFormacao from "../modelo/enum/nivelFormacao";
 import NivelExperiencia from "../modelo/enum/nivelExperiencia";
 import UsuarioService from "../service/usuarioService";
-import VagaDTO from "../modelo/dto/vagaDTO";
+import VagaDTO from "../modelo/dto/VagaDTO";
 
 
 class EmpresaUI {

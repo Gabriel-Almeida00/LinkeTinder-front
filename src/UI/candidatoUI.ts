@@ -1,15 +1,15 @@
-import Candidato from "../modelo/candidato";
+import Candidato from "../modelo/Candidato";
 import CandidatoService from "../service/candidatoService";
-import Competencia from "../modelo/competencia";
+import Competencia from "../modelo/Competencia";
 import NivelCompetencia from "../modelo/enum/nivelCompetencia";
 import NivelExperiencia from "../modelo/enum/nivelExperiencia";
 import NivelFormacao from "../modelo/enum/nivelFormacao";
 import Chart from 'chart.js/auto';
-import Formacao from "../modelo/formacao";
-import Experiencia from "../modelo/experiencia";
+import Formacao from "../modelo/Formacao";
+import Experiencia from "../modelo/Experiencia";
 import UsuarioService from "../service/usuarioService";
-import CandidatoDTO from "../modelo/dto/candidatoDTO";
-import Vaga from "../modelo/vaga";
+import CandidatoDTO from "../modelo/dto/CandidatoDTO";
+import Vaga from "../modelo/Vaga";
 
 
 export class CandidatoUI {
