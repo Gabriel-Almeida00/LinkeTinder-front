@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="vaga-competencia.css">
+    <title>Competências da Vaga</title>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <ul class="menu">
+                <li><a href="../perfil/perfil.html">perfil</a></li>
+                <li><a href="../cadastro-vagas/cadastro-vaga.html">Vagas</a></li>
+                <li><a href="../candidatos-cadastrados/candidatos-cadastrados.html">Candidatos</a></li>
+                <li><a href="../vaga-competencia/vaga-competencia.html">Competências</a></li>
+            </ul>
+        </nav>
+        <div class="competencias-vaga-container">
+            <!-- Conteúdo da lista de competências da vaga -->
+            <h2>Competências da Vaga</h2>
+            <table id="competencias-vaga-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ID Vaga</th>
+                        <th>ID Competência</th>
+                        <th>ID Nível Competência</th>
+                    </tr>
+                </thead>
+                <tbody id="competencias-vaga-list">
+                    <!-- Aqui serão inseridas as competências dinamicamente -->
+                    <!-- Exemplo de linha -->
+                    <tr>
+                        <td>1</td>
+                        <td>123</td>
+                        <td>456</td>
+                        <td>789</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cadastro-competencia-container">
+            <!-- Formulário para cadastrar competências na vaga -->
+            <h2>Cadastrar Competência na Vaga</h2>
+            <div class="input-group">
+                <div class="input-block">
+                    <label for="idCompetenciaVaga" class="form-label">ID Competência</label>
+                    <input type="text" id="idCompetenciaVaga" class="form-input" required>
+                </div>
+                <div class="input-block">
+                    <label for="idNivelCompetenciaVaga" class="form-label">ID Nível Competência</label>
+                    <input type="text" id="idNivelCompetenciaVaga" class="form-input" required>
+                </div>
+            </div>
+            <button type="button" id="adicionar-competencia-vaga" class="add-button">Adicionar Competência</button>
+        </div>
+    </div>
+    <script src="/dist/app.min.js"></script>
+</body>
+</html>

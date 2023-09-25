@@ -3,57 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="cadastro.css">
-    <title>Cadastro de Empresas</title>
+    <link rel="stylesheet" href="perfil.css">
+    <title>Perfil da Empresa</title>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Cadastro de Empresas</h1>
+            <h1>Perfil da Empresa</h1>
         </header>
+        <nav>
+            <ul class="menu">
+                <li><a href="../perfil/perfil.html">perfil</a></li>
+                <li><a href="../cadastro-vagas/cadastro-vaga.html">Vagas</a></li>
+                <li><a href="../candidatos-cadastrados/candidatos-cadastrados.html">Candidatos</a></li>
+                <li><a href="../vaga-competencia/vaga-competencia.html">Competências</a></li>
+            </ul>
+        </nav>
         <main>
-            <form class="cadastro-form">
+            <form class="perfil-form">
                 <!-- Parte 1: Informações da Empresa -->
                 <div class="form-section">
                     <h2>Informações da Empresa</h2>
                     <div class="input-group">
                         <div class="input-block">
-                            <label for="nomeEmpresa" class="form-label">Nome </label>
+                            <label for="nomeEmpresa" class="form-label">Nome da Empresa</label>
                             <input type="text" id="nomeEmpresa" class="form-input" required>
                         </div>
                         <div class="input-block">
-                            <label for="emailEmpresa" class="form-label">Email</label>
+                            <label for="emailEmpresa" class="form-label">Email da Empresa</label>
                             <input type="email" id="emailEmpresa" class="form-input" required>
                         </div>
                     </div>
                     <div class="input-group">
                         <div class="input-block">
-                            <label for="cepEmpresa" class="form-label">CEP</label>
+                            <label for="cepEmpresa" class="form-label">CEP da Empresa</label>
                             <input type="text" id="cepEmpresa" class="form-input">
                         </div>
                         <div class="input-block">
-                            <label for="cnpjEmpresa" class="form-label">CNPJ </label>
+                            <label for="cnpjEmpresa" class="form-label">CNPJ da Empresa</label>
                             <input type="text" id="cnpjEmpresa" class="form-input">
                         </div>
                     </div>
                     <div class="input-group">
                         <div class="input-block">
-                            <label for="paisEmpresa" class="form-label">País</label>
+                            <label for="paisEmpresa" class="form-label">País da Empresa</label>
                             <input type="text" id="paisEmpresa" class="form-input">
                         </div>
                         <div class="input-block">
-                            <label for="estadoEmpresa" class="form-label">Estado </label>
+                            <label for="estadoEmpresa" class="form-label">Estado da Empresa</label>
                             <input type="text" id="estadoEmpresa" class="form-input">
                         </div>
                     </div>
                     <div class="input-block">
-                        <label for="descricaoEmpresa" class="form-label">Descrição </label>
+                        <label for="descricaoEmpresa" class="form-label">Descrição da Empresa</label>
                         <textarea id="descricaoEmpresa" class="form-textarea"></textarea>
                     </div>
                 </div>
+                
                 <div class="button-container">
-                    <button onclick="history.back()" class="back-button">Voltar</button>
-                    <button id="cadastrar-empresa-button" type="button" class="submit-button">Cadastrar</button>
+                    <button id="salvar-button" type="button" class="submit-button">Salvar</button>
+                    <button id="cancelar-button" type="button" class="back-button">Cancelar</button>
                 </div>
             </form>
         </main>

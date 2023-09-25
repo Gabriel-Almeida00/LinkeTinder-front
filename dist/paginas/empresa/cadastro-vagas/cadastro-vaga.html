@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro-vaga.css">
+    <title>Cadastro de Vagas</title>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <ul class="menu">
+                <li><a href="../perfil/perfil.html">perfil</a></li>
+                <li><a href="../cadastro-vagas/cadastro-vaga.html">Vagas</a></li>
+                <li><a href="../candidatos-cadastrados/candidatos-cadastrados.html">Candidatos</a></li>
+                <li><a href="../vaga-competencia/vaga-competencia.html">Competências</a></li>
+            </ul>
+        </nav>
+        <div class="cadastro-container">
+            <h1>Cadastro de Vagas</h1>
+            <form class="cadastro-form">
+                <div class="input-group">
+                    <div class="input-block">
+                        <label for="nomeVaga" class="form-label">Nome da Vaga</label>
+                        <input type="text" id="nomeVaga" class="form-input" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="descricaoVaga" class="form-label">Descrição da Vaga</label>
+                        <textarea id="descricaoVaga" class="form-textarea" required></textarea>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-block">
+                        <label for="cidadeVaga" class="form-label">Cidade</label>
+                        <input type="text" id="cidadeVaga" class="form-input" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="nivelFormacao" class="form-label">Nível de Formação</label>
+                        <select id="nivelFormacao" class="form-select" required>
+                            <option value="Graduacao">Graduação</option>
+                            <option value="PosGraduacao">Pós-Graduação</option>
+                            <option value="Mestrado">Mestrado</option>
+                            <option value="Doutorado">Doutorado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-block">
+                        <label for="nivelExperiencia" class="form-label">Nível de Experiência</label>
+                        <select id="nivelExperiencia" class="form-select" required>
+                            <option value="Estagio">Estágio</option>
+                            <option value="Junior">Júnior</option>
+                            <option value="Pleno">Pleno</option>
+                            <option value="Senior">Sênior</option>
+                            <option value="Gerente">Gerente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="submit-button">Cadastrar Vaga</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="lista-vagas-container">
+            <h1>Lista de Vagas</h1>
+            <table class="vagas-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Cidade</th>
+                        <th>Nível de Formação</th>
+                        <th>Nível de Experiência</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aqui você pode inserir as vagas dinamicamente usando JavaScript -->
+                    <tr>
+                        <td>Vaga 1</td>
+                        <td>Descrição da Vaga 1</td>
+                        <td>Cidade 1</td>
+                        <td>Graduação</td>
+                        <td>Júnior</td>
+                    </tr>
+                    <tr>
+                        <td>Vaga 2</td>
+                        <td>Descrição da Vaga 2</td>
+                        <td>Cidade 2</td>
+                        <td>Pós-Graduação</td>
+                        <td>Pleno</td>
+                    </tr>
+                    <!-- Adicione mais linhas conforme necessário -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="cadastro-vagas.js"></script>
+</body>
+</html>
