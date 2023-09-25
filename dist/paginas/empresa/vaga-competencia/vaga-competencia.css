@@ -30,36 +30,19 @@ body {
     text-decoration: underline;
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
 nav {
     background-color: #007bff;
     color: #fff;
     padding: 10px;
 }
 
-.menu {
-    list-style-type: none;
-    padding: 0;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.menu li {
-    display: inline;
-    margin-right: 20px;
-}
 
-.menu a {
-    text-decoration: none;
-    color: #fff;
-}
-
-.menu a:hover {
-    text-decoration: underline;
-}
 
 .competencias-vaga-container,
 .cadastro-competencia-container {
