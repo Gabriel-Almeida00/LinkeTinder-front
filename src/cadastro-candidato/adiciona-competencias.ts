@@ -1,6 +1,4 @@
-import NivelCompetencia from "../modelo/enum/nivelCompetencia";
-import NivelFormacao from "../modelo/enum/nivelFormacao";
-import NivelExperiencia from "../modelo/enum/nivelExperiencia";
+/*
 
 const adicionarCompetenciaButton = document.getElementById('adicionar-competencia');
 const listaCompetencias = document.getElementById('lista-competencias');
@@ -75,4 +73,4 @@ if (adicionarExperienciaButton && listaExperiencias) {
             nivelExperienciaSelect.value = nivelExperiencia; // Defina o valor padrão diretamente usando a variável nivelExperiencia
         }
     });
-}
+}*/

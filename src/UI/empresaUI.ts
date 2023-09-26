@@ -4,6 +4,7 @@ import Vaga from "../modelo/Vaga";
 import Competencia from "../modelo/Competencia";
 import UsuarioService from "../service/usuarioService";
 import VagaDTO from "../modelo/dto/VagaDTO";
+import VagaCompetencia from "../modelo/VagaCompetencia";
 
 
 class EmpresaUI {
@@ -62,6 +63,8 @@ class EmpresaUI {
         const paisInput = document.getElementById('paisEmpresa') as HTMLInputElement;
         const estadoInput = document.getElementById('estadoEmpresa') as HTMLInputElement;
         const descricaoInput = document.getElementById('descricaoEmpresa') as HTMLInputElement;
+        const senhaInput = document.getElementById('senhaEmpresa') as HTMLInputElement;
+        
 
         if (
             !this.validarCnpj(cnpjInput.value) ||
@@ -73,17 +76,14 @@ class EmpresaUI {
             return null;
         }
 
-        const vagas: Vaga[] = this.obterVagas();
-
         return new Empresa(
             nomeInput.value,
             emailInput.value,
-            cepInput.value,
-            cnpjInput.value,
             paisInput.value,
-            estadoInput.value,
+            cepInput.value,
             descricaoInput.value,
-            vagas
+            senhaInput.value,
+            cnpjInput.value
         );
     }
 
@@ -106,63 +106,6 @@ class EmpresaUI {
         }
     }
 
-
-    private obterVagas(): Vaga[] {
-        const vagas: Vaga[] = [];
-        const listaVagas = document.getElementById('lista-vagas') as HTMLUListElement;
-        const itensVagas = listaVagas.querySelectorAll('li');
-    
-        itensVagas.forEach(item => {
-            const vaga = this.parseItemParaVaga(item);
-            if (vaga) {
-                vagas.push(vaga);
-            }
-        });
-    
-        return vagas;
-    }
-    
-    private parseItemParaVaga(item: HTMLElement): Vaga | null {
-        const partes = item.innerHTML.split("<br>");
-    
-        if (partes.length < 5) {
-            return null;
-        }
-    
-        const nome = this.extractTextFromHtml(partes[0]);
-        const descricao = this.extractTextFromHtml(partes[1]);
-        const competenciasTexto = this.extractTextFromHtml(partes[2]).replace("Competências: ", "");
-        const competencias = this.parseCompetencias(competenciasTexto);
-        const nivelExperienciaTexto = this.extractTextFromHtml(partes[3]).replace("Nível de Experiência: ", "");
-        const nivelFormacaoTexto = this.extractTextFromHtml(partes[4]).replace("Nível de Formação: ", "");
-    
-        const nivelExperiencia = nivelExperienciaTexto.trim() as NivelExperiencia;
-        const nivelFormacao = nivelFormacaoTexto.trim() as NivelFormacao;
-    
-        return new Vaga(nome, descricao, competencias, nivelFormacao, nivelExperiencia);
-    }
-    
-    private parseCompetencias(competenciasTexto: string): Competencia[] {
-        const competencias: Competencia[] = [];
-        const competenciasPartes = competenciasTexto.split(", ");
-    
-        competenciasPartes.forEach(competenciaTexto => {
-            const partesCompetencia = competenciaTexto.split(" - ");
-            if (partesCompetencia.length === 2) {
-                const nomeCompetencia = partesCompetencia[0];
-                const nivelCompetenciaTexto = partesCompetencia[1].trim() as NivelCompetencia;
-                competencias.push(new Competencia(nomeCompetencia, nivelCompetenciaTexto));
-            }
-        });
-    
-        return competencias;
-    }
-    
-    private extractTextFromHtml(html: string): string {
-        return html.replace(/<[^>]*>/g, "").trim();
-    }
-    
-
     listarVagas(): void {
         const vagas = this.empresaService.listarVagasDTO();
         const listaVagas = document.getElementById('vagas') as HTMLUListElement;
@@ -180,24 +123,24 @@ class EmpresaUI {
         li.setAttribute("class", "vaga-item");
         li.setAttribute("data-index", index.toString());
     
-        const competenciasTexto = this.formatarCompetencias(vaga.requisitos);
+        const competenciasTexto = this.formatarCompetencias(vaga.getCompetencias());
     
         const afinidade = this.empresaService.calcularAfinidadeVagaComCandidato(vaga);
     
         li.innerHTML = `
             <div class="informacoes-vaga hidden">
-                <p class="formacao-vaga">Formação Mínima: ${vaga.formacaoMinima}</p>
-                <p class="experiencia-vaga">Experiência Mínima: ${vaga.experienciaMinima}</p>
+                <p class="formacao-vaga">Formação Mínima: ${vaga.getFormacao()}</p>
+                <p class="experiencia-vaga">Experiência Mínima: ${vaga.getExperiencia()}</p>
             </div><br>
-            <strong>${vaga.nome}</strong><br>${vaga.descricao}<br>Competências: ${competenciasTexto}
+            <strong>${vaga.getNome()}</strong><br>${vaga.getDescricao()}<br>Competências: ${competenciasTexto}
             <br>Afinidade: ${afinidade.toFixed(2)}%
         `;
     
         return li;
     }
     
-    private formatarCompetencias(competencias: Competencia[]): string {
-        return competencias.map(comp => `${comp.nome} - ${comp.nivel}`).join(", ");
+    private formatarCompetencias(competencias: VagaCompetencia[]): string {
+        return competencias.map(comp => `${comp.getNivel()} `).join(", ");
     }
     
 

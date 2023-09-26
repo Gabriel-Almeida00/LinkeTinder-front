@@ -1,8 +1,6 @@
-import NivelCompetencia from "../modelo/enum/nivelCompetencia";
-import NivelExperiencia from "../modelo/enum/nivelExperiencia";
-import NivelFormacao from "../modelo/enum/nivelFormacao";
 
-document.addEventListener("DOMContentLoaded", () => {
+
+/*document.addEventListener("DOMContentLoaded", () => {
     // Variáveis relacionadas à competência da vaga
     const adicionarCompetenciaVagaButton = document.querySelector("#adicionar-competencia-vaga") as HTMLButtonElement;
     const nomeCompetenciaVagaInput = document.querySelector("#nomeCompetenciaVaga") as HTMLInputElement;
@@ -76,4 +74,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     adicionarVagaButton.addEventListener("click", adicionarVaga);
-});
+});*/

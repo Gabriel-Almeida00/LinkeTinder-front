@@ -35,4 +35,16 @@ export default class VagaDTO {
     getExperiencia():number{
         return this.experienciaMinima
     }
+
+    getCompetencias(): VagaCompetencia[]{
+        return this.competencias
+    }
+
+    getNome(): string{
+        return this.nome
+    }
+
+    getDescricao(): string{
+        return this.descricao
+    }
 }
