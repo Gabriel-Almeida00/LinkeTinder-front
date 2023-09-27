@@ -34,9 +34,9 @@ class Candidato extends Pessoa {
     this.cpf = cpf;
     this.redeSocial = redeSocial;
     this.telefone = telefone;
-    this.competencias = [];
-    this.formacoes = [];
-    this.experiencias = [];
+    this.competencias = []
+    this.formacoes = []
+    this.experiencias = []
   }
 
   getRedeSocial(): string {

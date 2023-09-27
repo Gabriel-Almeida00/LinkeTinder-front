@@ -1,4 +1,5 @@
 import Candidato from "../modelo/Candidato";
+import CandidatoCompetencia from "../modelo/CandidatoCompetencia";
 import Vaga from "../modelo/Vaga";
 import VagaCompetencia from "../modelo/VagaCompetencia";
 
@@ -47,12 +48,50 @@ class CandidatoService {
         this.salvarCandidatosNoLocalStorage();
     }
 
+    obterCompetenciasDoCandidato(idCandidato: string): CandidatoCompetencia[] {
+        const candidatosJson = localStorage.getItem('candidatos');
+
+        if (candidatosJson) {
+            const candidatos = JSON.parse(candidatosJson) as Candidato[];
+
+            const candidatoEncontrado = candidatos.find((candidato) => candidato.id === idCandidato);
+
+            if (candidatoEncontrado) {
+                return candidatoEncontrado.competencias || [];
+            }
+        }
+
+        return [];
+    }
+
     atualizarCandidatoNoLocalStorage(candidatoAtualizado: Candidato): void {
         const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
         const indice = candidatos.findIndex((candidato) => candidato.id === candidatoAtualizado.id);
     
         if (indice !== -1) {
             candidatos[indice] = candidatoAtualizado;
+            this.localStorageService.salvarDados(candidatos);
+        }
+    }
+
+    adicionarCompetenciaAoCandidato(candidatoId: string, novaCompetencia: CandidatoCompetencia): void {
+        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatoIndex = candidatos.findIndex((candidato) => candidato.id === candidatoId);
+    
+        if (candidatoIndex !== -1) {
+            const candidatoExistente = candidatos[candidatoIndex];
+            candidatoExistente.competencias.push(novaCompetencia);
+    
+            this.localStorageService.salvarDados(candidatos);
+        }
+    }
+    
+    atualizarCompetenciasDoCandidato(candidatoId: string, novasCompetencias: CandidatoCompetencia[]): void {
+        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatoIndex = candidatos.findIndex((candidato) => candidato.id === candidatoId);
+    
+        if (candidatoIndex !== -1) {
+            candidatos[candidatoIndex].competencias = novasCompetencias;
             this.localStorageService.salvarDados(candidatos);
         }
     }

@@ -24,7 +24,6 @@ function lidarComEnvioDeFormulario(event: Event) {
 
     if (email && senha && userType) { 
         const user = userService.login(email, senha, userType); 
-        console.log(user)
         if (user) {
             redirecionarParaPerfil(userType);
         } else {
