@@ -1,8 +1,11 @@
+import { v4 as uuidv4 } from 'uuid';
+
 class Competencia {
-  private id!: number;
+  private id: string;
   nome: string;
 
   constructor(nome: string) {
+    this.id = uuidv4();
       this.nome = nome;
     }
 
@@ -10,7 +13,7 @@ class Competencia {
       return this.nome;
   }
 
-  obterId(): number{
+  obterId(): string{
     return this.id
    }
 

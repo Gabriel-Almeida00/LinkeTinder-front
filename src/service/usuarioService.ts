@@ -43,7 +43,7 @@ class UsuarioService {
       const usersJson = localStorage.getItem(userKey);
   
       if (usersJson) {
-          const usuarios = JSON.parse(usersJson) as any[]; // Use "any" temporariamente
+          const usuarios = JSON.parse(usersJson) as any[]; 
   
           const usuariosConvertidos: Pessoa[] = [];
   

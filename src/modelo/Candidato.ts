@@ -10,7 +10,7 @@ class Candidato extends Pessoa {
   private cpf: string;
   private redeSocial: string;
   private telefone: string;
-  private competencias: CandidatoCompetencia[];
+   competencias: CandidatoCompetencia[];
   private formacoes: Formacao[];
   private experiencias: Experiencia[];
 
