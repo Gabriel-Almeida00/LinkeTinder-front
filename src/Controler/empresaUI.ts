@@ -5,6 +5,7 @@ import Competencia from "../modelo/Competencia";
 import UsuarioService from "../service/usuarioService";
 import VagaDTO from "../modelo/dto/VagaDTO";
 import VagaCompetencia from "../modelo/VagaCompetencia";
+import TipoUsuario from "../modelo/enum/tipoUsuario";
 
 
 class EmpresaUI {
@@ -83,12 +84,14 @@ class EmpresaUI {
             cepInput.value,
             descricaoInput.value,
             senhaInput.value,
-            cnpjInput.value
+            cnpjInput.value,
+            TipoUsuario.Empresa
         );
     }
 
     private limparCamposDoFormulario(): void {
-        const camposParaLimpar = ['nomeEmpresa', 'emailEmpresa', 'cepEmpresa', 'cnpjEmpresa', 'paisEmpresa', 'estadoEmpresa', 'descricaoEmpresa'];
+        const camposParaLimpar = ['nomeEmpresa', 'emailEmpresa', 'cepEmpresa', 'cnpjEmpresa',
+         'paisEmpresa', 'estadoEmpresa', 'descricaoEmpresa', 'senhaEmpresa'];
 
         camposParaLimpar.forEach((campo) => {
             const elemento = document.getElementById(campo) as HTMLInputElement;

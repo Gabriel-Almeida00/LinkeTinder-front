@@ -1,5 +1,6 @@
 import Pessoa from "./Pessoa";
 import Vaga from "./Vaga";
+import TipoUsuario from "./enum/tipoUsuario";
 
 class Empresa extends Pessoa {
     private cnpj: string;
@@ -12,9 +13,10 @@ class Empresa extends Pessoa {
         cep: string,
         descricao: string,
         senha: string,
-        cnpj: string
+        cnpj: string,
+        tipoUsuario: TipoUsuario.Empresa
     ) {
-        super(nome, email, pais, cep, descricao, senha);
+        super(nome, email, pais, cep, descricao, senha, tipoUsuario);
         this.cnpj = cnpj;
         this.vagas = [];
     }

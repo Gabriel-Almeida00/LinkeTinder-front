@@ -1,3 +1,6 @@
+import Candidato from "../modelo/Candidato";
+import TipoUsuario from "../modelo/enum/tipoUsuario";
+
 class LocalStorageService<T> {
     private key: string;
 
@@ -9,6 +12,16 @@ class LocalStorageService<T> {
         const dadosJSON = JSON.stringify(dados);
         localStorage.setItem(this.key, dadosJSON);
     }
+
+    BuscarCandidatoNoLocalStorage(): Candidato[] | [] {
+        const dadosJSON = localStorage.getItem(this.key);
+        if (dadosJSON) {
+            const dados = JSON.parse(dadosJSON) as Candidato[];
+            return dados;
+        }
+        return [];
+    }
+
 
     carregarDados(): T[] | [] {
         const dadosJSON = localStorage.getItem(this.key);

@@ -1,23 +1,24 @@
 import TipoUsuario from "../modelo/enum/tipoUsuario";
 import Candidato from "../modelo/Candidato";
 import Empresa from "../modelo/Empresa";
-import Usuario from "../modelo/UsuarioLogado";
+import Pessoa from "../modelo/Pessoa";
 
 class UsuarioService {
     constructor() {}
 
-    login(email: string, nome: string, userType: TipoUsuario): Usuario | null {
-        const users = this.getUsuariosPorTipo(userType);
-
-        const existingUser = users.find((user: Usuario) => user.email === email && user.nome === nome);
-
-        if (existingUser) {
-            this.setUsuarioLogado(existingUser);
-            return existingUser;
+    login(email: string, senha: string, userType: TipoUsuario): Pessoa | null {
+        const usuarios = this.getUsuariosPorTipo(userType);
+        const usuarioExistente = usuarios.find(
+          (usuario) => usuario.getEmail() === email && usuario.getSenha() === senha
+        );
+    
+        if (usuarioExistente) {
+          this.setUsuarioLogado(usuarioExistente);
+          return usuarioExistente;
         } else {
-            throw new UsuarioNaoEncontradoException('Usuário não encontrado.');
+          throw new UsuarioNaoEncontradoException('Usuário não encontrado.');
         }
-    }
+      }
 
     obterCandidatoLogado(): Candidato  {
         const candidatoLogadoJson = localStorage.getItem('usuarioLogado');
@@ -37,13 +38,57 @@ class UsuarioService {
         throw new UsuarioNaoEncontradoException('Usuário não encontrado.');
     }
 
-    private getUsuariosPorTipo(userType: TipoUsuario): Usuario[] {
-        const userKey = userType === TipoUsuario.Candidato ? 'candidatos' : 'empresas';
-        const usersJson = localStorage.getItem(userKey);
-        return usersJson ? JSON.parse(usersJson) : [];
-    }
+    getUsuariosPorTipo(userType: TipoUsuario): Pessoa[] {
+      const userKey = userType === TipoUsuario.Candidato ? 'candidatos' : 'empresas';
+      const usersJson = localStorage.getItem(userKey);
+  
+      if (usersJson) {
+          const usuarios = JSON.parse(usersJson) as any[]; // Use "any" temporariamente
+  
+          const usuariosConvertidos: Pessoa[] = [];
+  
+          for (const usuario of usuarios) {
+              if (userType === TipoUsuario.Candidato) {
+                  const candidato = new Candidato(
+                      usuario.nome,
+                      usuario.email,
+                      usuario.pais,
+                      usuario.cep,
+                      usuario.redeSocial,
+                      usuario.telefone,
+                      usuario.descricao,
+                      usuario.senha,
+                      usuario.sobrenome,
+                      new Date(usuario.dataNascimento),
+                      usuario.cpf,
+                      TipoUsuario.Candidato
+                  );
+                  candidato.setId(usuario.id);
+                  usuariosConvertidos.push(candidato);
+              } 
+              else if (userType === TipoUsuario.Empresa) {
+                  const empresa = new Empresa(
+                      usuario.nome,
+                      usuario.email,
+                      usuario.pais,
+                      usuario.cep,
+                      usuario.descricao,
+                      usuario.senha,
+                      usuario.cnpj,
+                      TipoUsuario.Empresa
+                  );
+                  empresa.setId(usuario.id);
+                  usuariosConvertidos.push(empresa);
+              }
+          }
+  
+          return usuariosConvertidos;
+      } else {
+          return [];
+      }
+  }
 
-    private setUsuarioLogado(usuario: Usuario): void {
+     setUsuarioLogado(usuario: Pessoa): void {
         localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
     }
 }

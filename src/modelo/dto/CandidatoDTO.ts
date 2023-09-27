@@ -3,7 +3,7 @@ import Experiencia from '../Experiencia';
 import Formacao from '../Formacao';
 
 export default class CandidatoDTO {
-    private id!: number;
+    private id!: string;
     private nome: string;
     private descricao: string;
     private competencias: CandidatoCompetencia[];
@@ -11,7 +11,7 @@ export default class CandidatoDTO {
     private formacoes: Formacao[]
 
     constructor(
-        id: number,
+        id: string,
         nome: string,
         descricao: string,
         competencias: CandidatoCompetencia[],

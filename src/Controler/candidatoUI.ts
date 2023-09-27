@@ -8,6 +8,7 @@ import UsuarioService from "../service/usuarioService";
 import CandidatoDTO from "../modelo/dto/CandidatoDTO";
 import Vaga from "../modelo/Vaga";
 import CandidatoCompetencia from "../modelo/CandidatoCompetencia";
+import TipoUsuario from "../modelo/enum/tipoUsuario";
 
 
 export class CandidatoUI {
@@ -88,7 +89,6 @@ export class CandidatoUI {
             !this.validarLinkedin(linkedinInput.value)
         ) {
             alert('Por favor, preencha os campos corretamente.');
-            return null;
         }
     
         const dataNascimentoValue = dataNascimentoInput.value;
@@ -101,11 +101,13 @@ export class CandidatoUI {
            paisInput.value,
            cepInput.value,
            linkedinInput.value,
+           telefoneInput.value,
            descricaoInput.value,
            senhaInput.value,
            sobrenomeInput.value,
            dataNascimento,
-           cpfInput.value
+           cpfInput.value,
+           TipoUsuario.Candidato
         );
     }
     
@@ -120,7 +122,8 @@ export class CandidatoUI {
     }
     
     private limparCamposDoFormulario(): void {
-        const camposParaLimpar = ['nome', 'email', 'cep', 'cpf', 'idade', 'estado', 'descricao', 'telefone', 'linkedin'];
+        const camposParaLimpar = ['nome', 'sobrenome', 'dataNascimento', 'email', 'pais', 'cep',
+         'cpf', 'descricao', 'senha', 'linkedin', 'telefone'];
         
         camposParaLimpar.forEach((campo) => {
             const elemento = document.getElementById(campo) as HTMLInputElement;

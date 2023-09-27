@@ -1,14 +1,15 @@
 import TipoUsuario from "../modelo/enum/tipoUsuario";
-import usuarioService from "../service/usuarioService";
+import UsuarioService from "../service/usuarioService";
 
 const form = document.querySelector('form');
-const nomeInput = document.getElementById('nome') as HTMLInputElement | null;
 const emailInput = document.getElementById('email') as HTMLInputElement | null;
+const senhaInput = document.getElementById('senha') as HTMLInputElement | null; 
+
 const userTypeSelect = document.getElementById('userType') as HTMLSelectElement | null;
 
-const userService = new usuarioService();
+const userService = new UsuarioService(); 
 
-if (form && nomeInput && emailInput && userTypeSelect) {
+if (form && emailInput && senhaInput && userTypeSelect) { 
     form.addEventListener('submit', lidarComEnvioDeFormulario);
 } else {
     console.log('Formulário ou elementos não encontrados');
@@ -17,12 +18,13 @@ if (form && nomeInput && emailInput && userTypeSelect) {
 function lidarComEnvioDeFormulario(event: Event) {
     event.preventDefault();
 
-    const nome = nomeInput!.value;
-    const email = emailInput!.value;    
+    const email = emailInput!.value;
+    const senha = senhaInput!.value; 
     const userType = userTypeSelect!.value as TipoUsuario;
 
-    if (nome && email && userType) {
-        const user = userService.login(email, nome, userType);
+    if (email && senha && userType) { 
+        const user = userService.login(email, senha, userType); 
+        console.log(user)
         if (user) {
             redirecionarParaPerfil(userType);
         } else {

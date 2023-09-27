@@ -1,5 +1,4 @@
 import Candidato from "../modelo/Candidato";
-import Competencia from "../modelo/Competencia";
 import Vaga from "../modelo/Vaga";
 import VagaCompetencia from "../modelo/VagaCompetencia";
 
@@ -47,6 +46,17 @@ class CandidatoService {
         this.candidatos.push(candidato);
         this.salvarCandidatosNoLocalStorage();
     }
+
+    atualizarCandidatoNoLocalStorage(candidatoAtualizado: Candidato): void {
+        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const indice = candidatos.findIndex((candidato) => candidato.id === candidatoAtualizado.id);
+    
+        if (indice !== -1) {
+            candidatos[indice] = candidatoAtualizado;
+            this.localStorageService.salvarDados(candidatos);
+        }
+    }
+    
 
 
     calcularAfinidadeCompetencias(candidato: CandidatoDTO, requisitos: VagaCompetencia[]): number {
