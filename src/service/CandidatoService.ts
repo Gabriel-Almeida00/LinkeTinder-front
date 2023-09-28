@@ -93,6 +93,23 @@ class CandidatoService {
         if (candidatoIndex !== -1) {
             candidatos[candidatoIndex].competencias = novasCompetencias;
             this.localStorageService.salvarDados(candidatos);
+        }   
+    }
+
+    excluirCompetenciaDoCandidato(candidatoId: string, competenciaId: string): void {
+        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatoIndex = candidatos.findIndex((candidato) => candidato.id === candidatoId);
+
+        if (candidatoIndex !== -1) {
+            const candidato = candidatos[candidatoIndex];
+
+            const competenciaIndex = candidato.competencias.findIndex((competencia) => competencia.idCompetencia === competenciaId);
+
+            if (competenciaIndex !== -1) {
+                candidato.competencias.splice(competenciaIndex, 1);
+
+                this.localStorageService.salvarDados(candidatos);
+            }
         }
     }
     

@@ -7,25 +7,26 @@ class PerfilCandidatoCompetenciaController {
     private candidatoService: CandidatoService;
     private usuarioService: UsuarioService;
     private competenciaService: CompetenciaService
+    private competenciaEmEdicaoIndex: number | null = null;
 
     constructor() {
         this.candidatoService = new CandidatoService();
         this.usuarioService = new UsuarioService();
         this.competenciaService = new CompetenciaService();
 
-        const adicionarCompetenciaButton = document.getElementById('adicionar-competencia');
+        const adicionarCompetenciaButton = document.getElementById('adicionar-competencia') as HTMLButtonElement;
         if (adicionarCompetenciaButton) {
             adicionarCompetenciaButton.addEventListener('click', () => {
                 this.adicionarCompetencia();
             });
         }
 
-        const editarButtons = document.querySelectorAll('.editar-button');
-        editarButtons.forEach((button, index) => {
-            button.addEventListener('click', () => {
-                this.preencherCamposDeEdicao(index);
+        const salvarButton = document.getElementById('salvar-button');
+        if (salvarButton) {
+            salvarButton.addEventListener('click', () => {
+                this.EdidarCompetencia();
             });
-        });
+        }
     }
 
     preencherCamposDeEdicao(competenciaIndex: number) {
@@ -35,18 +36,26 @@ class PerfilCandidatoCompetenciaController {
             const rows = competenciasList.getElementsByTagName('tr');
             if (competenciaIndex < rows.length) {
                 const row = rows[competenciaIndex];
-                const idCompetencia = row.cells[0].textContent; 
-                const nivel = row.cells[1].textContent; 
-    
-                const nomeCompetenciaElement = document.getElementById('nomeCompetencia') as HTMLInputElement ;
+                const idCompetencia = row.cells[0].textContent;
+                const nivel = row.cells[1].textContent;
+
+                const nomeCompetenciaElement = document.getElementById('nomeCompetencia') as HTMLInputElement;
                 const nivelCompetenciaElement = document.getElementById('nivelCompetencia') as HTMLSelectElement;
-    
+
                 nomeCompetenciaElement.value = idCompetencia!;
-                nivelCompetenciaElement.value = nivel!;
+
+                const nivelOption = nivelCompetenciaElement.querySelector(`option[value="${nivel}"]`) as HTMLSelectElement;
+                if (nivelOption) {
+                    nivelCompetenciaElement.value = nivelOption.value;
+                } else {
+                    console.error(`Valor de nível inválido: ${nivel}`);
+                }
+
+                this.competenciaEmEdicaoIndex = competenciaIndex;
             }
         }
     }
-    
+
 
     exibirCompetenciasDoCandidato() {
         const candidatoLogado = this.usuarioService.obterCandidatoLogado();
@@ -59,19 +68,40 @@ class PerfilCandidatoCompetenciaController {
             if (competenciasList) {
                 competenciasList.innerHTML = '';
 
-                for (const competencia of competencias) {
+                for (let index = 0; index < competencias.length; index++) {
+                    const competencia = competencias[index];
                     const row = document.createElement('tr');
                     row.innerHTML =
-                    `
-                    <td>${competencia.idCompetencia}</td>
-                    <td>${competencia.nivel}</td>
-                    <td style="display: none;" data-competencia-id="${competencia.idCompetencia}"></td>
-                    <td>
-                        <button class="editar-button">Editar</button>
-                        <button class="excluir-button">Excluir</button>
-                    </td>
+                        `
+                <td>${competencia.idCompetencia}</td>
+                <td>${competencia.nivel}</td>
+                <td style="display: none;" data-competencia-id="${competencia.idCompetencia}"></td>
+                <td>
+                    <button type="button" class="editar-button">Editar</button>
+                    <button type="button" class="excluir-button">Excluir</button>
+                </td>
                 `;
+
                     competenciasList.appendChild(row);
+
+                    const editarButton = row.querySelector('.editar-button');
+                    if (editarButton) {
+                        editarButton.addEventListener('click', (event) => {
+                            const rowIndex = Array.from(competenciasList.children).indexOf(row);
+                            this.preencherCamposDeEdicao(rowIndex);
+                        });
+                    }
+
+                    const excluirButton = row.querySelector('.excluir-button');
+                    if (excluirButton) {
+                        excluirButton.addEventListener('click', () => {
+                            const competenciaId = competencia.idCompetencia;
+    
+                            this.candidatoService.excluirCompetenciaDoCandidato(idCandidato, competenciaId);
+    
+                            this.exibirCompetenciasDoCandidato();
+                        });
+                    }
                 }
             }
         } else {
@@ -120,12 +150,41 @@ class PerfilCandidatoCompetenciaController {
         }
     }
 
-    
-    
+    EdidarCompetencia() {
+        const nomeCompetenciaElement = document.getElementById('nomeCompetencia') as HTMLInputElement;
+        const nivelCompetenciaElement = document.getElementById('nivelCompetencia') as HTMLSelectElement;
+
+        const nomeCompetencia = nomeCompetenciaElement.value;
+        const nivelCompetenciaString = nivelCompetenciaElement.value;
+
+        if (nomeCompetencia && nivelCompetenciaString) {
+            const nivelCompetencia = parseInt(nivelCompetenciaString, 10);
+
+            const candidatoLogado = this.usuarioService.obterCandidatoLogado();
+            if (candidatoLogado) {
+                const novasCompetencias = candidatoLogado.competencias.slice();
+                novasCompetencias.push(new CandidatoCompetencia(candidatoLogado.id, nomeCompetencia, nivelCompetencia));
+
+                this.candidatoService.atualizarCompetenciasDoCandidato(candidatoLogado.id, novasCompetencias);
+
+                nomeCompetenciaElement.value = '';
+                nivelCompetenciaElement.value = '1';
+
+                this.exibirCompetenciasDoCandidato();
+            } else {
+                console.error('Candidato logado não encontrado.');
+            }
+        } else {
+            console.error('Nome e nível da competência são obrigatórios.');
+        }
+    }
+
+
+
     nivelMap: { [key: string]: number } = {
-        "Basico": 1,
-        "Intermediario": 2,
-        "Avancado": 3
+        "1": 1,
+        "2": 2,
+        "3": 3
     };
 }
 export default PerfilCandidatoCompetenciaController
