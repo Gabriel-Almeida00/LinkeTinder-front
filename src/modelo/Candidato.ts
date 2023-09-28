@@ -5,13 +5,13 @@ import Formacao from './Formacao';
 import TipoUsuario from './enum/tipoUsuario';
 
 class Candidato extends Pessoa {
-  private sobrenome: string;
-  private dataNascimento: Date;
-  private cpf: string;
-  private redeSocial: string;
-  private telefone: string;
+   sobrenome: string;
+   dataNascimento: Date;
+   cpf: string;
+   redeSocial: string;
+   telefone: string;
    competencias: CandidatoCompetencia[];
-  private formacoes: Formacao[];
+   formacoes: Formacao[];
   private experiencias: Experiencia[];
 
   constructor(

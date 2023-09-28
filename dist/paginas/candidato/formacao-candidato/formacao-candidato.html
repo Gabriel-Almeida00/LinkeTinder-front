@@ -22,10 +22,7 @@
         </nav>
         <main>
             <form class="perfil-form">
-                <!-- Parte 1: Informações Pessoais -->
-                <!-- ... (seu código de informações pessoais) ... -->
-                
-                <!-- Parte 3: Formações -->
+            
                 <div class="form-section">
                     <h2>Formações</h2>
                     <table id="formacoes-table">
@@ -34,21 +31,12 @@
                                 <th>Instituição</th>
                                 <th>Curso</th>
                                 <th>Nível</th>
-                                <th>Ações</th>
+                                <th>Conclusão</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="formacoes-list">
                             <!-- Aqui serão inseridas as formações dinamicamente -->
-                            <tr>
-                                <td>Nome da Instituição</td>
-                                <td>Nome do Curso</td>
-                                <td>Graduação</td>
-                                <td>
-                                    <button class="editar-button">Editar</button>
-                                    <button class="excluir-button">Excluir</button>
-                                </td>
-                            </tr>
-                            <!-- Adicione mais linhas conforme necessário -->
                         </tbody>
                     </table>
                     <div class="input-group">
@@ -63,17 +51,22 @@
                         <div class="input-block">
                             <label for="nivelFormacao" class="form-label">Nível</label>
                             <select id="nivelFormacao" class="form-input">
-                                <option value="Graduação">Graduação</option>
-                                <option value="Pós-graduação">Pós-graduação</option>
-                                <option value="Mestrado">Mestrado</option>
-                                <option value="Doutorado">Doutorado</option>
+                                <option value="1">Graduação</option>
+                                <option value="2">Pós-graduação</option>
+                                <option value="3">Mestrado</option>
+                                <option value="4">Doutorado</option>
                             </select>
+                        </div>
+                        <div class="input-block">
+                            <label for="anoConclusaoFormacao" class="form-label">Ano de Conclusão</label>
+                            <input type="text" id="anoConclusaoFormacao" class="form-input" required>
                         </div>
                         <button type="button" id="adicionar-formacao" class="add-button">Adicionar Formação</button>
                     </div>
+                    
                 </div>
                 <div class="button-container">
-                    <button id="salvar-button" type="button" class="submit-button">Salvar</button>
+                    <button id="atualizar-formacao-button" type="button" class="submit-button">Salvar</button>
                     <button id="cancelar-button" type="button" class="back-button">Cancelar</button>
                 </div>
             </form>

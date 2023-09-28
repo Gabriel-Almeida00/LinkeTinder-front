@@ -21,9 +21,9 @@ class PerfilCandidatoController {
 
 
     exibirInformacoesCandidatoNoHTML() {
-        const usuarioLogadoString = localStorage.getItem('usuarioLogado');
-        if (usuarioLogadoString) {
-            const usuarioLogado = JSON.parse(usuarioLogadoString);
+       const idCanddato = this.usuarioService.obterIdCandidatoLogado()
+       const usuarioLogado = this.usuarioService.obterCandidato(idCanddato)
+       
 
             const nomeElement = document.getElementById('nomeCandidato') as HTMLInputElement;
             if (nomeElement) {
@@ -81,14 +81,12 @@ class PerfilCandidatoController {
             if (senhaElement) {
                 senhaElement.value = usuarioLogado.senha;
             }
-        } else {
-          
-        }
     }
 
     salvarInformacoesCandidato() {
         try {
-            const candidatoExistente = this.usuarioService.obterCandidatoLogado();
+            const idCanddato = this.usuarioService.obterIdCandidatoLogado()
+            const candidatoExistente = this.usuarioService.obterCandidato(idCanddato);
 
             const nomeElement = document.getElementById('nomeCandidato') as HTMLInputElement;
             const sobrenomeElement = document.getElementById('sobrenomeCandidato') as HTMLInputElement;
@@ -105,24 +103,19 @@ class PerfilCandidatoController {
             const dataNascimentoString = dataNascimentoElement.value;
             const dataNascimento = new Date(dataNascimentoString);
 
-            const candidatoAtualizado = new Candidato(
-                nomeElement.value,
-                emailElement.value,
-                paisElement.value,
-                cepElement.value,
-                linkedinElement.value,
-                telefoneElement.value,
-                descricaoElement.value,
-                senhaElement.value,
-                sobrenomeElement.value,
-                dataNascimento,
-                cpfElement.value,
-                TipoUsuario.Candidato
-            )
-            candidatoAtualizado.id = candidatoExistente.id;
-            
-            this.candidatoService.atualizarCandidatoNoLocalStorage(candidatoAtualizado);
-            this.usuarioService.setUsuarioLogado(candidatoAtualizado)
+            candidatoExistente.nome = nomeElement.value
+            candidatoExistente.sobrenome = sobrenomeElement.value
+            candidatoExistente.dataNascimento = dataNascimento
+            candidatoExistente.email = emailElement.value
+            candidatoExistente.pais = paisElement.value
+            candidatoExistente.cep = cepElement.value
+            candidatoExistente.cpf = cpfElement.value
+            candidatoExistente.redeSocial = linkedinElement.value
+            candidatoExistente.descricao = descricaoElement.value
+            candidatoExistente.telefone = telefoneElement.value
+            candidatoExistente.senha = senhaElement.value
+
+            this.candidatoService.atualizarCandidatoNoLocalStorage(candidatoExistente);
             this.exibirInformacoesCandidatoNoHTML();
         } catch (error) {
             console.error('Erro ao salvar informações do candidato:', error);

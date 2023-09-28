@@ -1,5 +1,4 @@
 import Candidato from "../modelo/Candidato";
-import TipoUsuario from "../modelo/enum/tipoUsuario";
 
 class LocalStorageService<T> {
     private key: string;

@@ -160,3 +160,57 @@ h2 {
 .excluir-button:hover {
     background-color: #999;
 }
+
+/* Estilo para a tabela de formações */
+#formacoes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Estilo para as células do cabeçalho */
+#formacoes-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para as células de dados */
+#formacoes-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para células de dados alternadas (linhas ímpares) */
+#formacoes-table tr:nth-child(odd) td {
+    background-color: #f7f7f7;
+}
+
+/* Estilo para células de botões dentro da tabela */
+#formacoes-table .editar-button,
+#formacoes-table .excluir-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+/* Estilo para botões de edição */
+#formacoes-table .editar-button {
+    background-color: #2ecc71;
+}
+
+/* Estilo para botões de exclusão */
+#formacoes-table .excluir-button {
+    background-color: #e74c3c;
+}
+
+/* Estilo para botões quando hover (passar o mouse por cima) */
+#formacoes-table .editar-button:hover,
+#formacoes-table .excluir-button:hover {
+    background-color: #2980b9;
+}

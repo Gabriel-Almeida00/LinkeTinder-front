@@ -4,12 +4,12 @@ import TipoUsuario from './enum/tipoUsuario';
 
 class Pessoa {
      id: string;
-    private nome: string;
-    private email: string;
-    private pais: string;
-    private cep: string;
-    private descricao: string;
-    private senha: string;
+     nome: string;
+     email: string;
+     pais: string;
+     cep: string;
+     descricao: string;
+     senha: string;
     private tipoUsuario: TipoUsuario
 
     constructor(

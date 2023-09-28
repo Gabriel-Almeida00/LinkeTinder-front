@@ -149,3 +149,59 @@ h2 {
 .excluir-button:hover {
     background-color: #1f8c40; /* Cor de fundo ao passar o mouse nos botões de ação */
 }
+
+
+/* Estilo para a tabela de formações */
+#competencias-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Estilo para as células do cabeçalho */
+#competencias-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para as células de dados */
+#competencias-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para células de dados alternadas (linhas ímpares) */
+#competencias-table tr:nth-child(odd) td {
+    background-color: #f7f7f7;
+}
+
+/* Estilo para células de botões dentro da tabela */
+#competencias-table .editar-button,
+#competencias-table .excluir-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+/* Estilo para botões de edição */
+#competencias-table .editar-button {
+    background-color: #2ecc71;
+}
+
+/* Estilo para botões de exclusão */
+#competencias-table .excluir-button {
+    background-color: #e74c3c;
+}
+
+/* Estilo para botões quando hover (passar o mouse por cima) */
+#competencias-table .editar-button:hover,
+#competencias-table .excluir-button:hover {
+    background-color: #2980b9;
+}
+

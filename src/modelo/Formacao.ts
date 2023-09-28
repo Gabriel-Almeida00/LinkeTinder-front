@@ -1,13 +1,15 @@
+import { v4 as uuidv4 } from 'uuid';
 
 class Formacao {
-  private id!: number;
-  private idCandidato: number;
-  private instituicao: string;
-  private curso: string;
-  private nivel: number;
-  private anoConclusao: string;
+   id: string;
+  private idCandidato: string;
+   instituicao: string;
+   curso: string;
+   nivel: number;
+   anoConclusao: string;
 
-  constructor(idCandidato: number, instituicao: string, curso: string, nivel: number, anoConclusao: string) {
+  constructor(idCandidato: string, instituicao: string, curso: string, nivel: number, anoConclusao: string) {
+    this.id = uuidv4();
     this.idCandidato = idCandidato;
     this.instituicao = instituicao;
     this.curso = curso;
@@ -15,7 +17,7 @@ class Formacao {
     this.anoConclusao = anoConclusao;
   }
 
-  obterId(): number {
+  obterId(): string {
     return this.id
   }
   getNivel(): number {

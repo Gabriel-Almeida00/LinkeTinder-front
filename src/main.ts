@@ -8,11 +8,15 @@ import EmpresaService from './service/EmpresaService';
 import UsuarioService from './service/usuarioService';
 import PerfilCandidatoController from './Controler/PerfilCandidatoController';
 import PerfilCandidatoCompetenciaController from './Controler/PerfilCandidatoCompetenciaController';
+import PerfilCandidatoFormacaoController from './Controler/PerfilCandidatoFormacaoController';
 
 
 const candidatoService = new CandidatoService();
 const usuarioService = new UsuarioService();
 const empresaService = new EmpresaService();
+const perfilCandidatoFormacaoController = new PerfilCandidatoFormacaoController();
+perfilCandidatoFormacaoController.exibirFormacoesDoCandidato();
+
 const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaController();
 perfilCandidatoCompetenciaController.exibirCompetenciasDoCandidato();
 

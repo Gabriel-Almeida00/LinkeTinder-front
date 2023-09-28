@@ -21,7 +21,7 @@ class PerfilCandidatoCompetenciaController {
             });
         }
 
-        const salvarButton = document.getElementById('salvar-button');
+        const salvarButton = document.getElementById('salvar-competencia-button');
         if (salvarButton) {
             salvarButton.addEventListener('click', () => {
                 this.EdidarCompetencia();
@@ -58,10 +58,10 @@ class PerfilCandidatoCompetenciaController {
 
 
     exibirCompetenciasDoCandidato() {
-        const candidatoLogado = this.usuarioService.obterCandidatoLogado();
+        const idCandidato = this.usuarioService.obterIdCandidatoLogado()
+        const candidatoLogado = this.usuarioService.obterCandidato(idCandidato);
 
         if (candidatoLogado) {
-            const idCandidato = candidatoLogado.id;
             const competencias = this.candidatoService.obterCompetenciasDoCandidato(idCandidato);
             const competenciasList = document.getElementById('competencias-list');
 
@@ -96,9 +96,9 @@ class PerfilCandidatoCompetenciaController {
                     if (excluirButton) {
                         excluirButton.addEventListener('click', () => {
                             const competenciaId = competencia.idCompetencia;
-    
+
                             this.candidatoService.excluirCompetenciaDoCandidato(idCandidato, competenciaId);
-    
+
                             this.exibirCompetenciasDoCandidato();
                         });
                     }
@@ -127,8 +127,8 @@ class PerfilCandidatoCompetenciaController {
 
         if (nomeCompetencia && nivelCompetenciaString) {
             const nivelCompetencia = this.nivelMap[nivelCompetenciaString];
-            const usuarioLogado = this.usuarioService.obterCandidatoLogado()
-            const idCandidato = usuarioLogado.id
+            const idCandidato = this.usuarioService.obterIdCandidatoLogado()
+            const usuarioLogado = this.usuarioService.obterCandidato(idCandidato)
 
             const novaCompetencia = new CandidatoCompetencia(
                 idCandidato,
@@ -139,7 +139,6 @@ class PerfilCandidatoCompetenciaController {
             usuarioLogado.competencias.push(novaCompetencia);
 
             this.candidatoService.adicionarCompetenciaAoCandidato(idCandidato, novaCompetencia);
-            this.usuarioService.setUsuarioLogado(usuarioLogado);
 
             nomeCompetenciaElement.value = '';
             nivelCompetenciaElement.value = 'Basico';
@@ -153,23 +152,33 @@ class PerfilCandidatoCompetenciaController {
     EdidarCompetencia() {
         const nomeCompetenciaElement = document.getElementById('nomeCompetencia') as HTMLInputElement;
         const nivelCompetenciaElement = document.getElementById('nivelCompetencia') as HTMLSelectElement;
-
-        const nomeCompetencia = nomeCompetenciaElement.value;
-        const nivelCompetenciaString = nivelCompetenciaElement.value;
-
-        if (nomeCompetencia && nivelCompetenciaString) {
-            const nivelCompetencia = parseInt(nivelCompetenciaString, 10);
-
-            const candidatoLogado = this.usuarioService.obterCandidatoLogado();
+    
+        const novoNomeCompetencia = nomeCompetenciaElement.value;
+        const novoNivelCompetenciaString = nivelCompetenciaElement.value;
+    
+        if (novoNomeCompetencia && novoNivelCompetenciaString) {
+            const novoNivelCompetencia = parseInt(novoNivelCompetenciaString, 10);
+            const idCandidato = this.usuarioService.obterIdCandidatoLogado();
+            const candidatoLogado = this.usuarioService.obterCandidato(idCandidato);
+    
             if (candidatoLogado) {
                 const novasCompetencias = candidatoLogado.competencias.slice();
-                novasCompetencias.push(new CandidatoCompetencia(candidatoLogado.id, nomeCompetencia, nivelCompetencia));
+    
+               if(this.competenciaEmEdicaoIndex != null) {
+                const competenciaEditada = novasCompetencias[this.competenciaEmEdicaoIndex];
 
-                this.candidatoService.atualizarCompetenciasDoCandidato(candidatoLogado.id, novasCompetencias);
+                competenciaEditada.idCompetencia = novoNomeCompetencia
+                competenciaEditada.nivel = novoNivelCompetencia
 
-                nomeCompetenciaElement.value = '';
-                nivelCompetenciaElement.value = '1';
+                this.candidatoService.atualizarCompetenciasDoCandidato(idCandidato, novasCompetencias)
 
+                nomeCompetenciaElement.value = ''
+                nivelCompetenciaElement.value = ''
+
+                this.competenciaEmEdicaoIndex = null
+                this.exibirCompetenciasDoCandidato()
+               }
+    
                 this.exibirCompetenciasDoCandidato();
             } else {
                 console.error('Candidato logado não encontrado.');

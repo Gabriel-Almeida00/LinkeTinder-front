@@ -14,49 +14,32 @@ class UsuarioService {
         );
 
         if (usuarioExistente) {
-            this.setUsuarioLogado(usuarioExistente);
+            this.setUsuarioLogado(usuarioExistente.id);
             return usuarioExistente;
         } else {
             throw new UsuarioNaoEncontradoException('Usuário não encontrado.');
         }
     }
 
-    obterCandidatoLogado(): Candidato {
-        const candidatoLogadoJson = localStorage.getItem('usuarioLogado');
-        if (candidatoLogadoJson) {
-            const candidatoLogadoData = JSON.parse(candidatoLogadoJson);
+    obterCandidato(idCandidato: string): Candidato {
+        const candidatosJson = localStorage.getItem('candidatos');
 
-            const competenciasData = candidatoLogadoData.competencias || []; 
+        if (candidatosJson) {
+            const candidatos = JSON.parse(candidatosJson) as Candidato[];
 
-            const competencias = competenciasData.map((competencia: any) => {
-                return new CandidatoCompetencia(
-                    candidatoLogadoData.id,
-                    competencia.idCompetencia,
-                    competencia.nivel
-                );
-            });
+            const candidatoEncontrado = candidatos.find((candidato) => candidato.id === idCandidato);
 
-            const candidatoLogado = new Candidato(
-                candidatoLogadoData.nome,
-                candidatoLogadoData.email,
-                candidatoLogadoData.pais,
-                candidatoLogadoData.cep,
-                candidatoLogadoData.redeSocial,
-                candidatoLogadoData.telefone,
-                candidatoLogadoData.descricao,
-                candidatoLogadoData.senha,
-                candidatoLogadoData.sobrenome,
-                new Date(candidatoLogadoData.dataNascimento),
-                candidatoLogadoData.cpf,
-                TipoUsuario.Candidato
-            );
-
-            candidatoLogado.setId(candidatoLogadoData.id);
-            candidatoLogado.competencias = competencias;
-
-            return candidatoLogado;
+            if (candidatoEncontrado) {
+                return candidatoEncontrado;
+            }
         }
         throw new UsuarioNaoEncontradoException('Usuário não encontrado.');
+
+    }
+
+    obterIdCandidatoLogado(): string {
+        const idUsuarioLogadoJson = localStorage.getItem('usuarioLogado');
+        return idUsuarioLogadoJson ? JSON.parse(idUsuarioLogadoJson) : null;
     }
 
     obterEmpresaLogado(): Empresa {
@@ -118,8 +101,8 @@ class UsuarioService {
         }
     }
 
-    setUsuarioLogado(usuario: Pessoa): void {
-        localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+    setUsuarioLogado(idUsuario: string): void {
+        localStorage.setItem('usuarioLogado', JSON.stringify(idUsuario));
     }
 }
 
