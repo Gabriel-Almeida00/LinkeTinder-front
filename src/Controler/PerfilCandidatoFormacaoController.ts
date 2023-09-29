@@ -1,16 +1,13 @@
 import Formacao from "../modelo/Formacao";
-import CandidatoService from "../service/CandidatoService";
 import FormacaoService from "../service/FormacaoService";
 import UsuarioService from "../service/usuarioService";
 
 class PerfilCandidatoFormacaoController {
-    private candidatoService: CandidatoService;
     private usuarioService: UsuarioService;
     private formacaoService: FormacaoService;
     private formacaoEmEdicaoIndex: number | null = null;
 
     constructor() {
-        this.candidatoService = new CandidatoService();
         this.usuarioService = new UsuarioService();
         this.formacaoService = new FormacaoService();
 
@@ -139,10 +136,6 @@ class PerfilCandidatoFormacaoController {
         }
     }
 
-    excluirFormacao(formacaoIndex: number) {
-        // Implemente a lógica para excluir uma formação
-    }
-
     exibirFormacoesDoCandidato() {
         const idCandidato = this.usuarioService.obterIdCandidatoLogado()
         const candidatoLogado = this.usuarioService.obterCandidato(idCandidato);
@@ -179,11 +172,14 @@ class PerfilCandidatoFormacaoController {
                         });
                     }
 
-                    const excluirButton = row.querySelector('.excluir-formacao-button');
+                    const excluirButton = row.querySelector('.excluir-button');
                     if (excluirButton) {
                         excluirButton.addEventListener('click', () => {
-                            const rowIndex = Array.from(formacoesList.children).indexOf(row);
-                            this.excluirFormacao(rowIndex);
+                            const formacaoId = formacao.id;
+
+                            this.formacaoService.excluirFormacaoDoCandidato(idCandidato, formacaoId);
+
+                            this.exibirFormacoesDoCandidato();
                         });
                     }
                 }

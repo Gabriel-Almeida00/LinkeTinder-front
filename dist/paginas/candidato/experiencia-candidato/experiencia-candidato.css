@@ -167,29 +167,49 @@ h2 {
     margin-top: 20px;
 }
 
-#experiencias-table th,
-#experiencias-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-}
-
-#experiencias-list tr:nth-child(even) {
+/* Estilo para as células do cabeçalho */
+#experiencias-table th {
     background-color: #f2f2f2;
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
 }
 
-#experiencias-list td {
-    vertical-align: middle;
+/* Estilo para as células de dados */
+#experiencias-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
 }
 
-/* Estilos para botões dentro da tabela */
-.editar-button,
-.excluir-button {
-    padding: 5px 10px;
-    margin: 0 5px;
+/* Estilo para células de dados alternadas (linhas ímpares) */
+#experiencias-table tr:nth-child(odd) td {
+    background-color: #f7f7f7;
 }
 
-/* Estilos para o formulário de adicionar Experiência */
-#adicionar-experiencia {
-    margin-top: 10px;
+/* Estilo para células de botões dentro da tabela */
+#experiencias-table .editar-button,
+#experiencias-table .excluir-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+/* Estilo para botões de edição */
+#experiencias-table .editar-button {
+    background-color: #2ecc71;
+}
+
+/* Estilo para botões de exclusão */
+#experiencias-table .excluir-button {
+    background-color: #e74c3c;
+}
+
+/* Estilo para botões quando hover (passar o mouse por cima) */
+#experiencias-table .editar-button:hover,
+#experiencias-table .excluir-button:hover {
+    background-color: #2980b9;
 }

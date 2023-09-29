@@ -22,58 +22,46 @@
         </nav>
         <main>
             <form class="perfil-form">
-                <!-- ... (outras seções de informações pessoais) ... -->
-                
-                <!-- Parte 3: Experiências -->
+     
                 <div class="form-section">
                     <h2>Experiências</h2>
                     <table id="experiencias-table">
                         <thead>
                             <tr>
-                                <th>Nome do Cargo</th>
-                                <th>Nome da Empresa</th>
+                                <th> Cargo</th>
+                                <th> Empresa</th>
                                 <th>Nível de Experiência</th>
-                                <th>Ações</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="experiencias-list">
                             <!-- Aqui serão inseridas as experiências dinamicamente -->
-                            <tr>
-                                <td>Cargo 1</td>
-                                <td>Empresa 1</td>
-                                <td>Sênior</td>
-                                <td>
-                                    <button class="editar-button">Editar</button>
-                                    <button class="excluir-button">Excluir</button>
-                                </td>
-                            </tr>
-                            <!-- Adicione mais linhas conforme necessário -->
                         </tbody>
                     </table>
                     <div class="input-group">
                         <div class="input-block">
-                            <label for="cargoExperiencia" class="form-label">Nome do Cargo</label>
+                            <label for="cargoExperiencia" class="form-label"> Cargo</label>
                             <input type="text" id="cargoExperiencia" class="form-input" required>
                         </div>
                         <div class="input-block">
-                            <label for="empresaExperiencia" class="form-label">Nome da Empresa</label>
+                            <label for="empresaExperiencia" class="form-label"> Empresa</label>
                             <input type="text" id="empresaExperiencia" class="form-input" required>
                         </div>
                         <div class="input-block">
                             <label for="nivelExperiencia" class="form-label">Nível de Experiência</label>
                             <select id="nivelExperiencia" class="form-input">
-                                <option value="Estágio">Estágio</option>
-                                <option value="Júnior">Júnior</option>
-                                <option value="Pleno">Pleno</option>
-                                <option value="Sênior">Sênior</option>
-                                <option value="Gerente">Gerente</option>
+                                <option value="1">Estágio</option>
+                                <option value="2">Júnior</option>
+                                <option value="3">Pleno</option>
+                                <option value="4">Sênior</option>
+                                <option value="5">Gerente</option>
                             </select>
                         </div>
                         <button type="button" id="adicionar-experiencia" class="add-button">Adicionar Experiência</button>
                     </div>
                 </div>
                 <div class="button-container">
-                    <button id="salvar-button" type="button" class="submit-button">Salvar</button>
+                    <button id="atualizar-experiencia-button" type="button" class="submit-button">Salvar</button>
                     <button id="cancelar-button" type="button" class="back-button">Cancelar</button>
                 </div>
             </form>

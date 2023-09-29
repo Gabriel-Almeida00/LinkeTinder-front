@@ -9,11 +9,16 @@ import UsuarioService from './service/usuarioService';
 import PerfilCandidatoController from './Controler/PerfilCandidatoController';
 import PerfilCandidatoCompetenciaController from './Controler/PerfilCandidatoCompetenciaController';
 import PerfilCandidatoFormacaoController from './Controler/PerfilCandidatoFormacaoController';
+import PerfilCandidatoExperienciaController from './Controler/PerfilCandidatoExperienciaController';
 
 
 const candidatoService = new CandidatoService();
 const usuarioService = new UsuarioService();
 const empresaService = new EmpresaService();
+
+const perfilCandidatoExperienciaController = new PerfilCandidatoExperienciaController();
+perfilCandidatoExperienciaController.exibirExperienciaDoCandidato();
+
 const perfilCandidatoFormacaoController = new PerfilCandidatoFormacaoController();
 perfilCandidatoFormacaoController.exibirFormacoesDoCandidato();
 

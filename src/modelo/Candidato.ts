@@ -12,7 +12,7 @@ class Candidato extends Pessoa {
    telefone: string;
    competencias: CandidatoCompetencia[];
    formacoes: Formacao[];
-  private experiencias: Experiencia[];
+   experiencias: Experiencia[];
 
   constructor(
     nome: string,

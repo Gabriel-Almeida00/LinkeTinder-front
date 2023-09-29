@@ -1,19 +1,22 @@
+import { v4 as uuidv4 } from 'uuid';
+
 
 class Experiencia {
-    private id!: number;
-    private idCandidato: number;
-    private cargo: string;
-    private empresa: string;
-    private nivel: number;
+     id: string;
+     idCandidato: string;
+     cargo: string;
+     empresa: string;
+     nivel: number;
 
-    constructor(idCandidato: number, cargo: string, empresa: string, nivel: number) {
+    constructor(idCandidato: string, cargo: string, empresa: string, nivel: number) {
+        this.id = uuidv4();
         this.idCandidato = idCandidato;
         this.cargo = cargo;
         this.empresa = empresa;
         this.nivel = nivel;
     }
 
-    obterId(): number {
+    obterId(): string {
         return this.id
     }
 
