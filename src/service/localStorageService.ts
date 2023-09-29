@@ -1,4 +1,5 @@
 import Candidato from "../modelo/Candidato";
+import Empresa from "../modelo/Empresa";
 
 class LocalStorageService<T> {
     private key: string;
@@ -16,6 +17,15 @@ class LocalStorageService<T> {
         const dadosJSON = localStorage.getItem(this.key);
         if (dadosJSON) {
             const dados = JSON.parse(dadosJSON) as Candidato[];
+            return dados;
+        }
+        return [];
+    }
+
+    BuscarEmpresaNoLocalStorage(): Empresa[] | [] {
+        const dadosJSON = localStorage.getItem(this.key);
+        if (dadosJSON) {
+            const dados = JSON.parse(dadosJSON) as Empresa[];
             return dados;
         }
         return [];

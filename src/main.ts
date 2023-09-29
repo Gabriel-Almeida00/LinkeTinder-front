@@ -10,11 +10,15 @@ import PerfilCandidatoController from './Controler/Candidato/PerfilCandidatoCont
 import PerfilCandidatoCompetenciaController from './Controler/Candidato/PerfilCandidatoCompetenciaController';
 import PerfilCandidatoFormacaoController from './Controler/Candidato/PerfilCandidatoFormacaoController';
 import PerfilCandidatoExperienciaController from './Controler/Candidato/PerfilCandidatoExperienciaController';
+import PerfilEmpresaController from './Controler/Empresa/PerfilEmpresaController';
 
 
 const candidatoService = new CandidatoService();
 const usuarioService = new UsuarioService();
 const empresaService = new EmpresaService();
+
+const perfilEmpresaController = new PerfilEmpresaController();
+perfilEmpresaController.exibirInformacoesEmpresaNoHTML();
 
 const perfilCandidatoExperienciaController = new PerfilCandidatoExperienciaController();
 perfilCandidatoExperienciaController.exibirExperienciaDoCandidato();

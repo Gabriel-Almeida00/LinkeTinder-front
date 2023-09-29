@@ -17,6 +17,47 @@ class PerfilEmpresaController {
         }
     }
 
+    exibirInformacoesEmpresaNoHTML(){
+        const idEmpresa = this.usuarioService.obterIdUsuarioLogado()
+        const empresa = this.usuarioService.obterEmpresa(idEmpresa)
+
+        const nomeElement = document.getElementById('nomeEmpresa') as HTMLInputElement;
+        if (nomeElement) {
+            nomeElement.value = empresa.nome;
+        }
+
+        const emailElement = document.getElementById('emailEmpresa') as HTMLInputElement;
+        if (emailElement) {
+            emailElement.value = empresa.email;
+        }
+
+        const paisElement = document.getElementById('paisEmpresa') as HTMLInputElement;
+        if (paisElement) {
+            paisElement.value = empresa.pais;
+        }
+
+        const cepElement = document.getElementById('cepEmpresa') as HTMLInputElement;
+        if (cepElement) {
+            cepElement.value = empresa.cep;
+        }
+
+        const cnpjElement = document.getElementById('cnpjEmpresa') as HTMLInputElement;
+        if (cnpjElement) {
+            cnpjElement.value = empresa.cnpj;
+        }
+
+        const senhaElement = document.getElementById('senhaEmpresa') as HTMLInputElement;
+        if (senhaElement) {
+            senhaElement.value = empresa.senha;
+        }
+
+        const descricaoElement = document.getElementById('descricaoEmpresa') as HTMLInputElement;
+        if (descricaoElement) {
+            descricaoElement.value = empresa.descricao;
+        }
+
+    }
+
     salvarInformacoesEmpresa(){
         try{
             const idEmpresa = this.usuarioService.obterIdUsuarioLogado()
@@ -38,7 +79,8 @@ class PerfilEmpresaController {
             empresaExistente.senha = senhaElement.value;
             empresaExistente.descricao = descricaoElement.value;
 
-
+            this.empresaService.atualizarEmpresaNoLocalStorage(empresaExistente);
+            this.exibirInformacoesEmpresaNoHTML();
         }catch (error) {
             console.error('Erro ao salvar informações da empresa:', error);
         }

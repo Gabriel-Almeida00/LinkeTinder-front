@@ -58,6 +58,16 @@ class EmpresaService {
         this.salvarEmpresasNoLocalStorage();
     }
 
+    atualizarEmpresaNoLocalStorage(empresaAtualizada: Empresa): void {
+        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+        const indice = empresas.findIndex((empresa) => empresa.id === empresaAtualizada.id);
+    
+        if (indice !== -1) {
+            empresas[indice] = empresaAtualizada;
+            this.localStorageService.salvarDados(empresas);
+        }
+    }
+
    
 
     calcularAfinidadeVagaComCandidato(vaga: VagaDTO): number {
