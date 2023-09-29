@@ -2,16 +2,17 @@ import TipoUsuario from "../modelo/enum/tipoUsuario";
 import Candidato from "../modelo/Candidato";
 import Empresa from "../modelo/Empresa";
 import Pessoa from "../modelo/Pessoa";
-import CandidatoCompetencia from "../modelo/CandidatoCompetencia";
 
 class UsuarioService {
     constructor() { }
 
     login(email: string, senha: string, userType: TipoUsuario): Pessoa | null {
         const usuarios = this.getUsuariosPorTipo(userType);
+        console.log(usuarios)
         const usuarioExistente = usuarios.find(
             (usuario) => usuario.getEmail() === email && usuario.getSenha() === senha
         );
+        console.log(usuarioExistente)
 
         if (usuarioExistente) {
             this.setUsuarioLogado(usuarioExistente.id);

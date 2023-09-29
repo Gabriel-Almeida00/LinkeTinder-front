@@ -1,7 +1,5 @@
 import Empresa from "../modelo/Empresa";
 import EmpresaService from "../service/EmpresaService";
-import Vaga from "../modelo/Vaga";
-import Competencia from "../modelo/Competencia";
 import UsuarioService from "../service/usuarioService";
 import VagaDTO from "../modelo/dto/VagaDTO";
 import VagaCompetencia from "../modelo/VagaCompetencia";

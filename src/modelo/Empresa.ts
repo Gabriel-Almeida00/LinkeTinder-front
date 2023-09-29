@@ -3,7 +3,7 @@ import Vaga from "./Vaga";
 import TipoUsuario from "./enum/tipoUsuario";
 
 class Empresa extends Pessoa {
-    private cnpj: string;
+     cnpj: string;
      vagas: Vaga[];
 
     constructor(
