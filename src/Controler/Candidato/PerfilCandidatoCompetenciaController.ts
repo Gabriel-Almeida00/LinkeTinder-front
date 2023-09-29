@@ -137,7 +137,6 @@ class PerfilCandidatoCompetenciaController {
             );
 
             usuarioLogado.competencias.push(novaCompetencia);
-
             this.candidatoService.adicionarCompetenciaAoCandidato(idCandidato, novaCompetencia);
 
             nomeCompetenciaElement.value = '';

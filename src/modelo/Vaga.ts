@@ -1,26 +1,27 @@
 import VagaCompetencia from "./VagaCompetencia";
 import VagaCurtida from "./VagaCurtida";
-
+import { v4 as uuidv4 } from 'uuid';
 
 class Vaga {
-    private id!: number;
-    private idEmpresa: number;
-    private nome: string;
-    private descricao: string;
-    private cidade: string;
-    private formacaoMinima: number;
-    private experienciaMinima: number;
-    private competencias: VagaCompetencia[];
-    private curtida: VagaCurtida[];
+     id: string;
+     idEmpresa: string;
+     nome: string;
+     descricao: string;
+     cidade: string;
+     formacaoMinima: number;
+     experienciaMinima: number;
+     competencias: VagaCompetencia[];
+     curtida: VagaCurtida[];
 
     constructor(
-        idEmpresa: number,
+        idEmpresa: string,
         nome: string,
         descricao: string,
         cidade: string,
         formacaoMinima: number,
         experienciaMinima: number
     ) {
+        this.id = uuidv4();
         this.idEmpresa = idEmpresa;
         this.nome = nome;
         this.descricao = descricao;
@@ -31,7 +32,7 @@ class Vaga {
         this.curtida = [];
     }
 
-    obterId(): number {
+    obterId(): string {
         return this.id
     }
 

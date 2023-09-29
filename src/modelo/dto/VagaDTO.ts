@@ -1,7 +1,7 @@
 import VagaCompetencia from '../VagaCompetencia';
 
 export default class VagaDTO {
-    private id: number;
+    private id: string;
     private nome: string;
     private descricao: string;
     private formacaoMinima: number;
@@ -9,7 +9,7 @@ export default class VagaDTO {
     private competencias: VagaCompetencia[];
 
     constructor(
-        id: number,
+        id: string,
         nome: string,
         descricao: string,
         formacaoMinima: number,

@@ -102,12 +102,11 @@ class CandidatoService {
 
         if (candidatoIndex !== -1) {
             const candidato = candidatos[candidatoIndex];
-
-            const competenciaIndex = candidato.competencias.findIndex((competencia) => competencia.idCompetencia === competenciaId);
+            const competenciaIndex = candidato.competencias
+            .findIndex((competencia) => competencia.idCompetencia === competenciaId);
 
             if (competenciaIndex !== -1) {
                 candidato.competencias.splice(competenciaIndex, 1);
-
                 this.localStorageService.salvarDados(candidatos);
             }
         }

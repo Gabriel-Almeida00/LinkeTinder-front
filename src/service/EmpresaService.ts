@@ -68,6 +68,58 @@ class EmpresaService {
         }
     }
 
+    obterVagasDaEmpresa(idEmpresa: string): Vaga[] {
+        const empresasJson = localStorage.getItem('empresas');
+
+        if (empresasJson) {
+            const empresas = JSON.parse(empresasJson) as Empresa[];
+
+            const vagasEncontradas = empresas.find((empresa) => empresa.id === idEmpresa);
+
+            if (vagasEncontradas) {
+                return vagasEncontradas.vagas || [];
+            }
+        }
+
+        return [];
+    }
+
+    adicionarVagaAEmpresa(idEmpresa: string, vaga: Vaga): void{
+        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+        const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
+    
+        if (empresaIndex !== -1) {
+            const empresaExistente = empresas[empresaIndex];
+            empresaExistente.vagas.push(vaga);
+            this.localStorageService.salvarDados(empresas);
+        }
+    }
+
+    atualizarVagaDaEmpresa(idEmpresa: string, NovasVagas:Vaga[]): void {
+        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+        const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
+    
+        if (empresaIndex !== -1) {
+            empresas[empresaIndex].vagas = NovasVagas;
+            this.localStorageService.salvarDados(empresas);
+        }   
+    }
+
+    excluirVagaDaEmpresa(idEmpresa: string, idVaga:string){
+        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+        const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
+
+        if (empresaIndex !== -1) {
+            const empresa = empresas[empresaIndex];
+            const vagaIndex = empresa.vagas.findIndex((vaga) => vaga.id === idVaga);
+
+            if (vagaIndex !== -1) {
+                empresa.vagas.splice(vagaIndex, 1);
+                this.localStorageService.salvarDados(empresas);
+            }
+        }
+    }
+
    
 
     calcularAfinidadeVagaComCandidato(vaga: VagaDTO): number {

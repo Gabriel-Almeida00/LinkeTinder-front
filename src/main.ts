@@ -11,11 +11,15 @@ import PerfilCandidatoCompetenciaController from './Controler/Candidato/PerfilCa
 import PerfilCandidatoFormacaoController from './Controler/Candidato/PerfilCandidatoFormacaoController';
 import PerfilCandidatoExperienciaController from './Controler/Candidato/PerfilCandidatoExperienciaController';
 import PerfilEmpresaController from './Controler/Empresa/PerfilEmpresaController';
+import PerfilEmpresaVagasController from './Controler/Empresa/PerfilEmpresaVagasController';
 
 
 const candidatoService = new CandidatoService();
 const usuarioService = new UsuarioService();
 const empresaService = new EmpresaService();
+
+const perfilEmpresaVgasController = new PerfilEmpresaVagasController();
+perfilEmpresaVgasController.exibirVagasDaEmpresa();
 
 const perfilEmpresaController = new PerfilEmpresaController();
 perfilEmpresaController.exibirInformacoesEmpresaNoHTML();
