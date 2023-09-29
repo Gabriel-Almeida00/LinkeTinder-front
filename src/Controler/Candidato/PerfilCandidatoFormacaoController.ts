@@ -1,6 +1,6 @@
-import Formacao from "../modelo/Formacao";
-import FormacaoService from "../service/FormacaoService";
-import UsuarioService from "../service/usuarioService";
+import Formacao from "../../modelo/Formacao";
+import FormacaoService from "../../service/FormacaoService";
+import UsuarioService from "../../service/usuarioService";
 
 class PerfilCandidatoFormacaoController {
     private usuarioService: UsuarioService;
@@ -44,7 +44,7 @@ class PerfilCandidatoFormacaoController {
 
 
 
-        const idCandidato = this.usuarioService.obterIdCandidatoLogado();
+        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
         const candidatoLogado = this.usuarioService.obterCandidato(idCandidato)
         
         const novaFormacao = new Formacao(idCandidato, instituicao, curso, nivelFormacao, anoConclusao);
@@ -103,7 +103,7 @@ class PerfilCandidatoFormacaoController {
         const novoAnoConclusao = anoConclusaoElement.value;
     
         if (novaInstituicao && novoCurso && novoNivel && novoAnoConclusao) {
-            const idCandidato = this.usuarioService.obterIdCandidatoLogado()
+            const idCandidato = this.usuarioService.obterIdUsuarioLogado()
             const candidato = this.usuarioService.obterCandidato(idCandidato)
     
             if (candidato) {
@@ -137,7 +137,7 @@ class PerfilCandidatoFormacaoController {
     }
 
     exibirFormacoesDoCandidato() {
-        const idCandidato = this.usuarioService.obterIdCandidatoLogado()
+        const idCandidato = this.usuarioService.obterIdUsuarioLogado()
         const candidatoLogado = this.usuarioService.obterCandidato(idCandidato);
 
         if (candidatoLogado) {

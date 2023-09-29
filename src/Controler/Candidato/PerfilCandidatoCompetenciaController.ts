@@ -1,7 +1,7 @@
-import CandidatoCompetencia from "../modelo/CandidatoCompetencia";
-import CandidatoService from "../service/CandidatoService";
-import CompetenciaService from "../service/CompetenciaService";
-import UsuarioService from "../service/usuarioService";
+import CandidatoCompetencia from "../../modelo/CandidatoCompetencia";
+import CandidatoService from "../../service/CandidatoService";
+import CompetenciaService from "../../service/CompetenciaService";
+import UsuarioService from "../../service/usuarioService";
 
 class PerfilCandidatoCompetenciaController {
     private candidatoService: CandidatoService;
@@ -58,7 +58,7 @@ class PerfilCandidatoCompetenciaController {
 
 
     exibirCompetenciasDoCandidato() {
-        const idCandidato = this.usuarioService.obterIdCandidatoLogado()
+        const idCandidato = this.usuarioService.obterIdUsuarioLogado()
         const candidatoLogado = this.usuarioService.obterCandidato(idCandidato);
 
         if (candidatoLogado) {
@@ -127,7 +127,7 @@ class PerfilCandidatoCompetenciaController {
 
         if (nomeCompetencia && nivelCompetenciaString) {
             const nivelCompetencia = this.nivelMap[nivelCompetenciaString];
-            const idCandidato = this.usuarioService.obterIdCandidatoLogado()
+            const idCandidato = this.usuarioService.obterIdUsuarioLogado()
             const usuarioLogado = this.usuarioService.obterCandidato(idCandidato)
 
             const novaCompetencia = new CandidatoCompetencia(
@@ -158,7 +158,7 @@ class PerfilCandidatoCompetenciaController {
     
         if (novoNomeCompetencia && novoNivelCompetenciaString) {
             const novoNivelCompetencia = parseInt(novoNivelCompetenciaString, 10);
-            const idCandidato = this.usuarioService.obterIdCandidatoLogado();
+            const idCandidato = this.usuarioService.obterIdUsuarioLogado();
             const candidatoLogado = this.usuarioService.obterCandidato(idCandidato);
     
             if (candidatoLogado) {

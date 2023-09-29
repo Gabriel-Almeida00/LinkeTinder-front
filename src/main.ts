@@ -6,10 +6,10 @@ import './View/login';
 import CandidatoService from './service/CandidatoService';
 import EmpresaService from './service/EmpresaService';
 import UsuarioService from './service/usuarioService';
-import PerfilCandidatoController from './Controler/PerfilCandidatoController';
-import PerfilCandidatoCompetenciaController from './Controler/PerfilCandidatoCompetenciaController';
-import PerfilCandidatoFormacaoController from './Controler/PerfilCandidatoFormacaoController';
-import PerfilCandidatoExperienciaController from './Controler/PerfilCandidatoExperienciaController';
+import PerfilCandidatoController from './Controler/Candidato/PerfilCandidatoController';
+import PerfilCandidatoCompetenciaController from './Controler/Candidato/PerfilCandidatoCompetenciaController';
+import PerfilCandidatoFormacaoController from './Controler/Candidato/PerfilCandidatoFormacaoController';
+import PerfilCandidatoExperienciaController from './Controler/Candidato/PerfilCandidatoExperienciaController';
 
 
 const candidatoService = new CandidatoService();
@@ -33,10 +33,11 @@ const empresaUi = new EmpresaUI(empresaService, usuarioService);
 
 empresaUi.listarVagas();
 empresaUi.associarEventosInformacoesVaga();
-candidatoUI.listarCandidatos();
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const dadosCompetencias = candidatoUI.obterContagemCompetencias();
+    candidatoUI.listarCandidatos();
     candidatoUI.criarGraficoCompetencias(dadosCompetencias);
     candidatoUI.associarEventosInformacoesCandidato();
 });

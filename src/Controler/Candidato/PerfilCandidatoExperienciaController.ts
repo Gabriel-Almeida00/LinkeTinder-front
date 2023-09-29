@@ -1,6 +1,6 @@
-import Experiencia from "../modelo/Experiencia";
-import ExperienciaService from "../service/ExperienciaService";
-import UsuarioService from "../service/usuarioService";
+import Experiencia from "../../modelo/Experiencia";
+import ExperienciaService from "../../service/ExperienciaService";
+import UsuarioService from "../../service/usuarioService";
 
 class PerfilCandidatoExperienciaController{
     private usuarioService: UsuarioService;
@@ -53,7 +53,7 @@ class PerfilCandidatoExperienciaController{
     }
 
     exibirExperienciaDoCandidato() {
-        const idCandidato = this.usuarioService.obterIdCandidatoLogado()
+        const idCandidato = this.usuarioService.obterIdUsuarioLogado()
         const candidatoLogado = this.usuarioService.obterCandidato(idCandidato);
 
         if (candidatoLogado) {
@@ -115,7 +115,7 @@ class PerfilCandidatoExperienciaController{
         const nivel = nivelElement.value;
         const nivelExperiencia = this.nivelMap[nivel];
 
-        const idCandidato = this.usuarioService.obterIdCandidatoLogado();
+        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
         const candidatoLogado = this.usuarioService.obterCandidato(idCandidato)
         
         const novaExperiencia = new Experiencia(idCandidato, cargo, empresa, nivelExperiencia);
@@ -145,7 +145,7 @@ class PerfilCandidatoExperienciaController{
         const novoNivel = parseInt(nivelElement.value);
     
         if (novoCargo && novaEmpresa && novoNivel) {
-            const idCandidato = this.usuarioService.obterIdCandidatoLogado()
+            const idCandidato = this.usuarioService.obterIdUsuarioLogado()
             const candidato = this.usuarioService.obterCandidato(idCandidato)
     
             if (candidato) {

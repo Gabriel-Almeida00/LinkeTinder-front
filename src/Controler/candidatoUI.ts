@@ -149,7 +149,8 @@ export class CandidatoUI {
         li.setAttribute("class", "candidato-item");
         li.setAttribute("data-index", index.toString());
     
-        const empresaLogada = this.usuarioService.obterEmpresaLogado();
+        const idEmpresa = this.usuarioService.obterIdUsuarioLogado()
+        const empresaLogada = this.usuarioService.obterEmpresa(idEmpresa);
         if (empresaLogada) {
             const afinidadesHtml = this.obterAfinidadesHtml(candidatoDTO, empresaLogada.getVagas());
             const informacoesCandidatoHtml = this.obterInformacoesCandidatoHtml(candidatoDTO);

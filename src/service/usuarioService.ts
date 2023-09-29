@@ -22,12 +22,16 @@ class UsuarioService {
         }
     }
 
+    obterIdUsuarioLogado(): string {
+        const idUsuarioLogadoJson = localStorage.getItem('usuarioLogado');
+        return idUsuarioLogadoJson ? JSON.parse(idUsuarioLogadoJson) : null;
+    }
+
     obterCandidato(idCandidato: string): Candidato {
         const candidatosJson = localStorage.getItem('candidatos');
 
         if (candidatosJson) {
             const candidatos = JSON.parse(candidatosJson) as Candidato[];
-
             const candidatoEncontrado = candidatos.find((candidato) => candidato.id === idCandidato);
 
             if (candidatoEncontrado) {
@@ -38,16 +42,16 @@ class UsuarioService {
 
     }
 
-    obterIdCandidatoLogado(): string {
-        const idUsuarioLogadoJson = localStorage.getItem('usuarioLogado');
-        return idUsuarioLogadoJson ? JSON.parse(idUsuarioLogadoJson) : null;
-    }
+    obterEmpresa(idEmpresa: string): Empresa {
+        const empresaJson = localStorage.getItem('empresas')
 
-    obterEmpresaLogado(): Empresa {
-        const empresaLogadoJson = localStorage.getItem('usuarioLogado');
-        if (empresaLogadoJson) {
-            const empresaLogado = JSON.parse(empresaLogadoJson);
-            return empresaLogado as Empresa;
+        if(empresaJson){
+            const empresas = JSON.parse(empresaJson) as Empresa[];
+            const empresaEncontrada = empresas.find((empresa) => empresa.id === idEmpresa);
+
+            if(empresaEncontrada){
+                return empresaEncontrada;
+            }
         }
         throw new UsuarioNaoEncontradoException('Usuário não encontrado.');
     }

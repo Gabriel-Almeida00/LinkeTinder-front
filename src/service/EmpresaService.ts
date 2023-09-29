@@ -61,7 +61,7 @@ class EmpresaService {
    
 
     calcularAfinidadeVagaComCandidato(vaga: VagaDTO): number {
-        const idCandidato = this.usuarioService.obterIdCandidatoLogado()
+        const idCandidato = this.usuarioService.obterIdUsuarioLogado()
         const candidatoLogado = this.usuarioService.obterCandidato(idCandidato);
     
         if (!candidatoLogado) {

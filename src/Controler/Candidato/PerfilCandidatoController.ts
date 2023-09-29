@@ -1,7 +1,5 @@
-import Candidato from "../modelo/Candidato";
-import TipoUsuario from "../modelo/enum/tipoUsuario";
-import CandidatoService from "../service/CandidatoService";
-import UsuarioService from "../service/usuarioService";
+import CandidatoService from "../../service/CandidatoService";
+import UsuarioService from "../../service/usuarioService";
 
 class PerfilCandidatoController {
     private candidatoService: CandidatoService;
@@ -19,9 +17,8 @@ class PerfilCandidatoController {
         }
     }
 
-
     exibirInformacoesCandidatoNoHTML() {
-       const idCanddato = this.usuarioService.obterIdCandidatoLogado()
+       const idCanddato = this.usuarioService.obterIdUsuarioLogado()
        const usuarioLogado = this.usuarioService.obterCandidato(idCanddato)
        
 
@@ -85,7 +82,7 @@ class PerfilCandidatoController {
 
     salvarInformacoesCandidato() {
         try {
-            const idCanddato = this.usuarioService.obterIdCandidatoLogado()
+            const idCanddato = this.usuarioService.obterIdUsuarioLogado()
             const candidatoExistente = this.usuarioService.obterCandidato(idCanddato);
 
             const nomeElement = document.getElementById('nomeCandidato') as HTMLInputElement;
@@ -121,7 +118,5 @@ class PerfilCandidatoController {
             console.error('Erro ao salvar informações do candidato:', error);
         }
     }
-
-
 }
 export default PerfilCandidatoController
