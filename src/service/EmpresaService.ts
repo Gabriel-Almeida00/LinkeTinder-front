@@ -44,7 +44,7 @@ class EmpresaService {
         const vagas: VagaDTO[] = [];
     
         this.empresas.forEach(empresa => {
-            empresa.getVagas().forEach(vaga => {
+            empresa.vagas.forEach(vaga => {
                 const vagaDTO = this.converterVagaParaDTO(vaga);
                 vagas.push(vagaDTO);
             });

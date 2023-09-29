@@ -4,7 +4,7 @@ import TipoUsuario from "./enum/tipoUsuario";
 
 class Empresa extends Pessoa {
     private cnpj: string;
-    private vagas: Vaga[];
+     vagas: Vaga[];
 
     constructor(
         nome: string,

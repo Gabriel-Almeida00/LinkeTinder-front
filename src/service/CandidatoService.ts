@@ -33,12 +33,12 @@ class CandidatoService {
 
     listarCandidatosDTO(): CandidatoDTO[] {
         return this.candidatos.map(candidato => new CandidatoDTO(
-            candidato.obterId(),
-            candidato.getNome(),
-            candidato.getDescricao(),
-            candidato.getCompetencias(),
-            candidato.getExperiencias(),
-            candidato.getFormacoes()
+            candidato.id,
+            candidato.nome,
+            candidato.descricao,
+            candidato.competencias,
+            candidato.experiencias,
+            candidato.formacoes
         ));
     }
 

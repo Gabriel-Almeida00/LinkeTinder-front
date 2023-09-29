@@ -9,27 +9,6 @@ body {
     background-color: #f7f7f7;
 }
 
-.menu {
-    list-style-type: none;
-    padding: 0;
-}
-
-.menu li {
-    display: inline;
-    margin-right: 20px;
-}
-
-.menu a {
-    text-decoration: none;
-    color: #007bff; 
-    padding: 5px;
-}
-
-.menu a:hover {
-    text-decoration: underline;
-}
-
-
 .container {
     max-width: 800px;
     margin: 0 auto;
