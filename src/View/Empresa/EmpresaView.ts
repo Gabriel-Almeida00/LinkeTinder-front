@@ -9,7 +9,7 @@ class EmpresaView{
         if (window.location.href.includes('http://localhost:8080/paginas/empresa/')) {
             this.perfilEmpresaController = new PerfilEmpresaController();
             this.perfilEmpresaVagasController = new PerfilEmpresaVagasController();
-            console.log("EmpresaView")
+
             this.perfilEmpresaController.exibirInformacoesEmpresaNoHTML();
             this.perfilEmpresaVagasController.exibirVagasDaEmpresa();
         }

@@ -15,7 +15,7 @@ class CandidatoView {
             this.perfilCandidatoExperienciaController = new PerfilCandidatoExperienciaController();
             this.perfilCandidatoFormacaoController = new PerfilCandidatoFormacaoController();
             this.perfilCandidatoController = new PerfilCandidatoController();
-            console.log("candidato view")
+            
             this.perfilCandidatoCompetenciaController.exibirCompetenciasDoCandidato();
             this.perfilCandidatoExperienciaController.exibirExperienciaDoCandidato();
             this.perfilCandidatoFormacaoController.exibirFormacoesDoCandidato();
