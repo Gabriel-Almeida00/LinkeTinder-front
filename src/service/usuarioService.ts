@@ -22,6 +22,7 @@ class UsuarioService {
         }
     }
 
+
     obterIdUsuarioLogado(): string {
         const idUsuarioLogadoJson = localStorage.getItem('usuarioLogado');
         return idUsuarioLogadoJson ? JSON.parse(idUsuarioLogadoJson) : null;

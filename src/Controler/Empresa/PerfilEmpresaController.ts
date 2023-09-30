@@ -21,37 +21,37 @@ class PerfilEmpresaController {
         const idEmpresa = this.usuarioService.obterIdUsuarioLogado()
         const empresa = this.usuarioService.obterEmpresa(idEmpresa)
 
-        const nomeElement = document.getElementById('nomeEmpresa') as HTMLInputElement;
+        const nomeElement = document.getElementById('empresaNome') as HTMLInputElement;
         if (nomeElement) {
             nomeElement.value = empresa.nome;
         }
 
-        const emailElement = document.getElementById('emailEmpresa') as HTMLInputElement;
+        const emailElement = document.getElementById('empresaEmail') as HTMLInputElement;
         if (emailElement) {
             emailElement.value = empresa.email;
         }
 
-        const paisElement = document.getElementById('paisEmpresa') as HTMLInputElement;
+        const paisElement = document.getElementById('empresaPais') as HTMLInputElement;
         if (paisElement) {
             paisElement.value = empresa.pais;
         }
 
-        const cepElement = document.getElementById('cepEmpresa') as HTMLInputElement;
+        const cepElement = document.getElementById('empresaCep') as HTMLInputElement;
         if (cepElement) {
             cepElement.value = empresa.cep;
         }
 
-        const cnpjElement = document.getElementById('cnpjEmpresa') as HTMLInputElement;
+        const cnpjElement = document.getElementById('empresaCnpj') as HTMLInputElement;
         if (cnpjElement) {
             cnpjElement.value = empresa.cnpj;
         }
 
-        const senhaElement = document.getElementById('senhaEmpresa') as HTMLInputElement;
+        const senhaElement = document.getElementById('empresaSenha') as HTMLInputElement;
         if (senhaElement) {
             senhaElement.value = empresa.senha;
         }
 
-        const descricaoElement = document.getElementById('descricaoEmpresa') as HTMLInputElement;
+        const descricaoElement = document.getElementById('empresaDescricao') as HTMLInputElement;
         if (descricaoElement) {
             descricaoElement.value = empresa.descricao;
         }
@@ -63,13 +63,13 @@ class PerfilEmpresaController {
             const idEmpresa = this.usuarioService.obterIdUsuarioLogado()
             const empresaExistente = this.usuarioService.obterEmpresa(idEmpresa);
 
-            const nomeElement = document.getElementById('nomeEmpresa') as HTMLInputElement;
-            const emailElement = document.getElementById('emailEmpresa') as HTMLInputElement;
-            const paisElement = document.getElementById('paisEmpresa') as HTMLInputElement;
-            const cepElement = document.getElementById('cepEmpresa') as HTMLInputElement;
-            const cnpjElement = document.getElementById('cnpjEmpresa') as HTMLInputElement;
-            const senhaElement = document.getElementById('senhaEmpresa') as HTMLInputElement;
-            const descricaoElement = document.getElementById('descricaoEmpresa') as HTMLInputElement;
+            const nomeElement = document.getElementById('empresaNome') as HTMLInputElement;
+            const emailElement = document.getElementById('empresaEmail') as HTMLInputElement;
+            const paisElement = document.getElementById('empresaPais') as HTMLInputElement;
+            const cepElement = document.getElementById('empresaCep') as HTMLInputElement;
+            const cnpjElement = document.getElementById('empresaCnpj') as HTMLInputElement;
+            const senhaElement = document.getElementById('empresaSenha') as HTMLInputElement;
+            const descricaoElement = document.getElementById('empresaDescricao') as HTMLInputElement;
             
             empresaExistente.nome = nomeElement.value;
             empresaExistente.email = emailElement.value;
