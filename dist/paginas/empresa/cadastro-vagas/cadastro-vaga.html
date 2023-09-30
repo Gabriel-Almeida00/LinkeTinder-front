@@ -31,12 +31,44 @@
                         <th>Nível de Formação</th>
                         <th>Nível de Experiência</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="vagas-list">
                     <!--aqui a tabela de competencias da vaga será adicionada dinamicamente -->
                 </tbody>
             </table>
+        </div>
+
+        <div id="competencias-vaga-container" class="competencias-vaga-container" style="display: none;">
+            <table id="competencias-vaga-table">
+                <thead>
+                    <tr>
+                        <th>Competência</th>
+                        <th>Nível</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="competencias-vaga-list">
+                    <!-- Linhas das competências serão adicionadas dinamicamente aqui -->
+                </tbody>
+            </table>
+        
+            <div class="cadastro-competencia-container">
+                <h2>Cadastrar Competência na Vaga</h2>
+                <div class="input-group">
+                    <div class="input-block">
+                        <label for="idCompetenciaVaga" class="form-label">ID Competência</label>
+                        <input type="text" id="idCompetenciaVaga" class="form-input" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="idNivelCompetenciaVaga" class="form-label">ID Nível Competência</label>
+                        <input type="text" id="idNivelCompetenciaVaga" class="form-input" required>
+                    </div>
+                </div>
+                <button type="button" id="adicionar-competencia-vaga" class="add-button">Adicionar </button>
+                <button type="button" id="atualizar-competencia-vaga" class="add-button">Atualizar </button>
+            </div>
         </div>
 
         <div class="cadastro-container">

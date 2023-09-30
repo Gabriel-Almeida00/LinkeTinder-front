@@ -106,26 +106,55 @@ h2 {
     background-color: #999;
 }
 
-/* Estilos específicos para a tabela de competências da vaga */
 #competencias-vaga-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-#competencias-vaga-table th,
-#competencias-vaga-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-}
-
-/* Estilos específicos para a tabela de competências da vaga */
+/* Estilo para as células do cabeçalho */
 #competencias-vaga-table th {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
 }
 
-#competencias-vaga-list tr:hover {
-    background-color: #f0f0f0;
+/* Estilo para as células de dados */
+#competencias-vaga-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para células de dados alternadas (linhas ímpares) */
+#competencias-vaga-table tr:nth-child(odd) td {
+    background-color: #f7f7f7;
+}
+
+/* Estilo para células de botões dentro da tabela */
+#competencias-vaga-table .editar-button,
+#competencias-vaga-table .excluir-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+/* Estilo para botões de edição */
+#competencias-vaga-table .editar-button {
+    background-color: #2ecc71;
+}
+
+/* Estilo para botões de exclusão */
+#competencias-vaga-table .excluir-button {
+    background-color: #e74c3c;
+}
+
+/* Estilo para botões quando hover (passar o mouse por cima) */
+#competencias-vaga-table .editar-button:hover,
+#competencias-vaga-table .excluir-button:hover {
+    background-color: #2980b9;
 }

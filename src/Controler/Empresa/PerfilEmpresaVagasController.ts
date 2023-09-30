@@ -24,6 +24,7 @@ class PerfilEmpresaVagasController {
                 this.atualizarVaga();
             });
         }
+
     }
 
     adicionarVaga() {
@@ -171,10 +172,13 @@ class PerfilEmpresaVagasController {
                     <td>${vaga.cidade}</td>
                     <td>${vaga.formacaoMinima}</td>
                     <td>${vaga.experienciaMinima}</td>
-                    <td style="display: none;" data-competencia-id="${vaga.id}"></td>
                     <td>
                         <button type="button" class="editar-button">Editar</button>
                         <button type="button" class="excluir-button">Excluir</button>
+                    </td>
+                    <td>
+                        <button type="button" class="competencias-button" data-competencia-id="${vaga.id}">
+                            Competências</button>
                     </td>
                     `;
 
