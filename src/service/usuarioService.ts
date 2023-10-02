@@ -1,4 +1,4 @@
-import TipoUsuario from "../modelo/enum/tipoUsuario";
+import TipoUsuario from "../modelo/enum/TipoUsuario";
 import Candidato from "../modelo/Candidato";
 import Empresa from "../modelo/Empresa";
 import Pessoa from "../modelo/Pessoa";

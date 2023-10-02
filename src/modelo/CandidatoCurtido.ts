@@ -1,15 +1,16 @@
-class CandidatoCurtido {
-    private id!: number;
-    private idCandidato: number;
-    private idEmpresa: number;
+import { v4 as uuidv4 } from 'uuid';
 
-    constructor(idCandidato: number, idEmpresa: number) {
+class CandidatoCurtido {
+     id: string;
+     idCandidato: string;
+     idEmpresa: string;
+
+    constructor(idCandidato: string, idEmpresa: string) {
+        this.id = uuidv4();
         this.idCandidato = idCandidato;
         this.idEmpresa = idEmpresa;
     }
 
-    obterId(): number{
-        return this.id
-       }
+  
 }
 export default CandidatoCurtido;

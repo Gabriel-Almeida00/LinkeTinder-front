@@ -31,30 +31,6 @@ class Vaga {
         this.competencias = [];
         this.curtida = [];
     }
-
-    obterId(): string {
-        return this.id
-    }
-
-    getCompetencias(): VagaCompetencia[] {
-        return this.competencias
-    }
-
-    getExperiencia(): number {
-        return this.experienciaMinima
-    }
-
-    getFormacao(): number {
-        return this.formacaoMinima
-    }
-
-    getNome(): string {
-        return this.nome
-    }
-
-    getDescricao():string{
-        return this.descricao
-    }
 }
 
 export default Vaga;

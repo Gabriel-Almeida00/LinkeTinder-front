@@ -8,7 +8,7 @@ import UsuarioService from "../service/usuarioService";
 import CandidatoDTO from "../modelo/dto/CandidatoDTO";
 import Vaga from "../modelo/Vaga";
 import CandidatoCompetencia from "../modelo/CandidatoCompetencia";
-import TipoUsuario from "../modelo/enum/tipoUsuario";
+import TipoUsuario from "../modelo/enum/TipoUsuario";
 
 
 export class CandidatoUI {

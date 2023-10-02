@@ -2,7 +2,7 @@ import CandidatoCompetencia from './CandidatoCompetencia';
 import Pessoa from './Pessoa';
 import Experiencia from './Experiencia';
 import Formacao from './Formacao';
-import TipoUsuario from './enum/tipoUsuario';
+import TipoUsuario from './enum/TipoUsuario';
 
 class Candidato extends Pessoa {
    sobrenome: string;
@@ -37,36 +37,6 @@ class Candidato extends Pessoa {
     this.competencias = []
     this.formacoes = []
     this.experiencias = []
-  }
-
-  getRedeSocial(): string {
-    return this.redeSocial
-  }
-
-  getTelefone(): string {
-    return this.telefone
-  }
-
-  getSobrenome(): string {
-    return this.sobrenome
-  }
-
-  getDataNascimento(): Date{
-    return this.dataNascimento
-  }
-
-  getCpf(): string{
-    return this.cpf
-  }
-
-  getCompetencias(): CandidatoCompetencia[] {
-    return this.competencias
-  }
-  getExperiencias(): Experiencia[] {
-    return this.experiencias
-  }
-  getFormacoes(): Formacao[] {
-    return this.formacoes
   }
 }
 

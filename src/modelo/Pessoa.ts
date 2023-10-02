@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import TipoUsuario from './enum/tipoUsuario';
+import TipoUsuario from './enum/TipoUsuario';
 
 
 class Pessoa {
@@ -10,7 +10,7 @@ class Pessoa {
      cep: string;
      descricao: string;
      senha: string;
-    private tipoUsuario: TipoUsuario
+     tipoUsuario: TipoUsuario
 
     constructor(
         nome: string,
@@ -29,40 +29,6 @@ class Pessoa {
         this.descricao = descricao;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario
-    }
-
-    setId(id: string): void {
-        this.id = id;
-    }
-
-    obterId(): string {
-        return this.id
-    }
-
-    getNome(): string {
-        return this.nome
-    }
-
-    getEmail(): string {
-        return this.email
-    }
-
-    getPais(): string{
-        return this.pais
-    }
-
-    getCep(): string{
-        return this.cep
-    }
-
-  
-
-    getDescricao(): string {
-        return this.descricao
-    }
-
-    getSenha(): string {
-        return this.senha
     }
 }
 export default Pessoa;

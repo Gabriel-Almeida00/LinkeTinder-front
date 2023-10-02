@@ -3,7 +3,7 @@ import EmpresaService from "../service/EmpresaService";
 import UsuarioService from "../service/usuarioService";
 import VagaDTO from "../modelo/dto/VagaDTO";
 import VagaCompetencia from "../modelo/VagaCompetencia";
-import TipoUsuario from "../modelo/enum/tipoUsuario";
+import TipoUsuario from "../modelo/enum/TipoUsuario";
 
 
 class EmpresaUI {

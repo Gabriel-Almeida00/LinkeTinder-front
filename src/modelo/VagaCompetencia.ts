@@ -13,13 +13,5 @@ class VagaCompetencia{
         this.idCompetencia = idCompetencia;
         this.nivel = nivel;
     }
-
-    ObterId(): string {
-        return this.id;
-    }
-
-    getNivel(): number{
-        return this.nivel
-    }
 }
 export default VagaCompetencia

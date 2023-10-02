@@ -1,15 +1,14 @@
-class VagaCurtida{
-    private id!: number;
-    private idCandidata: number;
-    private idVaga: number;
+import { v4 as uuidv4 } from 'uuid';
 
-    constructor(idCandidata: number, idVaga: number) {
+class VagaCurtida{
+     id: string;
+     idCandidata: string;
+     idVaga: string;
+
+    constructor(idCandidata: string, idVaga: string) {
+        this.id = uuidv4();
         this.idCandidata = idCandidata;
         this.idVaga = idVaga;
     }
-
-   obterId(): number{
-    return this.id
-   }
 }
 export default VagaCurtida;

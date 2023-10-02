@@ -15,20 +15,6 @@ class Experiencia {
         this.empresa = empresa;
         this.nivel = nivel;
     }
-
-    obterId(): string {
-        return this.id
-    }
-
-    getNivel(): number {
-        return this.nivel
-    }
-    getCargo():string{
-        return this.cargo
-    }
-    getEmpresa():string{
-        return this.empresa
-    }
 }
 
 export default Experiencia;

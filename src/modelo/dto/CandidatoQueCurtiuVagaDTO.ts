@@ -1,11 +1,11 @@
 import CandidatoCompetencia from "../CandidatoCompetencia";
 
 class CandidatoQueCurtiuVagaDTO{
-    private idCandidato: number;
-    private descricao: string;
-    private competencia: CandidatoCompetencia[];
+     idCandidato: string;
+     descricao: string;
+     competencia: CandidatoCompetencia[];
 
-    constructor(idCandidato: number, descricao: string, competencia: CandidatoCompetencia[]) {
+    constructor(idCandidato: string, descricao: string, competencia: CandidatoCompetencia[]) {
         this.idCandidato = idCandidato;
         this.descricao = descricao;
         this.competencia = competencia;

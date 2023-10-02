@@ -1,6 +1,6 @@
 import Pessoa from "./Pessoa";
 import Vaga from "./Vaga";
-import TipoUsuario from "./enum/tipoUsuario";
+import TipoUsuario from "./enum/TipoUsuario";
 
 class Empresa extends Pessoa {
      cnpj: string;
@@ -19,9 +19,6 @@ class Empresa extends Pessoa {
         super(nome, email, pais, cep, descricao, senha, tipoUsuario);
         this.cnpj = cnpj;
         this.vagas = [];
-    }
-    getVagas():Vaga[]{
-        return this.vagas
     }
 }
 

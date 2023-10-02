@@ -25,17 +25,4 @@ export default class CandidatoDTO {
         this.experiencias = experiencias;
         this.formacoes = formacoes;
     }
-
-    getCompetencias(): CandidatoCompetencia[] {
-        return this.competencias
-    }
-    getExperiencias(): Experiencia[] {
-        return this.experiencias
-    }
-    getFormacoes(): Formacao[]{
-        return this.formacoes
-    }
-    getDescricao():string{
-        return this.descricao
-    }
 }

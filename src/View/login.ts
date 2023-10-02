@@ -1,4 +1,4 @@
-import TipoUsuario from "../modelo/enum/tipoUsuario";
+import TipoUsuario from "../modelo/enum/TipoUsuario";
 import UsuarioService from "../service/usuarioService";
 
 const form = document.querySelector('form');
