@@ -124,16 +124,16 @@ class EmpresaUI {
         li.setAttribute("class", "vaga-item");
         li.setAttribute("data-index", index.toString());
     
-        const competenciasTexto = this.formatarCompetencias(vaga.getCompetencias());
+        const competenciasTexto = this.formatarCompetencias(vaga.competencias);
     
         const afinidade = this.empresaService.calcularAfinidadeVagaComCandidato(vaga);
     
         li.innerHTML = `
             <div class="informacoes-vaga hidden">
-                <p class="formacao-vaga">Formação Mínima: ${vaga.getFormacao()}</p>
-                <p class="experiencia-vaga">Experiência Mínima: ${vaga.getExperiencia()}</p>
+                <p class="formacao-vaga">Formação Mínima: ${vaga.formacaoMinima}</p>
+                <p class="experiencia-vaga">Experiência Mínima: ${vaga.experienciaMinima}</p>
             </div><br>
-            <strong>${vaga.getNome()}</strong><br>${vaga.getDescricao()}<br>Competências: ${competenciasTexto}
+            <strong>${vaga.nome}</strong><br>${vaga.descricao}<br>Competências: ${competenciasTexto}
             <br>Afinidade: ${afinidade.toFixed(2)}%
         `;
     
@@ -141,7 +141,7 @@ class EmpresaUI {
     }
     
     private formatarCompetencias(competencias: VagaCompetencia[]): string {
-        return competencias.map(comp => `${comp.getNivel()} `).join(", ");
+        return competencias.map(comp => `${comp.nivel} `).join(", ");
     }
     
 

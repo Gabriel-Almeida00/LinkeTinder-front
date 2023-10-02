@@ -32,12 +32,12 @@ class EmpresaService {
 
     private converterVagaParaDTO(vaga: Vaga): VagaDTO {
         return new VagaDTO(
-            vaga.obterId(),
-            vaga.getNome(),
-            vaga.getDescricao(),
-            vaga.getFormacao(),
-            vaga.getExperiencia(),
-            vaga.getCompetencias()
+            vaga.id,
+            vaga.nome,
+            vaga.descricao,
+            vaga.formacaoMinima,
+            vaga.experienciaMinima,
+            vaga.competencias
         );
     }
 
@@ -223,10 +223,10 @@ class EmpresaService {
     private calcularAfinidadeCompetencias(vaga: VagaDTO, candidato: Candidato): number {
         let afinidade = 0;
 
-        vaga.getVagas().forEach(requisito => {
-            const competenciaCandidato = candidato.getCompetencias().find(
-                competencia => competencia.getNivel() === requisito.getNivel());
-            if (competenciaCandidato && competenciaCandidato.getNivel() === requisito.getNivel()) {
+        vaga.competencias.forEach(requisito => {
+            const competenciaCandidato = candidato.competencias.find(
+                competencia => competencia.nivel === requisito.nivel);
+            if (competenciaCandidato && competenciaCandidato.nivel === requisito.nivel) {
                 afinidade += 3;
             }
         });
@@ -235,14 +235,14 @@ class EmpresaService {
     }
 
     private calcularAfinidadeExperiencia(vaga: VagaDTO, candidato: Candidato): number {
-        const experienciaCandidato = candidato.getExperiencias().find(
-            experiencia => experiencia.getNivel() === vaga.getExperiencia());
+        const experienciaCandidato = candidato.experiencias.find(
+            experiencia => experiencia.nivel === vaga.experienciaMinima);
         return experienciaCandidato ? 3 : 0;
     }
 
     private calcularAfinidadeFormacao(vaga: VagaDTO, candidato: Candidato): number {
-        const formacaoCandidato = candidato.getFormacoes().find(
-            formacao => formacao.getNivel() === vaga.getFormacao());
+        const formacaoCandidato = candidato.formacoes.find(
+            formacao => formacao.nivel === vaga.formacaoMinima);
         return formacaoCandidato ? 3 : 0;
     }
 

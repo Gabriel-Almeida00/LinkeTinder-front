@@ -152,7 +152,7 @@ export class CandidatoUI {
         const idEmpresa = this.usuarioService.obterIdUsuarioLogado()
         const empresaLogada = this.usuarioService.obterEmpresa(idEmpresa);
         if (empresaLogada) {
-            const afinidadesHtml = this.obterAfinidadesHtml(candidatoDTO, empresaLogada.getVagas());
+            const afinidadesHtml = this.obterAfinidadesHtml(candidatoDTO, empresaLogada.vagas);
             const informacoesCandidatoHtml = this.obterInformacoesCandidatoHtml(candidatoDTO);
     
             li.innerHTML = `
@@ -173,28 +173,28 @@ export class CandidatoUI {
         let afinidadesHtml = '';
         vagas.forEach(vaga => {
             const afinidade = this.candidatoService.calcularAfinidadeCandidatoComVaga(candidatoDTO, [vaga]);
-            afinidadesHtml += `<p>Afinidade com ${vaga.getNome()}: ${afinidade.toFixed(2)}%</p>`;
+            afinidadesHtml += `<p>Afinidade com ${vaga.nome}: ${afinidade.toFixed(2)}%</p>`;
         });
         return afinidadesHtml;
     }
     
     private obterInformacoesCandidatoHtml(candidatoDTO: CandidatoDTO): string {
         return `
-            <p class="formacao-candidato">Formação: ${this.obterFormacoesTexto(candidatoDTO.getFormacoes())}</p>
-            <p class="experiencia-candidato">Experiência: ${this.obterExperienciasTexto(candidatoDTO.getExperiencias())}</p>
+            <p class="formacao-candidato">Formação: ${this.obterFormacoesTexto(candidatoDTO.formacoes)}</p>
+            <p class="experiencia-candidato">Experiência: ${this.obterExperienciasTexto(candidatoDTO.experiencias)}</p>
         `;
     }
     
     private obterFormacoesTexto(formacoes: Formacao[]): string {
-        return formacoes.map(formacao => `${formacao.getCurso()} - ${formacao.getInstituicao()}`).join(', ');
+        return formacoes.map(formacao => `${formacao.curso} - ${formacao.instituicao}`).join(', ');
     }
     
     private obterExperienciasTexto(experiencias: Experiencia[]): string {
-        return experiencias.map(experiencia => `${experiencia.getCargo()} - ${experiencia.getEmpresa()}`).join(', ');
+        return experiencias.map(experiencia => `${experiencia.cargo} - ${experiencia.empresa}`).join(', ');
     }
     
     private obterCompetenciasTexto(competencias: CandidatoCompetencia[]): string {
-        return competencias.map(comp => `${comp.getNivel()} `).join(', ');
+        return competencias.map(comp => `${comp.nivel} `).join(', ');
     }
     
     
@@ -252,8 +252,8 @@ export class CandidatoUI {
         const competenciasCount: { [competencia: string]: number } = {};
     
         this.candidatoService.listarCandidatos().forEach(candidato => {
-            candidato.getCompetencias().forEach(competencia => {
-                const nomeCompetencia = competencia.getNivel();
+            candidato.competencias.forEach(competencia => {
+                const nomeCompetencia = competencia.nivel;
                 if (!competenciasCount[nomeCompetencia]) {
                     competenciasCount[nomeCompetencia] = 0;
                 }

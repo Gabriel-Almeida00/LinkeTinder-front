@@ -3,12 +3,12 @@ import Experiencia from '../Experiencia';
 import Formacao from '../Formacao';
 
 export default class CandidatoDTO {
-    private id!: string;
-    private nome: string;
-    private descricao: string;
-    private competencias: CandidatoCompetencia[];
-    private experiencias: Experiencia[]
-    private formacoes: Formacao[]
+     id!: string;
+     nome: string;
+     descricao: string;
+     competencias: CandidatoCompetencia[];
+     experiencias: Experiencia[]
+     formacoes: Formacao[]
 
     constructor(
         id: string,
