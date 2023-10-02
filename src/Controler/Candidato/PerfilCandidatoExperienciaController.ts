@@ -1,6 +1,6 @@
 import Experiencia from "../../modelo/Experiencia";
 import ExperienciaService from "../../service/ExperienciaService";
-import UsuarioService from "../../service/usuarioService";
+import UsuarioService from "../../service/UsuarioService";
 
 class PerfilCandidatoExperienciaController{
     private usuarioService: UsuarioService;

@@ -16,7 +16,7 @@ class CompetenciaService{
     }
 
     obterCompetenciaPorId(idCompetencia: string): Competencia | undefined {
-        return this.competencias.find(competencia => competencia.obterId() === idCompetencia);
+        return this.competencias.find(competencia => competencia.id === idCompetencia);
     }
 
     listarCompetencias(): Competencia[] {
@@ -24,7 +24,7 @@ class CompetenciaService{
     }
 
     removerCompetencia(idCompetencia: string): boolean {
-        const index = this.competencias.findIndex(competencia => competencia.obterId() === idCompetencia);
+        const index = this.competencias.findIndex(competencia => competencia.id === idCompetencia);
         if (index !== -1) {
             this.competencias.splice(index, 1);
             return true;

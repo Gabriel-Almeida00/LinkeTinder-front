@@ -1,6 +1,6 @@
 import VagaCompetencia from "../../modelo/VagaCompetencia";
 import EmpresaService from "../../service/EmpresaService";
-import UsuarioService from "../../service/usuarioService";
+import UsuarioService from "../../service/UsuarioService";
 
 class PerfilEmpresaCompetenciaVagaController {
     private empresaService: EmpresaService;

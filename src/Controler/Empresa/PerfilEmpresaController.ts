@@ -1,5 +1,5 @@
 import EmpresaService from "../../service/EmpresaService";
-import UsuarioService from "../../service/usuarioService";
+import UsuarioService from "../../service/UsuarioService";
 
 class PerfilEmpresaController {
     private empresaService: EmpresaService;

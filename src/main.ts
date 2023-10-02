@@ -3,7 +3,7 @@ import CandidatoUI from './Controler/candidatoUI';
 import EmpresaUI from './Controler/empresaUI';
 import CandidatoService from './service/CandidatoService';
 import EmpresaService from './service/EmpresaService';
-import UsuarioService from './service/usuarioService';
+import UsuarioService from './service/UsuarioService';
 import CandidatoView from './View/Candidato/CandidatoView';
 import EmpresaView from './View/Empresa/EmpresaView';
 

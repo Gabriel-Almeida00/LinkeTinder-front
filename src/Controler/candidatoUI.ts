@@ -4,7 +4,7 @@ import Competencia from "../modelo/Competencia";
 import Chart from 'chart.js/auto';
 import Formacao from "../modelo/Formacao";
 import Experiencia from "../modelo/Experiencia";
-import UsuarioService from "../service/usuarioService";
+import UsuarioService from "../service/UsuarioService";
 import CandidatoDTO from "../modelo/dto/CandidatoDTO";
 import Vaga from "../modelo/Vaga";
 import CandidatoCompetencia from "../modelo/CandidatoCompetencia";
@@ -161,8 +161,8 @@ export class CandidatoUI {
                     ${afinidadesHtml}
                 </div>
                 <br>
-                <strong>Descrição Pessoal:</strong> ${candidatoDTO.getDescricao()}<br>
-                <strong>Competências:</strong> ${this.obterCompetenciasTexto(candidatoDTO.getCompetencias())}
+                <strong>Descrição Pessoal:</strong> ${candidatoDTO.descricao}<br>
+                <strong>Competências:</strong> ${this.obterCompetenciasTexto(candidatoDTO.competencias)}
             `;
         }
     

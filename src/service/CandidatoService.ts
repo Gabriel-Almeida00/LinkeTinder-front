@@ -5,7 +5,7 @@ import VagaCompetencia from "../modelo/VagaCompetencia";
 
 
 import CandidatoDTO from "../modelo/dto/CandidatoDTO";
-import localStorageService from "./localStorageService";
+import localStorageService from "./LocalStorageService";
 
 class CandidatoService {
     private candidatos: Candidato[] = [];
@@ -21,9 +21,9 @@ class CandidatoService {
     }
 
     private carregarCandidatosDoLocalStorage(): void {
-        const candidatos = this.localStorageService.carregarDados();
-        if (candidatos.length > 0) {
-            this.candidatos = candidatos;
+        const candidatosJson = this.localStorageService.carregarDados();
+        if (candidatosJson.length > 0) {
+            this.candidatos = candidatosJson;
         }
     }
 
@@ -49,25 +49,21 @@ class CandidatoService {
     }
 
     obterCompetenciasDoCandidato(idCandidato: string): CandidatoCompetencia[] {
-        const candidatosJson = localStorage.getItem('candidatos');
+        const candidatos = this.localStorageService.carregarDados();
 
-        if (candidatosJson) {
-            const candidatos = JSON.parse(candidatosJson) as Candidato[];
+        const candidatoEncontrado = candidatos.find((candidato) => candidato.id === idCandidato);
 
-            const candidatoEncontrado = candidatos.find((candidato) => candidato.id === idCandidato);
-
-            if (candidatoEncontrado) {
-                return candidatoEncontrado.competencias || [];
-            }
+        if (candidatoEncontrado) {
+            return candidatoEncontrado.competencias || [];
         }
 
         return [];
     }
 
     atualizarCandidatoNoLocalStorage(candidatoAtualizado: Candidato): void {
-        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatos = this.localStorageService.carregarDados();
         const indice = candidatos.findIndex((candidato) => candidato.id === candidatoAtualizado.id);
-    
+
         if (indice !== -1) {
             candidatos[indice] = candidatoAtualizado;
             this.localStorageService.salvarDados(candidatos);
@@ -75,35 +71,35 @@ class CandidatoService {
     }
 
     adicionarCompetenciaAoCandidato(candidatoId: string, novaCompetencia: CandidatoCompetencia): void {
-        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((candidato) => candidato.id === candidatoId);
-    
+
         if (candidatoIndex !== -1) {
             const candidatoExistente = candidatos[candidatoIndex];
             candidatoExistente.competencias.push(novaCompetencia);
-    
+
             this.localStorageService.salvarDados(candidatos);
         }
     }
-    
+
     atualizarCompetenciasDoCandidato(candidatoId: string, novasCompetencias: CandidatoCompetencia[]): void {
-        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((candidato) => candidato.id === candidatoId);
-    
+
         if (candidatoIndex !== -1) {
             candidatos[candidatoIndex].competencias = novasCompetencias;
             this.localStorageService.salvarDados(candidatos);
-        }   
+        }
     }
 
     excluirCompetenciaDoCandidato(candidatoId: string, competenciaId: string): void {
-        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((candidato) => candidato.id === candidatoId);
 
         if (candidatoIndex !== -1) {
             const candidato = candidatos[candidatoIndex];
             const competenciaIndex = candidato.competencias
-            .findIndex((competencia) => competencia.idCompetencia === competenciaId);
+                .findIndex((competencia) => competencia.idCompetencia === competenciaId);
 
             if (competenciaIndex !== -1) {
                 candidato.competencias.splice(competenciaIndex, 1);
@@ -111,8 +107,6 @@ class CandidatoService {
             }
         }
     }
-    
-
 
     calcularAfinidadeCompetencias(candidato: CandidatoDTO, requisitos: VagaCompetencia[]): number {
         let afinidade = 0;
@@ -164,7 +158,7 @@ class CandidatoService {
             const afinidadeVaga = this.calcularAfinidadeVaga(candidato, vaga);
             return acumulador + afinidadeVaga;
         }, 0);
-        
+
         return totalAfinidade / vagas.length;
     }
 }

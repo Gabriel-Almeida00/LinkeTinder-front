@@ -20,6 +20,10 @@ class Empresa extends Pessoa {
         this.cnpj = cnpj;
         this.vagas = [];
     }
+
+    setId(id: string):void{
+        this.id = id
+    }
 }
 
 export default Empresa;

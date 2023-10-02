@@ -1,6 +1,6 @@
 import Candidato from "../modelo/Candidato";
 import Experiencia from "../modelo/Experiencia";
-import LocalStorageService from "./localStorageService";
+import LocalStorageService from "./LocalStorageService";
 
 class ExperienciaService{
     private localStorageService: LocalStorageService<Candidato>;
@@ -10,13 +10,13 @@ class ExperienciaService{
     }
 
     obterExperienciasDoCandidato(candidatoId: string): Experiencia[] {
-        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatos = this.localStorageService.carregarDados();
         const candidato = candidatos.find((c) => c.id === candidatoId);
         return candidato?.experiencias || [];
     }
 
     adicionarExperienciaAoCandidato(candidatoId: string, novaExperiencia: Experiencia): void {
-        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
 
         if (candidatoIndex !== -1) {
@@ -26,7 +26,7 @@ class ExperienciaService{
     }
 
     atualizarExperienciasDoCandidato(candidatoId: string, novasExperiencias: Experiencia[]): void {
-        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
 
         if (candidatoIndex !== -1) {
@@ -36,7 +36,7 @@ class ExperienciaService{
     }
 
     excluirExperienciaDoCandidato(candidatoId: string, experienciaId: string): void {
-        const candidatos = this.localStorageService.BuscarCandidatoNoLocalStorage();
+        const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
 
         if (candidatoIndex !== -1) {

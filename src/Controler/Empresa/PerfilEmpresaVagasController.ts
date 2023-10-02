@@ -1,6 +1,6 @@
 import Vaga from "../../modelo/Vaga";
 import EmpresaService from "../../service/EmpresaService";
-import UsuarioService from "../../service/usuarioService";
+import UsuarioService from "../../service/UsuarioService";
 
 class PerfilEmpresaVagasController {
     private usuarioService: UsuarioService;

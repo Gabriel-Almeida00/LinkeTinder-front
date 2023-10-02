@@ -3,8 +3,8 @@ import Vaga from "../modelo/Vaga";
 import Empresa from "../modelo/Empresa";
 import Candidato from "../modelo/Candidato";
 
-import LocalStorageService from "./localStorageService";
-import UsuarioService from "./usuarioService";
+import LocalStorageService from "./LocalStorageService";
+import UsuarioService from "./UsuarioService";
 import VagaCompetencia from "../modelo/VagaCompetencia";
 
 class EmpresaService {
@@ -60,7 +60,7 @@ class EmpresaService {
     }
 
     atualizarEmpresaNoLocalStorage(empresaAtualizada: Empresa): void {
-        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+        const empresas = this.localStorageService.carregarDados();
         const indice = empresas.findIndex((empresa) => empresa.id === empresaAtualizada.id);
 
         if (indice !== -1) {
@@ -70,23 +70,17 @@ class EmpresaService {
     }
 
     obterVagasDaEmpresa(idEmpresa: string): Vaga[] {
-        const empresasJson = localStorage.getItem('empresas');
+        const empresas = this.localStorageService.carregarDados();
+        const vagasEncontradas = empresas.find((empresa) => empresa.id === idEmpresa);
 
-        if (empresasJson) {
-            const empresas = JSON.parse(empresasJson) as Empresa[];
-
-            const vagasEncontradas = empresas.find((empresa) => empresa.id === idEmpresa);
-
-            if (vagasEncontradas) {
-                return vagasEncontradas.vagas || [];
-            }
+        if (vagasEncontradas) {
+            return vagasEncontradas.vagas || [];
         }
-
         return [];
     }
 
     adicionarVagaAEmpresa(idEmpresa: string, vaga: Vaga): void {
-        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+        const empresas = this.localStorageService.carregarDados();
         const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
 
         if (empresaIndex !== -1) {
@@ -97,7 +91,7 @@ class EmpresaService {
     }
 
     atualizarVagaDaEmpresa(idEmpresa: string, NovasVagas: Vaga[]): void {
-        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+        const empresas = this.localStorageService.carregarDados();
         const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
 
         if (empresaIndex !== -1) {
@@ -107,7 +101,7 @@ class EmpresaService {
     }
 
     excluirVagaDaEmpresa(idEmpresa: string, idVaga: string) {
-        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+        const empresas = this.localStorageService.carregarDados();
         const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
 
         if (empresaIndex !== -1) {
@@ -121,8 +115,8 @@ class EmpresaService {
         }
     }
 
-    adicionarCompetenciaAVaga( novaCompetencia: VagaCompetencia) {
-        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+    adicionarCompetenciaAVaga(novaCompetencia: VagaCompetencia) {
+        const empresas = this.localStorageService.carregarDados();
         const empresaIndex = empresas.findIndex((empresa) => empresa.vagas.some((vaga) => vaga.id === novaCompetencia.idVaga));
 
         if (empresaIndex !== -1) {
@@ -137,8 +131,8 @@ class EmpresaService {
         }
     }
 
-    atualizarCompetenciaDaVaga( idCompetencia: string, novaCompetencia: VagaCompetencia) {
-        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+    atualizarCompetenciaDaVaga(idCompetencia: string, novaCompetencia: VagaCompetencia) {
+        const empresas = this.localStorageService.carregarDados();
         const empresaIndex = empresas.findIndex((empresa) => empresa.vagas.some((vaga) => vaga.id === novaCompetencia.idVaga));
 
         if (empresaIndex !== -1) {
@@ -160,7 +154,7 @@ class EmpresaService {
 
 
     excluirCompetenciaDaVaga(idVaga: string, idCompetencia: string) {
-        const empresas = this.localStorageService.BuscarEmpresaNoLocalStorage();
+        const empresas = this.localStorageService.carregarDados();
         const empresaIndex = empresas.findIndex((empresa) => empresa.vagas.some((vaga) => vaga.id === idVaga));
 
         if (empresaIndex !== -1) {
@@ -181,20 +175,17 @@ class EmpresaService {
 
 
     obterCompetenciasDaVaga(idVaga: string): VagaCompetencia[] {
-        const empresaJson = localStorage.getItem('empresas');
+        const empresas = this.localStorageService.carregarDados();
+        const empresaEncontrada = empresas.find((empresa) => empresa.vagas.some((vaga) => vaga.id === idVaga));
 
-        if (empresaJson) {
-            const empresas = JSON.parse(empresaJson) as Empresa[];
-            const empresaEncontrada = empresas.find((empresa) => empresa.vagas.some((vaga) => vaga.id === idVaga));
+        if (empresaEncontrada) {
+            const vagaEncontrada = empresaEncontrada.vagas.find((vaga) => vaga.id === idVaga);
 
-            if (empresaEncontrada) {
-                const vagaEncontrada = empresaEncontrada.vagas.find((vaga) => vaga.id === idVaga);
-
-                if (vagaEncontrada) {
-                    return vagaEncontrada.competencias || [];
-                }
+            if (vagaEncontrada) {
+                return vagaEncontrada.competencias || [];
             }
         }
+
         return [];
     }
 
@@ -213,7 +204,7 @@ class EmpresaService {
         const afinidadeExperiencia = this.calcularAfinidadeExperiencia(vaga, candidatoLogado);
         const afinidadeFormacao = this.calcularAfinidadeFormacao(vaga, candidatoLogado);
 
-        const maxAfinidade = (3 * vaga.getVagas().length) + 3 + 3;
+        const maxAfinidade = (3 * vaga.competencias.length) + 3 + 3;
         const afinidadeTotal = afinidadeCompetencias + afinidadeExperiencia + afinidadeFormacao;
         const afinidadePercentual = (afinidadeTotal / maxAfinidade) * 100;
 

@@ -1,7 +1,7 @@
 import CandidatoCompetencia from "../../modelo/CandidatoCompetencia";
 import CandidatoService from "../../service/CandidatoService";
 import CompetenciaService from "../../service/CompetenciaService";
-import UsuarioService from "../../service/usuarioService";
+import UsuarioService from "../../service/UsuarioService";
 
 class PerfilCandidatoCompetenciaController {
     private candidatoService: CandidatoService;
@@ -111,10 +111,10 @@ class PerfilCandidatoCompetenciaController {
 
     obterNomeCompetenciaPorId(idCompetencia: string): string {
         const competencias = this.competenciaService.listarCompetencias();
-        const competenciaEncontrada = competencias.find(competencia => competencia.obterId() === idCompetencia);
+        const competenciaEncontrada = competencias.find(competencia => competencia.id === idCompetencia);
 
         if (competenciaEncontrada) {
-            return competenciaEncontrada.obterNome();
+            return competenciaEncontrada.nome;
         }
         return '';
     }

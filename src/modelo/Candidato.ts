@@ -5,14 +5,14 @@ import Formacao from './Formacao';
 import TipoUsuario from './enum/TipoUsuario';
 
 class Candidato extends Pessoa {
-   sobrenome: string;
-   dataNascimento: Date;
-   cpf: string;
-   redeSocial: string;
-   telefone: string;
-   competencias: CandidatoCompetencia[];
-   formacoes: Formacao[];
-   experiencias: Experiencia[];
+  sobrenome: string;
+  dataNascimento: Date;
+  cpf: string;
+  redeSocial: string;
+  telefone: string;
+  competencias: CandidatoCompetencia[];
+  formacoes: Formacao[];
+  experiencias: Experiencia[];
 
   constructor(
     nome: string,
@@ -37,6 +37,9 @@ class Candidato extends Pessoa {
     this.competencias = []
     this.formacoes = []
     this.experiencias = []
+  }
+  setId(id: string): void {
+    this.id = id
   }
 }
 

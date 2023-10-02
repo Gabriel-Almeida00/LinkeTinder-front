@@ -10,7 +10,7 @@ class UsuarioService {
         const usuarios = this.getUsuariosPorTipo(userType);
         console.log(usuarios)
         const usuarioExistente = usuarios.find(
-            (usuario) => usuario.getEmail() === email && usuario.getSenha() === senha
+            (usuario) => usuario.email === email && usuario.senha === senha
         );
         console.log(usuarioExistente)
 
@@ -60,52 +60,76 @@ class UsuarioService {
     getUsuariosPorTipo(userType: TipoUsuario): Pessoa[] {
         const userKey = userType === TipoUsuario.Candidato ? 'candidatos' : 'empresas';
         const usersJson = localStorage.getItem(userKey);
-
-        if (usersJson) {
-            const usuarios = JSON.parse(usersJson) as any[];
-
-            const usuariosConvertidos: Pessoa[] = [];
-
-            for (const usuario of usuarios) {
-                if (userType === TipoUsuario.Candidato) {
-                    const candidato = new Candidato(
-                        usuario.nome,
-                        usuario.email,
-                        usuario.pais,
-                        usuario.cep,
-                        usuario.redeSocial,
-                        usuario.telefone,
-                        usuario.descricao,
-                        usuario.senha,
-                        usuario.sobrenome,
-                        new Date(usuario.dataNascimento),
-                        usuario.cpf,
-                        TipoUsuario.Candidato
-                    );
-                    candidato.setId(usuario.id);
-                    usuariosConvertidos.push(candidato);
-                }
-                else if (userType === TipoUsuario.Empresa) {
-                    const empresa = new Empresa(
-                        usuario.nome,
-                        usuario.email,
-                        usuario.pais,
-                        usuario.cep,
-                        usuario.descricao,
-                        usuario.senha,
-                        usuario.cnpj,
-                        TipoUsuario.Empresa
-                    );
-                    empresa.setId(usuario.id);
-                    usuariosConvertidos.push(empresa);
-                }
-            }
-
-            return usuariosConvertidos;
-        } else {
+    
+        if (!usersJson) {
             return [];
         }
+    
+        const usuarios = JSON.parse(usersJson) as any[];
+    
+        const usuariosConvertidos: Pessoa[] = usuarios.map((usuario) => {
+            if (userType === TipoUsuario.Candidato) {
+                return this.convertToCandidato(usuario);
+            } else if (userType === TipoUsuario.Empresa) {
+                return this.convertToEmpresa(usuario);
+            }
+            return null;
+        }).filter((usuario) => usuario !== null) as Pessoa[];
+    
+        return usuariosConvertidos;
     }
+    
+    private convertToCandidato(usuario: any): Candidato | null {
+        const candidatoProps = [
+            'nome', 'email', 'pais', 'cep', 'redeSocial', 'telefone', 'descricao', 'senha',
+            'sobrenome', 'dataNascimento', 'cpf'
+        ];
+        
+        if (!candidatoProps.every((prop) => prop in usuario)) {
+            return null;
+        }
+    
+        const candidato = new Candidato(
+            usuario.nome,
+            usuario.email,
+            usuario.pais,
+            usuario.cep,
+            usuario.redeSocial,
+            usuario.telefone,
+            usuario.descricao,
+            usuario.senha,
+            usuario.sobrenome,
+            new Date(usuario.dataNascimento),
+            usuario.cpf,
+            TipoUsuario.Candidato
+        );
+        candidato.setId(usuario.id);
+        return candidato;
+    }
+    
+    private convertToEmpresa(usuario: any): Empresa | null {
+        const empresaProps = [
+            'nome', 'email', 'pais', 'cep', 'descricao', 'senha', 'cnpj'
+        ];
+    
+        if (!empresaProps.every((prop) => prop in usuario)) {
+            return null;
+        }
+    
+        const empresa = new Empresa(
+            usuario.nome,
+            usuario.email,
+            usuario.pais,
+            usuario.cep,
+            usuario.descricao,
+            usuario.senha,
+            usuario.cnpj,
+            TipoUsuario.Empresa
+        );
+        empresa.setId(usuario.id);
+        return empresa;
+    }
+    
 
     setUsuarioLogado(idUsuario: string): void {
         localStorage.setItem('usuarioLogado', JSON.stringify(idUsuario));

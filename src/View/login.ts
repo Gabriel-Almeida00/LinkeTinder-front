@@ -1,5 +1,5 @@
 import TipoUsuario from "../modelo/enum/TipoUsuario";
-import UsuarioService from "../service/usuarioService";
+import UsuarioService from "../service/UsuarioService";
 
 const form = document.querySelector('form');
 const emailInput = document.getElementById('email') as HTMLInputElement | null;

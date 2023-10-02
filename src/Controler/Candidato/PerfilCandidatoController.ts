@@ -1,5 +1,5 @@
 import CandidatoService from "../../service/CandidatoService";
-import UsuarioService from "../../service/usuarioService";
+import UsuarioService from "../../service/UsuarioService";
 
 class PerfilCandidatoController {
     private candidatoService: CandidatoService;

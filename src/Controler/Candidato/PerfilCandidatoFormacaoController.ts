@@ -1,6 +1,6 @@
 import Formacao from "../../modelo/Formacao";
 import FormacaoService from "../../service/FormacaoService";
-import UsuarioService from "../../service/usuarioService";
+import UsuarioService from "../../service/UsuarioService";
 
 class PerfilCandidatoFormacaoController {
     private usuarioService: UsuarioService;

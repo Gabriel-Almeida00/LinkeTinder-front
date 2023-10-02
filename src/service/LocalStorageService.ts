@@ -13,25 +13,6 @@ class LocalStorageService<T> {
         localStorage.setItem(this.key, dadosJSON);
     }
 
-    BuscarCandidatoNoLocalStorage(): Candidato[] | [] {
-        const dadosJSON = localStorage.getItem(this.key);
-        if (dadosJSON) {
-            const dados = JSON.parse(dadosJSON) as Candidato[];
-            return dados;
-        }
-        return [];
-    }
-
-    BuscarEmpresaNoLocalStorage(): Empresa[] | [] {
-        const dadosJSON = localStorage.getItem(this.key);
-        if (dadosJSON) {
-            const dados = JSON.parse(dadosJSON) as Empresa[];
-            return dados;
-        }
-        return [];
-    }
-
-
     carregarDados(): T[] | [] {
         const dadosJSON = localStorage.getItem(this.key);
         if (dadosJSON) {

@@ -1,6 +1,6 @@
 import Empresa from "../modelo/Empresa";
 import EmpresaService from "../service/EmpresaService";
-import UsuarioService from "../service/usuarioService";
+import UsuarioService from "../service/UsuarioService";
 import VagaDTO from "../modelo/dto/VagaDTO";
 import VagaCompetencia from "../modelo/VagaCompetencia";
 import TipoUsuario from "../modelo/enum/TipoUsuario";
