@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="experiencia-candidato.css">
+    <title>Experiências do Candidato</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Experiências do Candidato</h1>
+        </header>
+        <nav>
+            <ul class="menu">
+                <li><a href="../vagas-cadastradas/vagas-cadastradas.html">Vagas Cadastradas</a></li>
+                <li><a href="../perfil-candidato/perfil-candidato.html">Perfil</a></li>
+                <li><a href="../competencia-candidato/competencia-candidato.html">Competências</a></li>
+                <li><a href="../formacao-candidato/formacao-candidato.html">Formações</a></li>
+                <li><a href="../experiencia-candidato/experiencia-candidato.html">Experiências</a></li>
+            </ul>
+        </nav>
+        <main>
+            <form class="perfil-form">
+     
+                <div class="form-section">
+                    <h2>Experiências</h2>
+                    <table id="experiencias-table">
+                        <thead>
+                            <tr>
+                                <th> Cargo</th>
+                                <th> Empresa</th>
+                                <th>Nível de Experiência</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="experiencias-list">
+                            <!-- Aqui serão inseridas as experiências dinamicamente -->
+                        </tbody>
+                    </table>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="cargoExperiencia" class="form-label"> Cargo</label>
+                            <input type="text" id="cargoExperiencia" class="form-input" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="empresaExperiencia" class="form-label"> Empresa</label>
+                            <input type="text" id="empresaExperiencia" class="form-input" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="nivelExperiencia" class="form-label">Nível de Experiência</label>
+                            <select id="nivelExperiencia" class="form-input">
+                                <option value="1">Estágio</option>
+                                <option value="2">Júnior</option>
+                                <option value="3">Pleno</option>
+                                <option value="4">Sênior</option>
+                                <option value="5">Gerente</option>
+                            </select>
+                        </div>
+                        <button type="button" id="adicionar-experiencia" class="add-button">Adicionar Experiência</button>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button id="atualizar-experiencia-button" type="button" class="submit-button">Salvar</button>
+                    <button id="cancelar-button" type="button" class="back-button">Cancelar</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="/dist/app.min.js"></script>
+</body>
+</html>

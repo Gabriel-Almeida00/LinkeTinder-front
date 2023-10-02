@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="perfil-candidato.css">
+    <title>Perfil do Usuário</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Perfil do Usuário</h1>
+        </header>
+        <nav>
+            <ul class="menu">
+                <li><a href="../vagas-cadastradas/vagas-cadastradas.html">Vagas Cadastradas</a></li>
+                <li><a href="../perfil-candidato/perfil-candidato.html">Perfil</a></li>
+                <li><a href="../competencia-candidato/competencia-candidato.html">Competências</a></li>
+                <li><a href="../formacao-candidato/formacao-candidato.html">Formações</a></li>
+                <li><a href="#experiencias">Experiências</a></li>
+            </ul>
+        </nav>
+        <main>
+            <form class="perfil-form">
+                <!-- Parte 1: Informações Pessoais -->
+                <div class="form-section">
+                    <h2>Informações Pessoais</h2>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" id="nomeCandidato" class="form-input" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="sobrenome" class="form-label">Sobrenome</label>
+                            <input type="text" id="sobrenomeCandidato" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                            <input type="date" id="dataNascimentoCandidato" class="form-input" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="emailCandidato" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="pais" class="form-label">País</label>
+                            <input type="text" id="paisCandidato" class="form-input">
+                        </div>
+                        <div class="input-block">
+                            <label for="cep" class="form-label">CEP</label>
+                            <input type="text" id="cepCandidato" class="form-input">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="cpf" class="form-label">CPF</label>
+                            <input type="text" id="cpfCandidato" class="form-input">
+                        </div>
+                        <div class="input-block">
+                            <label for="linkedin" class="form-label">LinkedIn</label>
+                            <input type="url" id="linkedinCandidato" class="form-input">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="descricao" class="form-label">Descrição Pessoal</label>
+                            <textarea id="descricaoCandidato" class="form-textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="telefone" class="form-label">Telefone</label>
+                            <input type="tel" id="telefoneCandidato" class="form-input">
+                        </div>
+                        <div class="input-block">
+                            <label for="senha" class="form-label">Senha</label>
+                            <input type="password" id="senhaCandidato" class="form-input" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button id="salvar-button" type="button" class="submit-button">Salvar</button>
+                    <button id="cancelar-button" type="button" class="back-button">Cancelar</button>
+                </div>
+            </form>
+        </main>
+        
+    </div>
+    <script src="/dist/app.min.js"></script>
+</body>
+</html>

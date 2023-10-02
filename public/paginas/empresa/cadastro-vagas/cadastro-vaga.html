@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro-vaga.css">
+    <title>Cadastro de Vagas</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Vagas</h1>
+        </header>
+        <nav>
+            <ul class="menu">
+                <li><a href="../perfil/perfil.html">perfil</a></li>
+                <li><a href="../cadastro-vagas/cadastro-vaga.html">Vagas</a></li>
+                <li><a href="../candidatos-cadastrados/candidatos-cadastrados.html">Candidatos</a></li>
+            </ul>
+        </nav>
+
+        <div class="lista-vagas-container">
+            <h1>Lista de Vagas</h1>
+            <table id="vagas-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Cidade</th>
+                        <th>Nível de Formação</th>
+                        <th>Nível de Experiência</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="vagas-list">
+                    <!--aqui a tabela de competencias da vaga será adicionada dinamicamente -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="competencias-vaga-container" class="competencias-vaga-container" style="display: none;">
+            <table id="competencias-vaga-table">
+                <thead>
+                    <tr>
+                        <th>Competência</th>
+                        <th>Nível</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="competencias-vaga-list">
+                    <!-- Linhas das competências serão adicionadas dinamicamente aqui -->
+                </tbody>
+            </table>
+        
+            <div class="cadastro-competencia-container">
+                <h2>Cadastrar Competência na Vaga</h2>
+                <div class="input-group">
+                    <div class="input-block">
+                        <label for="idCompetenciaVaga" class="form-label">Nome</label>
+                        <input type="text" id="idCompetenciaVaga" class="form-input" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="nivelCompetencia" class="form-label">Nível</label>
+                        <select id="nivelCompetencia" class="form-input">
+                            <option value="1">Básico</option>
+                            <option value="2">Intermediário</option>
+                            <option value="3">Avançado</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" id="adicionar-competencia-vaga" class="add-button">Adicionar </button>
+                <button type="button" id="atualizar-competencia-vaga" class="add-button">Atualizar </button>
+            </div>
+        </div>
+
+        <div class="cadastro-container">
+            <h1>Cadastro de Vagas</h1>
+            <form class="cadastro-form">
+                <div class="input-group">
+                    <div class="input-block">
+                        <label for="nomeVaga" class="form-label">Nome</label>
+                        <input type="text" id="nomeVaga" class="form-input" required>
+                    </div>
+                    <div class="input-block">
+                        <label for="cidadeVaga" class="form-label">Cidade</label>
+                        <input type="text" id="cidadeVaga" class="form-input" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-block">
+                        <label for="nivelFormacao" class="form-label">Nível de Formação</label>
+                        <select id="nivelFormacao" class="form-select" required>
+                            <option value="1">Graduação</option>
+                            <option value="2">Pós-Graduação</option>
+                            <option value="3">Mestrado</option>
+                            <option value="4">Doutorado</option>
+                        </select>
+                    </div>
+                    <div class="input-block">
+                        <label for="nivelExperiencia" class="form-label">Nível de Experiência</label>
+                        <select id="nivelExperiencia" class="form-select" required>
+                            <option value="1">Estágio</option>
+                            <option value="2">Júnior</option>
+                            <option value="3">Pleno</option>
+                            <option value="4">Sênior</option>
+                            <option value="5">Gerente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="input-block">
+                        <label for="descricaoVaga" class="form-label">Descrição </label>
+                        <textarea id="descricaoVaga" class="form-textarea" required></textarea>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button id="cadastro-vaga-button" type="submit" class="submit-button">Cadastrar Vaga</button>
+                    <button id="atualizar-vaga-button" type="submit" class="submit-button">Atualizar Vaga</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <script src="/dist/app.min.js"></script>
+</body>
+</html>

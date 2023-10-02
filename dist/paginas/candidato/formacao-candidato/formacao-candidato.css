@@ -1,0 +1,216 @@
+/* Reset de estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+
+.menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #007bff;
+    padding: 5px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+nav {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+}
+
+.menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+.perfil-form {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.input-block {
+    flex: 0 0 calc(50% - 10px);
+    margin-bottom: 10px;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-textarea {
+    height: 100px;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+.submit-button,
+.back-button,
+.add-button,
+.editar-button,
+.excluir-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.back-button,
+.add-button,
+.editar-button,
+.excluir-button {
+    background-color: #ccc;
+    color: #333;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.back-button:hover,
+.add-button:hover,
+.editar-button:hover,
+.excluir-button:hover {
+    background-color: #999;
+}
+
+/* Estilo para a tabela de formações */
+#formacoes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Estilo para as células do cabeçalho */
+#formacoes-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para as células de dados */
+#formacoes-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilo para células de dados alternadas (linhas ímpares) */
+#formacoes-table tr:nth-child(odd) td {
+    background-color: #f7f7f7;
+}
+
+/* Estilo para células de botões dentro da tabela */
+#formacoes-table .editar-button,
+#formacoes-table .excluir-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+/* Estilo para botões de edição */
+#formacoes-table .editar-button {
+    background-color: #2ecc71;
+}
+
+/* Estilo para botões de exclusão */
+#formacoes-table .excluir-button {
+    background-color: #e74c3c;
+}
+
+/* Estilo para botões quando hover (passar o mouse por cima) */
+#formacoes-table .editar-button:hover,
+#formacoes-table .excluir-button:hover {
+    background-color: #2980b9;
+}

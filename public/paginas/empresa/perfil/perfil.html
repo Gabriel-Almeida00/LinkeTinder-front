@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="perfil.css">
+    <title>Perfil da Empresa</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Perfil da Empresa</h1>
+        </header>
+        <nav>
+            <ul class="menu">
+                <li><a href="../perfil/perfil.html">perfil</a></li>
+                <li><a href="../cadastro-vagas/cadastro-vaga.html">Vagas</a></li>
+                <li><a href="../candidatos-cadastrados/candidatos-cadastrados.html">Candidatos</a></li>
+            </ul>
+        </nav>
+        <main>
+            <form class="perfil-form">
+                <!-- Parte 1: Informações da Empresa -->
+                <div class="form-section">
+                    <h2>Informações da Empresa</h2>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="nomeEmpresa" class="form-label">Nome</label>
+                            <input type="text" id="empresaNome" class="form-input" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="emailEmpresa" class="form-label">Email</label>
+                            <input type="email" id="empresaEmail" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="paisEmpresa" class="form-label">País</label>
+                            <input type="text" id="empresaPais" class="form-input">
+                        </div>
+                        <div class="input-block">
+                            <label for="cepEmpresa" class="form-label">CEP </label>
+                            <input type="text" id="empresaCep" class="form-input">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="cnpjEmpresa" class="form-label">CNPJ </label>
+                            <input type="text" id="empresaCnpj" class="form-input">
+                        </div>
+                        <div class="input-block">
+                            <label for="senhaEmpresa" class="form-label">Senha </label>
+                            <input type="password" id="empresaSenha" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="descricaoEmpresa" class="form-label">Descrição </label>
+                            <textarea id="empresaDescricao" class="form-textarea"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="button-container">
+                    <button id="atualizar-empresa-button" type="button" class="submit-button">Salvar</button>
+                    <button id="cancelar-button" type="button" class="back-button">Cancelar</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="/dist/app.min.js"></script>
+</body>
+</html>

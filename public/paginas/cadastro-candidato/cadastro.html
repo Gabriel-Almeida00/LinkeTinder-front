@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="cadastro.css">
     <title>Cadastro de Candidato</title>
 </head>
+
 <body>
     <div class="container">
         <div class="form-container">
             <div class="logo-container">
-                <img src="../../imgs/vista-lateral-de-uma-mulher-sorridente-trabalhando-com-um-laptop-no-escritorio.jpg" alt="Logo do Linketinder">
+                <img src="../../imgs/vista-lateral-de-uma-mulher-sorridente-trabalhando-com-um-laptop-no-escritorio.jpg"
+                    alt="Logo do Linketinder">
             </div>
             <div class="form-content">
                 <form class="cadastro-form">
@@ -23,28 +26,38 @@
                                 <input type="text" id="nome" class="form-input" required>
                             </div>
                             <div class="input-block">
+                                <label for="sobrenome" class="form-label">Sobrenome</label>
+                                <input type="text" id="sobrenome" class="form-input" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-block">
+                                <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                                <input type="date" id="dataNascimento" class="form-input" required>
+                            </div>
+                            <div class="input-block">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" id="email" class="form-input" required>
                             </div>
                         </div>
                         <div class="input-group">
                             <div class="input-block">
-                                <label for="cep" class="form-label">CEP</label>
-                                <input type="text" id="cep" class="form-input">
+                                <label for="pais" class="form-label">País</label>
+                                <input type="text" id="pais" class="form-input">
                             </div>
                             <div class="input-block">
-                                <label for="cpf" class="form-label">CPF</label>
-                                <input type="text" id="cpf" class="form-input">
+                                <label for="cep" class="form-label">CEP</label>
+                                <input type="text" id="cep" class="form-input">
                             </div>
                         </div>
                         <div class="input-group">
                             <div class="input-block">
-                                <label for="idade" class="form-label">Idade</label>
-                                <input type="number" id="idade" class="form-input" required>
+                                <label for="cpf" class="form-label">CPF</label>
+                                <input type="text" id="cpf" class="form-input">
                             </div>
                             <div class="input-block">
-                                <label for="estado" class="form-label">Estado</label>
-                                <input type="text" id="estado" class="form-input">
+                                <label for="linkedin" class="form-label">LinkedIn</label>
+                                <input type="url" id="linkedin" class="form-input">
                             </div>
                         </div>
                         <div class="input-group">
@@ -59,124 +72,23 @@
                                 <input type="tel" id="telefone" class="form-input">
                             </div>
                             <div class="input-block">
-                                <label for="linkedin" class="form-label">LinkedIn</label>
-                                <input type="url" id="linkedin" class="form-input">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Parte 2: Competências -->
-                    <div class="form-section">
-                        <h2>Competências</h2>
-                        <div class="competencias-container">
-                            <div class="competencia-form">
-                                <div class="input-group">
-                                    <div class="input-block">
-                                        <label for="nomeCompetencia" class="form-label">Nome da Competência</label>
-                                        <input type="text" id="nomeCompetencia" class="form-input" required>
-                                    </div>
-                                    <div class="input-block">
-                                        <label for="nivelCompetencia" class="form-label">Nível</label>
-                                        <select id="nivelCompetencia" class="form-input">
-                                            <option value="Basico">Básico</option>
-                                            <option value="Intermediario">Intermediário</option>
-                                            <option value="Avancado">Avançado</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button type="button" id="adicionar-competencia" class="add-button">Adicionar Competência</button>
-                            </div>
-                            <div class="competencias-adicionadas">
-                                <h3>Competências Adicionadas:</h3>
-                                <ul id="lista-competencias"></ul>
+                                <label for="senha" class="form-label">Senha</label>
+                                <input type="password" id="senha" class="form-input" required>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Parte 3: Formação -->
-                    <div class="form-section">
-                        <h2>Formação</h2>
-                        <div class="formacao-container">
-                            <div class="formacao-form">
-                                <div class="input-group">
-                                    <div class="input-block">
-                                        <label for="instituicaoFormacao" class="form-label">Instituição de Formação</label>
-                                        <input type="text" id="instituicaoFormacao" class="form-input" required>
-                                    </div>
-                                    <div class="input-block">
-                                        <label for="cursoFormacao" class="form-label">Curso</label>
-                                        <input type="text" id="cursoFormacao" class="form-input" required>
-                                    </div>
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-block">
-                                        <label for="nivelFormacao" class="form-label">Nível</label>
-                                        <select id="nivelFormacao" class="form-input">
-                                            <option value="Graduacao">Graduação</option>
-                                            <option value="PosGraduacao">Pós-Graduação</option>
-                                            <option value="Mestrado">Mestrado</option>
-                                            <option value="Doutorado">Doutorado</option>
-                                        </select>
-                                    </div>
-                                    <div class="input-block">
-                                        <label for="anoConclusaoFormacao" class="form-label">Ano de Conclusão</label>
-                                        <input type="number" id="anoConclusaoFormacao" class="form-input">
-                                    </div>
-                                </div>
-                                <button type="button" id="adicionar-formacao" class="add-button">Adicionar Formação</button>
-                            </div>
-                            <div class="formacoes-adicionadas">
-                                <h3>Formações Adicionadas:</h3>
-                                <ul id="lista-formacoes"></ul>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Parte 4: Experiência -->
-                    <div class="form-section">
-                        <h2>Experiência</h2>
-                        <div class="experiencia-container">
-                            <div class="experiencia-form">
-                                <div class="input-group">
-                                    <div class="input-block">
-                                        <label for="cargoExperiencia" class="form-label">Cargo</label>
-                                        <input type="text" id="cargoExperiencia" class="form-input" required>
-                                    </div>
-                                    <div class="input-block">
-                                        <label for="empresaExperiencia" class="form-label">Empresa</label>
-                                        <input type="text" id="empresaExperiencia" class="form-input" required>
-                                    </div>
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-block">
-                                        <label for="nivelExperiencia" class="form-label">Nível</label>
-                                        <select id="nivelExperiencia" class="form-input">
-                                            <option value="Estagio">Estágio</option>
-                                            <option value="Junior">Júnior</option>
-                                            <option value="Pleno">Pleno</option>
-                                            <option value="Senior">Sênior</option>
-                                            <option value="Gerente">Gerente</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button type="button" id="adicionar-experiencia" class="add-button">Adicionar Experiência</button>
-                            </div>
-                            <div class="experiencias-adicionadas">
-                                <h3>Experiências Adicionadas:</h3>
-                                <ul id="lista-experiencias"></ul>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="button-container">
                         <button onclick="history.back()" class="back-button">Voltar</button>
-                        <button id="cadastrar-candidato-button" type="button"  class="submit-button">Cadastrar</button>
+                        <button id="cadastrar-candidato-button" type="button" class="submit-button">Cadastrar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <script src="/dist/app.min.js"></script>
-   
+
 </body>
+
 </html>

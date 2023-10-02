@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="candidato-competencia.css">
+    <title>Competências do Candidato</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Competências do Candidato</h1>
+        </header>
+        <nav>
+            <ul class="menu">
+                <li><a href="../vagas-cadastradas/vagas-cadastradas.html">Vagas Cadastradas</a></li>
+                <li><a href="../perfil-candidato/perfil-candidato.html">Perfil</a></li>
+                <li><a href="../competencia-candidato/competencia-candidato.html">Competências</a></li>
+                <li><a href="../formacao-candidato/formacao-candidato.html">Formações</a></li>
+                <li><a href="../experiencia-candidato/experiencia-candidato.html">Experiências</a></li>
+            </ul>
+        </nav>
+        <main>
+            <form class="perfil-form">
+                <div class="form-section">
+                    <h2>Competências</h2>
+                    <table id="competencias-table">
+                        <thead>
+                            <tr>
+                                <th>Competência</th>
+                                <th>Nível</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="competencias-list">
+                            <!-- Aqui serão inseridas as competências dinamicamente -->
+                            <tr>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="nomeCompetencia" class="form-label">Nome da Competência</label>
+                            <input type="text" id="nomeCompetencia" class="form-input" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="nivelCompetencia" class="form-label">Nível</label>
+                            <select id="nivelCompetencia" class="form-input">
+                                <option value="1">Básico</option>
+                                <option value="2">Intermediário</option>
+                                <option value="3">Avançado</option>
+                            </select>
+                        </div>
+                        <button type="button" id="adicionar-competencia" class="add-button">Adicionar Competência</button>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button id="salvar-competencia-button" type="button" class="submit-button">Salvar</button>
+                    <button id="cancelar-button" type="button" class="back-button">Cancelar</button>
+                </div>
+            </form>
+        </main>
+        
+    </div>
+    <script src="/dist/app.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="formacao-candidato.css">
+    <title>Formações do Candidato</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Formações do Candidato</h1>
+        </header>
+        <nav>
+            <ul class="menu">
+                <li><a href="../vagas-cadastradas/vagas-cadastradas.html">Vagas Cadastradas</a></li>
+                <li><a href="../perfil-candidato/perfil-candidato.html">Perfil</a></li>
+                <li><a href="../competencia-candidato/competencia-candidato.html">Competências</a></li>
+                <li><a href="../formacao-candidato/formacao-candidato.html">Formações</a></li>
+                <li><a href="../experiencia-candidato/experiencia-candidato.html">Experiências</a></li>
+            </ul>
+        </nav>
+        <main>
+            <form class="perfil-form">
+            
+                <div class="form-section">
+                    <h2>Formações</h2>
+                    <table id="formacoes-table">
+                        <thead>
+                            <tr>
+                                <th>Instituição</th>
+                                <th>Curso</th>
+                                <th>Nível</th>
+                                <th>Conclusão</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="formacoes-list">
+                            <!-- Aqui serão inseridas as formações dinamicamente -->
+                        </tbody>
+                    </table>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="instituicaoFormacao" class="form-label">Nome da Instituição</label>
+                            <input type="text" id="instituicaoFormacao" class="form-input" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="cursoFormacao" class="form-label">Nome do Curso</label>
+                            <input type="text" id="cursoFormacao" class="form-input" required>
+                        </div>
+                        <div class="input-block">
+                            <label for="nivelFormacao" class="form-label">Nível</label>
+                            <select id="nivelFormacao" class="form-input">
+                                <option value="1">Graduação</option>
+                                <option value="2">Pós-graduação</option>
+                                <option value="3">Mestrado</option>
+                                <option value="4">Doutorado</option>
+                            </select>
+                        </div>
+                        <div class="input-block">
+                            <label for="anoConclusaoFormacao" class="form-label">Ano de Conclusão</label>
+                            <input type="text" id="anoConclusaoFormacao" class="form-input" required>
+                        </div>
+                        <button type="button" id="adicionar-formacao" class="add-button">Adicionar Formação</button>
+                    </div>
+                    
+                </div>
+                <div class="button-container">
+                    <button id="atualizar-formacao-button" type="button" class="submit-button">Salvar</button>
+                    <button id="cancelar-button" type="button" class="back-button">Cancelar</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="/dist/app.min.js"></script>
+</body>
+</html>
