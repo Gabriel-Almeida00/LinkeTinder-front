@@ -58,12 +58,16 @@
                 <h2>Cadastrar Competência na Vaga</h2>
                 <div class="input-group">
                     <div class="input-block">
-                        <label for="idCompetenciaVaga" class="form-label">ID Competência</label>
+                        <label for="idCompetenciaVaga" class="form-label">Nome</label>
                         <input type="text" id="idCompetenciaVaga" class="form-input" required>
                     </div>
                     <div class="input-block">
-                        <label for="idNivelCompetenciaVaga" class="form-label">ID Nível Competência</label>
-                        <input type="text" id="idNivelCompetenciaVaga" class="form-input" required>
+                        <label for="nivelCompetencia" class="form-label">Nível</label>
+                        <select id="nivelCompetencia" class="form-input">
+                            <option value="1">Básico</option>
+                            <option value="2">Intermediário</option>
+                            <option value="3">Avançado</option>
+                        </select>
                     </div>
                 </div>
                 <button type="button" id="adicionar-competencia-vaga" class="add-button">Adicionar </button>
