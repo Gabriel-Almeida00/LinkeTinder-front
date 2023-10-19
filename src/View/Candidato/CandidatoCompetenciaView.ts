@@ -63,7 +63,7 @@ class PerfilCandidatoCompetenciaView {
                 const nivelOption = nivelCompetenciaSelect.querySelector(`option[value="${competencia.nivel}"]`) as HTMLSelectElement;
                 nivelCompetenciaSelect.value = nivelOption.value;
 
-                this.competenciaEmEdicaoIndex = competencia.id
+                this.competenciaEmEdicaoIndex = competenciaId
             }
         }
     }

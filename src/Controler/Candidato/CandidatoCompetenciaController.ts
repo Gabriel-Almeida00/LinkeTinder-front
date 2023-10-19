@@ -23,12 +23,7 @@ class PerfilCandidatoCompetenciaController {
 
     adicionarCompetencias(nome: string, nivel:number){
         const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-
-        const competencia = new CandidatoCompetencia(
-            idCandidato,
-            nome,
-            nivel
-        );
+        const competencia = new CandidatoCompetencia(idCandidato, nome, nivel);
 
         this.candidatoCompetenciaService.adicionarCompetenciaAoCandidato(idCandidato, competencia);
     }
