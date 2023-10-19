@@ -1,4 +1,4 @@
-import PerfilCandidatoCompetenciaController from "../../Controler/Candidato/PerfilCandidatoCompetenciaController";
+import PerfilCandidatoCompetenciaController from "../../Controler/Candidato/CandidatoCompetenciaController";
 
 
 class PerfilCandidatoCompetenciaView {

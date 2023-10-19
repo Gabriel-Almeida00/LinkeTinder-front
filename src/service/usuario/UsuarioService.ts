@@ -1,9 +1,10 @@
-import TipoUsuario from "../modelo/enum/TipoUsuario";
-import Candidato from "../modelo/Candidato";
-import Empresa from "../modelo/Empresa";
-import Pessoa from "../modelo/Pessoa";
+import TipoUsuario from "../../modelo/enum/TipoUsuario";
+import Candidato from "../../modelo/Candidato";
+import Empresa from "../../modelo/Empresa";
+import Pessoa from "../../modelo/Pessoa";
+import IUsuarioService from "./IUsuarioService";
 
-class UsuarioService {
+class UsuarioService implements IUsuarioService{
     constructor() { }
 
     login(email: string, senha: string, userType: TipoUsuario): Pessoa | null {

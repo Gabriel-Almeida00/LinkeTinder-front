@@ -1,27 +1,27 @@
-import Candidato from "../modelo/Candidato";
-import CandidatoCompetencia from "../modelo/CandidatoCompetencia";
-import Vaga from "../modelo/Vaga";
-import VagaCompetencia from "../modelo/VagaCompetencia";
+import Candidato from "../../modelo/Candidato";
+import Vaga from "../../modelo/Vaga";
+import VagaCompetencia from "../../modelo/VagaCompetencia";
 
 
-import CandidatoDTO from "../modelo/dto/CandidatoDTO";
-import localStorageService from "../data/LocalStorage";
+import CandidatoDTO from "../../modelo/dto/CandidatoDTO";
+import ICandidatoService from "./ICandidatoService";
+import LocalStorage from "../../data/LocalStorage";
 
-class CandidatoService {
+class CandidatoService implements ICandidatoService {
     private candidatos: Candidato[] = [];
-    private localStorageService: localStorageService<Candidato>;
+    private localStorage: LocalStorage<Candidato>;
 
-    constructor() {
-        this.localStorageService = new localStorageService<Candidato>('candidatos');
+    constructor(localStorage: LocalStorage<Candidato>) {
+        this.localStorage = localStorage;
         this.carregarCandidatosDoLocalStorage();
     }
 
     private salvarCandidatosNoLocalStorage(): void {
-        this.localStorageService.salvarDados(this.candidatos);
+        this.localStorage.salvarDados(this.candidatos);
     }
 
     private carregarCandidatosDoLocalStorage(): void {
-        const candidatosJson = this.localStorageService.carregarDados();
+        const candidatosJson = this.localStorage.carregarDados();
         if (candidatosJson.length > 0) {
             this.candidatos = candidatosJson;
         }
@@ -49,12 +49,12 @@ class CandidatoService {
     }
 
     atualizarCandidatoNoLocalStorage(candidatoAtualizado: Candidato): void {
-        const candidatos = this.localStorageService.carregarDados();
+        const candidatos = this.localStorage.carregarDados();
         const indice = candidatos.findIndex((candidato) => candidato.id === candidatoAtualizado.id);
 
         if (indice !== -1) {
             candidatos[indice] = candidatoAtualizado;
-            this.localStorageService.salvarDados(candidatos);
+            this.localStorage.salvarDados(candidatos);
         }
     }
 

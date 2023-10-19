@@ -1,5 +1,5 @@
 import CandidatoCompetencia from "../../modelo/CandidatoCompetencia";
-import UsuarioService from "../../service/UsuarioService";
+import UsuarioService from "../../service/usuario/UsuarioService";
 import ICandidatoCompetenciaService from "../../service/candidato/ICandidatoCompetenciaService";
 
 class PerfilCandidatoCompetenciaController {

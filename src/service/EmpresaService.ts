@@ -4,7 +4,7 @@ import Empresa from "../modelo/Empresa";
 import Candidato from "../modelo/Candidato";
 
 import LocalStorageService from "../data/LocalStorage";
-import UsuarioService from "./UsuarioService";
+import UsuarioService from "./usuario/UsuarioService";
 import VagaCompetencia from "../modelo/VagaCompetencia";
 
 class EmpresaService {
