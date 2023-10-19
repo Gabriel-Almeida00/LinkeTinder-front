@@ -8,11 +8,9 @@ class UsuarioService {
 
     login(email: string, senha: string, userType: TipoUsuario): Pessoa | null {
         const usuarios = this.getUsuariosPorTipo(userType);
-        console.log(usuarios)
         const usuarioExistente = usuarios.find(
             (usuario) => usuario.email === email && usuario.senha === senha
         );
-        console.log(usuarioExistente)
 
         if (usuarioExistente) {
             this.setUsuarioLogado(usuarioExistente.id);

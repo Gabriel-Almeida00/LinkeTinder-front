@@ -1,6 +1,3 @@
-import Candidato from "../modelo/Candidato";
-import Empresa from "../modelo/Empresa";
-
 class LocalStorageService<T> {
     private key: string;
 
@@ -13,7 +10,7 @@ class LocalStorageService<T> {
         localStorage.setItem(this.key, dadosJSON);
     }
 
-    carregarDados(): T[] | [] {
+    carregarDados(): T[] {
         const dadosJSON = localStorage.getItem(this.key);
         if (dadosJSON) {
             return JSON.parse(dadosJSON) as T[];
@@ -21,5 +18,4 @@ class LocalStorageService<T> {
         return [];
     }
 }
-
 export default LocalStorageService;

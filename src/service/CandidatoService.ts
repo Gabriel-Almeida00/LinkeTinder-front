@@ -82,15 +82,19 @@ class CandidatoService {
         }
     }
 
-    atualizarCompetenciasDoCandidato(candidatoId: string, novasCompetencias: CandidatoCompetencia[]): void {
+    atualizarCompetenciaDoCandidato(candidatoId: string, competenciaAtualizada: CandidatoCompetencia): void {
         const candidatos = this.localStorageService.carregarDados();
-        const candidatoIndex = candidatos.findIndex((candidato) => candidato.id === candidatoId);
-
-        if (candidatoIndex !== -1) {
-            candidatos[candidatoIndex].competencias = novasCompetencias;
-            this.localStorageService.salvarDados(candidatos);
+        const candidato = candidatos.find((c) => c.id === candidatoId);
+    
+        if (candidato) {
+            const competenciaIndex = candidato.competencias.findIndex((comp) => comp.id === competenciaAtualizada.id);
+            if (competenciaIndex !== -1) {
+               candidato.competencias[competenciaIndex] = competenciaAtualizada;
+                this.localStorageService.salvarDados(candidatos);
+            }
         }
     }
+    
 
     excluirCompetenciaDoCandidato(candidatoId: string, competenciaId: string): void {
         const candidatos = this.localStorageService.carregarDados();

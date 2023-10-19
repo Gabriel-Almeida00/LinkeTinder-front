@@ -6,6 +6,8 @@ import EmpresaService from './service/EmpresaService';
 import UsuarioService from './service/UsuarioService';
 import CandidatoView from './View/Candidato/CandidatoView';
 import EmpresaView from './View/Empresa/EmpresaView';
+import PerfilCandidatoCompetenciaController from './Controler/Candidato/PerfilCandidatoCompetenciaController';
+import PerfilCandidatoCompetenciaView from './View/Candidato/PerfilCandidatoCompetenciaView';
 
 const candidatoService = new CandidatoService();
 const usuarioService = new UsuarioService();
@@ -16,6 +18,10 @@ const empresaUi = new EmpresaUI(empresaService, usuarioService);
 
 const empresaView = new EmpresaView();
 const candidatoView = new CandidatoView();
+
+const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaController(candidatoService, usuarioService)
+const perfilCandidatoCompetenciaView = new PerfilCandidatoCompetenciaView(perfilCandidatoCompetenciaController ,usuarioService)
+perfilCandidatoCompetenciaView.exibirCompetenciasDoCandidato();
 
 empresaUi.listarVagas();
 empresaUi.associarEventosInformacoesVaga();
