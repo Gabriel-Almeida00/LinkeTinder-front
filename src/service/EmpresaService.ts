@@ -3,7 +3,7 @@ import Vaga from "../modelo/Vaga";
 import Empresa from "../modelo/Empresa";
 import Candidato from "../modelo/Candidato";
 
-import LocalStorageService from "./LocalStorageService";
+import LocalStorageService from "../data/LocalStorage";
 import UsuarioService from "./UsuarioService";
 import VagaCompetencia from "../modelo/VagaCompetencia";
 

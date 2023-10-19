@@ -1,6 +1,6 @@
 import Candidato from "../modelo/Candidato";
 import Experiencia from "../modelo/Experiencia";
-import LocalStorageService from "./LocalStorageService";
+import LocalStorageService from "../data/LocalStorage";
 
 class ExperienciaService{
     private localStorageService: LocalStorageService<Candidato>;

@@ -1,6 +1,6 @@
 import Candidato from "../modelo/Candidato";
 import Formacao from "../modelo/Formacao";
-import LocalStorageService from "./LocalStorageService";
+import LocalStorageService from "../data/LocalStorage";
 
 class FormacaoService{
     private localStorageService: LocalStorageService<Candidato>;

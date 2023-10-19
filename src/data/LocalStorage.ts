@@ -1,4 +1,6 @@
-class LocalStorageService<T> {
+import ILocalStorage from "./ILocalStorage";
+
+class LocalStorage<T> implements ILocalStorage<T>{
     private key: string;
 
     constructor(key: string) {
@@ -18,4 +20,4 @@ class LocalStorageService<T> {
         return [];
     }
 }
-export default LocalStorageService;
+export default LocalStorage;
