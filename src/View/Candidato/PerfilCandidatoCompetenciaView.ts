@@ -1,16 +1,16 @@
 import PerfilCandidatoCompetenciaController from "../../Controler/Candidato/PerfilCandidatoCompetenciaController";
-import CandidatoCompetencia from "../../modelo/CandidatoCompetencia";
-import UsuarioService from "../../service/UsuarioService";
+
 
 class PerfilCandidatoCompetenciaView {
     private controller: PerfilCandidatoCompetenciaController;
-    private competenciaEmEdicaoIndex: number | null = null;
-    usuarioService: UsuarioService;
+    private competenciaEmEdicaoIndex: string | null = null;
 
-    constructor(controller: PerfilCandidatoCompetenciaController, usuarioService: UsuarioService) {
+    constructor(controller: PerfilCandidatoCompetenciaController) {
         this.controller = controller;
-        this.usuarioService = usuarioService;
+        this.configurarEventListeners();
+    }
 
+    private configurarEventListeners() {
         const adicionarCompetenciaButton = document.getElementById('adicionar-competencia') as HTMLButtonElement;
         if (adicionarCompetenciaButton) {
             adicionarCompetenciaButton.addEventListener('click', () => {
@@ -31,65 +31,57 @@ class PerfilCandidatoCompetenciaView {
             name: document.getElementById('nomeCompetencia') as HTMLInputElement,
             nivel: document.getElementById('nivelCompetencia') as HTMLInputElement
         };
-    
+
         const competencia = {
             name: elements.name.value.trim(),
-            nivel: elements.nivel.value.trim()
+            nivel: parseInt(elements.nivel.value.trim())
         };
-    
+
         return competencia;
     }
 
-    limparCamposDoFormulário() {
-        const nome =  document.getElementById('nomeCompetencia') as HTMLInputElement;
+    limparCamposDoFormulario() {
+        const nome = document.getElementById('nomeCompetencia') as HTMLInputElement;
         const nivel = document.getElementById('nivelCompetencia') as HTMLInputElement;
-      
+
         nome.value = "";
         nivel.value = "";
     }
-    
-    
 
-    preencherCamposDeEdicao(competenciaIndex: number) {
-        const competenciasList = document.getElementById('competencias-list');
 
-        if (competenciaIndex >= 0 && competenciasList) {
-            const rows = competenciasList.getElementsByTagName('tr');
-            if (competenciaIndex < rows.length) {
-                const row = rows[competenciaIndex];
-                const idCompetencia = row.cells[0].textContent;
-                const nivel = row.cells[1].textContent;
 
-                const nomeCompetenciaElement = document.getElementById('nomeCompetencia') as HTMLInputElement;
-                const nivelCompetenciaElement = document.getElementById('nivelCompetencia') as HTMLSelectElement;
+    preencherCamposDeEdicao(competenciaId: string) {
+        const competencia = this.controller.buscarCompetenciaPorId(competenciaId);
+        const competenciaForm = document.getElementById('perfil-form');
 
-                nomeCompetenciaElement.value = idCompetencia!;
+        if (competenciaForm && competencia) {
+            const nomeCompetenciaInput = competenciaForm.querySelector("#nomeCompetencia") as HTMLInputElement;
+            const nivelCompetenciaSelect = competenciaForm.querySelector("#nivelCompetencia") as HTMLSelectElement;
 
-                const nivelOption = nivelCompetenciaElement.querySelector(`option[value="${nivel}"]`) as HTMLSelectElement;
-                if (nivelOption) {
-                    nivelCompetenciaElement.value = nivelOption.value;
-                } else {
-                    console.error(`Valor de nível inválido: ${nivel}`);
-                }
+            if (nomeCompetenciaInput && nivelCompetenciaSelect) {
+                nomeCompetenciaInput.value = competencia.idCompetencia;
+                const nivelOption = nivelCompetenciaSelect.querySelector(`option[value="${competencia.nivel}"]`) as HTMLSelectElement;
+                nivelCompetenciaSelect.value = nivelOption.value;
 
-                this.competenciaEmEdicaoIndex = competenciaIndex;
+                this.competenciaEmEdicaoIndex = competencia.id
             }
         }
     }
 
 
+
     exibirCompetenciasDoCandidato() {
-            const competencias = this.controller.listarCompetencia();
-            const competenciasList = document.getElementById('competencias-list');
+        const competencias = this.controller.listarCompetencia();
+        const competenciasList = document.getElementById('competencias-list');
 
-            if (competenciasList) {
-                competenciasList.innerHTML = '';
+        if (competenciasList) {
+            competenciasList.innerHTML = '';
 
-                for (let index = 0; index < competencias.length; index++) {
-                    const competencia = competencias[index];
-                    const row = document.createElement('tr');
-                    row.innerHTML =
-                        `
+            for (let index = 0; index < competencias.length; index++) {
+                const competencia = competencias[index];
+                const row = document.createElement('tr');
+                row.innerHTML =
+                    `
                 <td>${competencia.idCompetencia}</td>
                 <td>${competencia.nivel}</td>
                 <td style="display: none;" data-competencia-id="${competencia.idCompetencia}"></td>
@@ -99,102 +91,55 @@ class PerfilCandidatoCompetenciaView {
                 </td>
                 `;
 
-                    competenciasList.appendChild(row);
+                competenciasList.appendChild(row);
 
-                    const editarButton = row.querySelector('.editar-button');
-                    if (editarButton) {
-                        editarButton.addEventListener('click', (event) => {
-                            const rowIndex = Array.from(competenciasList.children).indexOf(row);
-                            this.preencherCamposDeEdicao(rowIndex);
-                        });
-                    }
+                const editarButton = row.querySelector('.editar-button');
+                if (editarButton) {
+                    editarButton.addEventListener('click', () => {
+                        const competenciaId = competencia.id;
+                        this.preencherCamposDeEdicao(competenciaId);
+                    });
+                }
 
-                    const excluirButton = row.querySelector('.excluir-button');
-                    if (excluirButton) {
-                        excluirButton.addEventListener('click', () => {
-                            const competenciaId = competencia.idCompetencia;
+                const excluirButton = row.querySelector('.excluir-button');
+                if (excluirButton) {
+                    excluirButton.addEventListener('click', () => {
+                        const competenciaId = competencia.idCompetencia;
+                        this.controller.excluirCompetencia(competenciaId);
 
-                            this.controller.excluirCompetencia(competenciaId);
-
-                            this.exibirCompetenciasDoCandidato();
-                        });
-                    }
+                        this.exibirCompetenciasDoCandidato();
+                    });
                 }
             }
+        }
     }
 
-
+   
     adicionarCompetencia() {
-        const nomeCompetenciaElement = document.getElementById('nomeCompetencia') as HTMLInputElement;
-        const nivelCompetenciaElement = document.getElementById('nivelCompetencia') as HTMLSelectElement;
-        const nomeCompetencia = nomeCompetenciaElement.value;
-        const nivelCompetenciaString = nivelCompetenciaElement.value;
+        const competencia = this.pegarValoresDoFormulario();
+        this.controller.adicionarCompetencias(competencia.name, competencia.nivel);
 
-        if (nomeCompetencia && nivelCompetenciaString) {
-            const nivelCompetencia = this.nivelMap[nivelCompetenciaString];
-            const idCandidato = this.usuarioService.obterIdUsuarioLogado();
+        this.limparCamposDoFormulario();
+        this.exibirCompetenciasDoCandidato();
 
-            const novaCompetencia = new CandidatoCompetencia(
-                idCandidato,
-                nomeCompetencia,
-                nivelCompetencia
-            );
-
-            this.controller.adicionarCompetencias( novaCompetencia);
-
-            nomeCompetenciaElement.value = '';
-            nivelCompetenciaElement.value = 'Basico';
-
-            this.exibirCompetenciasDoCandidato();
-        } else {
-            console.error('Nome e nível da competência são obrigatórios.');
-        }
     }
 
     EdidarCompetencia() {
-        const nomeCompetenciaElement = document.getElementById('nomeCompetencia') as HTMLInputElement;
-        const nivelCompetenciaElement = document.getElementById('nivelCompetencia') as HTMLSelectElement;
-    
-        const novoNomeCompetencia = nomeCompetenciaElement.value;
-        const novoNivelCompetenciaString = nivelCompetenciaElement.value;
+        const competenciaHtml = this.pegarValoresDoFormulario();
 
-    
-        if (novoNomeCompetencia && novoNivelCompetenciaString) {
-            const novoNivelCompetencia = parseInt(novoNivelCompetenciaString, 10);
-            const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-            const candidatoLogado = this.usuarioService.obterCandidato(idCandidato);
-    
-            if (candidatoLogado) {
-                if (this.competenciaEmEdicaoIndex != null) {
-                    const competenciaEditada = candidatoLogado.competencias[this.competenciaEmEdicaoIndex];
-                    competenciaEditada.idCompetencia = novoNomeCompetencia
-                    competenciaEditada.nivel = novoNivelCompetencia
+        if (this.competenciaEmEdicaoIndex != null) {
+            const competenciaEditada = this.controller.buscarCompetenciaPorId(this.competenciaEmEdicaoIndex);
 
-                    this.controller.atualizarCompetencia(competenciaEditada);
-    
-                    nomeCompetenciaElement.value = '';
-                    nivelCompetenciaElement.value = '';
-    
-                    this.competenciaEmEdicaoIndex = null;
-                    this.exibirCompetenciasDoCandidato();
-                }
-    
+            if (competenciaEditada) {
+                competenciaEditada.idCompetencia = competenciaHtml.name
+                competenciaEditada.nivel = competenciaHtml.nivel
+
+                this.controller.atualizarCompetencia(competenciaEditada);
+                this.limparCamposDoFormulario()
                 this.exibirCompetenciasDoCandidato();
-            } else {
-                console.error('Candidato logado não encontrado.');
+                this.competenciaEmEdicaoIndex = null;
             }
-        } else {
-            console.error('Nome e nível da competência são obrigatórios.');
         }
     }
-    
-
-
-
-    nivelMap: { [key: string]: number } = {
-        "1": 1,
-        "2": 2,
-        "3": 3
-    };
 }
 export default PerfilCandidatoCompetenciaView;

@@ -20,7 +20,7 @@ const empresaView = new EmpresaView();
 const candidatoView = new CandidatoView();
 
 const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaController(candidatoService, usuarioService)
-const perfilCandidatoCompetenciaView = new PerfilCandidatoCompetenciaView(perfilCandidatoCompetenciaController ,usuarioService)
+const perfilCandidatoCompetenciaView = new PerfilCandidatoCompetenciaView(perfilCandidatoCompetenciaController )
 perfilCandidatoCompetenciaView.exibirCompetenciasDoCandidato();
 
 empresaUi.listarVagas();

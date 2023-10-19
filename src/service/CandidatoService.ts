@@ -48,6 +48,19 @@ class CandidatoService {
         this.salvarCandidatosNoLocalStorage();
     }
 
+    obterCompetenciaDoCandidatoPorId(candidatoId: string, competenciaId: string): CandidatoCompetencia | null {
+        const candidatos = this.localStorageService.carregarDados();
+        const candidato = candidatos.find((c) => c.id === candidatoId);
+    
+        if (candidato) {
+            const competencia = candidato.competencias.find((c) => c.id === competenciaId);
+            return competencia || null;
+        }
+    
+        return null;
+    }
+    
+
     obterCompetenciasDoCandidato(idCandidato: string): CandidatoCompetencia[] {
         const candidatos = this.localStorageService.carregarDados();
 
@@ -88,6 +101,7 @@ class CandidatoService {
     
         if (candidato) {
             const competenciaIndex = candidato.competencias.findIndex((comp) => comp.id === competenciaAtualizada.id);
+            console.log(competenciaIndex)
             if (competenciaIndex !== -1) {
                candidato.competencias[competenciaIndex] = competenciaAtualizada;
                 this.localStorageService.salvarDados(candidatos);
