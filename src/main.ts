@@ -16,6 +16,9 @@ import CandidatoController from './Controler/Candidato/CandidatoController';
 import CandidatoExperienciaView from './View/Candidato/CandidatoExperienciaView';
 import PerfilCandidatoExperienciaController from './Controler/Candidato/CandidatoExperienciaController';
 import ExperienciaService from './service/ExperienciaService';
+import CandidatoFormacaoView from './View/Candidato/CandidatoFormacaoView';
+import CandidatoFormacaoController from './Controler/Candidato/CandidatoFormacaoController';
+import FormacaoService from './service/FormacaoService';
 
 const localStorage = new LocalStorage<Candidato>('candidatos');
 
@@ -24,12 +27,18 @@ const candidatoCompetenciaService = new CandidatoCompetenciaService(localStorage
 const usuarioService = new UsuarioService();
 const empresaService = new EmpresaService();
 const experienciaService = new ExperienciaService()
+const formacaoService = new FormacaoService();
 
 const candidatoUI = new CandidatoUI(candidatoService, usuarioService);
 const empresaUi = new EmpresaUI(empresaService, usuarioService);
 
 const empresaView = new EmpresaView();
 const view = new View();
+
+
+const controller = new CandidatoFormacaoController(usuarioService, formacaoService)
+const candidatoFormacaoVew = new CandidatoFormacaoView(controller)
+candidatoFormacaoVew.exibirFormacoesDoCandidato();
 
 const candidatoExperienciaController = new PerfilCandidatoExperienciaController(usuarioService, experienciaService);
 const candidatoExperienciaView = new CandidatoExperienciaView(candidatoExperienciaController);
