@@ -1,17 +1,16 @@
-import VagaCompetencia from "../../modelo/VagaCompetencia";
-import EmpresaService from "../../service/EmpresaService";
-import UsuarioService from "../../service/usuario/UsuarioService";
+import VagaCompetenciaController from "../../Controler/Empresa/VagaCompetenciaController";
 
-class PerfilEmpresaCompetenciaVagaController {
-    private empresaService: EmpresaService;
-    private usuarioService: UsuarioService;
-    private CompetenciaEmEdicaoIndex: number | null = null;
+class VagaCompetenciaView{
+    private controller: VagaCompetenciaController;
+    private CompetenciaEmEdicaoIndex!: string;
     private idVaga!: string;
 
-    constructor() {
-        this.empresaService = new EmpresaService();
-        this.usuarioService = new UsuarioService();
+    constructor(controller: VagaCompetenciaController){
+        this.controller = controller;
+        this.configurarEventListeners();
+    }
 
+    private configurarEventListeners(){
         const adicionarVagaButton = document.getElementById('adicionar-competencia-vaga') as HTMLButtonElement;
         if (adicionarVagaButton) {
             adicionarVagaButton.addEventListener('click', () => {
@@ -50,6 +49,7 @@ class PerfilEmpresaCompetenciaVagaController {
                 });
             }
         });
+    }
     }
 
     adicionarCompetencia() {
@@ -189,6 +189,5 @@ class PerfilEmpresaCompetenciaVagaController {
         "2": 2,
         "3": 3
     };
-
 }
-export default PerfilEmpresaCompetenciaVagaController;
+export default VagaCompetenciaView;

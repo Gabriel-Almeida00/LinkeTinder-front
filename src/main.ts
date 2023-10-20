@@ -4,8 +4,7 @@ import EmpresaUI from './Controler/empresaUI';
 import CandidatoService from './service/candidato/CandidatoService';
 import EmpresaService from './service/EmpresaService';
 import UsuarioService from './service/usuario/UsuarioService';
-import View from './View/Candidato/Views';
-import EmpresaView from './View/Empresa/EmpresaView';
+import EmpresaView from './View/Empresa/View';
 import PerfilCandidatoCompetenciaController from './Controler/Candidato/CandidatoCompetenciaController';
 import PerfilCandidatoCompetenciaView from './View/Candidato/CandidatoCompetenciaView';
 import CandidatoCompetenciaService from './service/candidato/CandidatoCompetenciaService';
@@ -33,7 +32,6 @@ const candidatoUI = new CandidatoUI(candidatoService, usuarioService);
 const empresaUi = new EmpresaUI(empresaService, usuarioService);
 
 const empresaView = new EmpresaView();
-const view = new View();
 
 
 const controller = new CandidatoFormacaoController(usuarioService, formacaoService)

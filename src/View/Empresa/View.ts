@@ -1,4 +1,4 @@
-import PerfilEmpresaCompetenciaVagaController from "../../Controler/Empresa/PerfilEmpresaCompetenciaVagaController";
+import PerfilEmpresaCompetenciaVagaController from "../../Controler/Empresa/VagaCompetenciaController";
 import PerfilEmpresaController from "../../Controler/Empresa/PerfilEmpresaController";
 import PerfilEmpresaVagasController from "../../Controler/Empresa/PerfilEmpresaVagasController";
 
