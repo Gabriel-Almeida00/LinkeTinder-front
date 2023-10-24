@@ -1,7 +1,6 @@
-import Candidato from "../modelo/Candidato";
-import Empresa from "../modelo/Empresa";
+import ILocalStorage from "./ILocalStorage";
 
-class LocalStorageService<T> {
+class LocalStorage<T> implements ILocalStorage<T>{
     private key: string;
 
     constructor(key: string) {
@@ -13,7 +12,7 @@ class LocalStorageService<T> {
         localStorage.setItem(this.key, dadosJSON);
     }
 
-    carregarDados(): T[] | [] {
+    carregarDados(): T[] {
         const dadosJSON = localStorage.getItem(this.key);
         if (dadosJSON) {
             return JSON.parse(dadosJSON) as T[];
@@ -21,5 +20,4 @@ class LocalStorageService<T> {
         return [];
     }
 }
-
-export default LocalStorageService;
+export default LocalStorage;

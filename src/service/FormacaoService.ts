@@ -1,12 +1,24 @@
 import Candidato from "../modelo/Candidato";
 import Formacao from "../modelo/Formacao";
-import LocalStorageService from "./LocalStorageService";
+import LocalStorageService from "../data/LocalStorage";
 
 class FormacaoService{
     private localStorageService: LocalStorageService<Candidato>;
 
     constructor() {
         this.localStorageService = new LocalStorageService<Candidato>('candidatos');
+    }
+
+    obterFormacaoDoCandidatoPorId(candidatoId: string, formacaoId: string){
+        const candidatos = this.localStorageService.carregarDados();
+        const candidato = candidatos.find((c) => c.id === candidatoId);
+    
+        if (candidato) {
+            const formacao = candidato.formacoes.find((c) => c.id === formacaoId);
+            return formacao || null;
+        }
+    
+        return null;
     }
 
     obterFormacoesDoCandidato(candidatoId: string): Formacao[] {
@@ -25,13 +37,16 @@ class FormacaoService{
         }
     }
 
-    atualizarFormacoesDoCandidato(candidatoId: string, novasFormacoes: Formacao[]): void {
+    atualizarFormacoesDoCandidato(candidatoId: string, formacaoAtualizada: Formacao): void {
         const candidatos = this.localStorageService.carregarDados();
-        const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
+        const candidato = candidatos.find((c) => c.id === candidatoId);
 
-        if (candidatoIndex !== -1) {
-            candidatos[candidatoIndex].formacoes = novasFormacoes;
-            this.localStorageService.salvarDados(candidatos);
+         if (candidato) {
+            const formacaoIndex = candidato.formacoes.findIndex((comp) => comp.id === formacaoAtualizada.id);
+            if (formacaoIndex !== -1) {
+               candidato.formacoes[formacaoIndex] = formacaoAtualizada;
+                this.localStorageService.salvarDados(candidatos);
+            }
         }
     }
 
