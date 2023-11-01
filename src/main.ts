@@ -18,6 +18,8 @@ import ExperienciaService from './service/ExperienciaService';
 import CandidatoFormacaoView from './View/Candidato/CandidatoFormacaoView';
 import CandidatoFormacaoController from './Controler/Candidato/CandidatoFormacaoController';
 import FormacaoService from './service/FormacaoService';
+import VagaCompetenciaView from './View/Empresa/VagaCompetenciaView';
+import VagaCompetenciaController from './Controler/Empresa/VagaCompetenciaController';
 
 const localStorage = new LocalStorage<Candidato>('candidatos');
 
@@ -49,6 +51,10 @@ candidatoView.exibirInformacoesCandidatoNoHTML();
 const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaController(candidatoCompetenciaService, usuarioService)
 const perfilCandidatoCompetenciaView = new PerfilCandidatoCompetenciaView(perfilCandidatoCompetenciaController )
 perfilCandidatoCompetenciaView.exibirCompetenciasDoCandidato();
+
+
+
+
 
 empresaUi.listarVagas();
 empresaUi.associarEventosInformacoesVaga();

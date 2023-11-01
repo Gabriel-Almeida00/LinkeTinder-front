@@ -1,27 +1,29 @@
 import VagaCompetenciaController from "../../Controler/Empresa/VagaCompetenciaController";
+import VagaCompetencia from "../../modelo/VagaCompetencia";
 
-class VagaCompetenciaView{
+class VagaCompetenciaView {
     private controller: VagaCompetenciaController;
     private CompetenciaEmEdicaoIndex!: string;
     private idVaga!: string;
 
-    constructor(controller: VagaCompetenciaController){
+    constructor(controller: VagaCompetenciaController) {
         this.controller = controller;
         this.configurarEventListeners();
+        console.log("chegou aqui ")
     }
 
-    private configurarEventListeners(){
+    private configurarEventListeners() {
         const adicionarVagaButton = document.getElementById('adicionar-competencia-vaga') as HTMLButtonElement;
         if (adicionarVagaButton) {
             adicionarVagaButton.addEventListener('click', () => {
-                this.adicionarCompetencia();
+                 this.adicionarCompetencia();
             });
         }
 
         const atualizarButton = document.getElementById('atualizar-competencia-vaga');
         if (atualizarButton) {
             atualizarButton.addEventListener('click', () => {
-                this.atualizarCompetencia();
+                 this.atualizarCompetencia();
             });
         }
 
@@ -31,15 +33,14 @@ class VagaCompetenciaView{
             if (competenciasButtons) {
                 competenciasButtons.forEach((button) => {
                     button.addEventListener('click', () => {
-                        const dataCompetenciaId = button.getAttribute('data-competencia-id');
-                        if (dataCompetenciaId !== null) {
-                            this.idVaga = dataCompetenciaId;
+                        const vagaId = button.getAttribute('data-competencia-id');
+                        if (vagaId !== null) {
+                            this.idVaga = vagaId;
                             const competenciasVagaContainer = document.getElementById(`competencias-vaga-container`);
-
+                                this.exibirCompetenciasDaVaga(this.idVaga)
                             if (competenciasVagaContainer && this.idVaga) {
                                 if (competenciasVagaContainer.style.display === 'none' || competenciasVagaContainer.style.display === '') {
                                     competenciasVagaContainer.style.display = 'block';
-                                    this.exibirCompetenciasDaVaga(this.idVaga);
                                 } else {
                                     competenciasVagaContainer.style.display = 'none';
                                 }
@@ -50,76 +51,65 @@ class VagaCompetenciaView{
             }
         });
     }
+
+    pegarIdVaga(){
+        
     }
 
+
+    pegarValoresDoFormulario() {
+        const elements = {
+            name: document.getElementById('idCompetenciaVaga') as HTMLInputElement,
+            nivel: document.getElementById('nivelCompetencia') as HTMLInputElement
+        };
+
+
+        const competencia = new VagaCompetencia(
+            this.idVaga,
+            elements.name.value.trim(),
+            parseInt(elements.nivel.value.trim())
+        )
+
+        return competencia;
+    }
+
+    limparCamposDoFormulario() {
+        const nome = document.getElementById('idCompetenciaVaga') as HTMLInputElement;
+        const nivel = document.getElementById('nivelCompetencia') as HTMLInputElement;
+
+        nome.value = "";
+        nivel.value = "";
+    }
+
+
     adicionarCompetencia() {
-        const nomeElement = document.getElementById('idCompetenciaVaga') as HTMLInputElement;
-        const nivelElement = document.getElementById('nivelCompetencia') as HTMLSelectElement;
+        const competencia = this.pegarValoresDoFormulario();
+        this.controller.adicionarCompetencia(competencia);
 
-        const nome = nomeElement.value;
-        const nivelString = nivelElement.value;
+        this.limparCamposDoFormulario();
+        this.exibirCompetenciasDaVaga(this.idVaga);
 
-        if (nome && nivelString) {
-            const nivel = this.nivelMap[nivelString]
-
-            const novaCompetencia = new VagaCompetencia(
-                this.idVaga,
-                nome,
-                nivel
-            );
-            this.empresaService.adicionarCompetenciaAVaga(novaCompetencia);
-
-            nomeElement.value = '';
-            nivelElement.value = '';
-
-            this.exibirCompetenciasDaVaga(this.idVaga);
-        }
     }
 
     atualizarCompetencia() {
-        const nomeElement = document.getElementById('idCompetenciaVaga') as HTMLInputElement;
-        const nivelElement = document.getElementById('nivelCompetencia') as HTMLSelectElement;
-    
-        const novoNome = nomeElement.value;
-        const novoNivelString = nivelElement.value;
-    
-        if (novoNome && novoNivelString) {
-            const novoNivel = parseInt(novoNivelString);
-    
-            if (this.CompetenciaEmEdicaoIndex !== null) {
-                const idVaga = this.idVaga; 
-                const idCompetencia = this.CompetenciaEmEdicaoIndex; 
-    
-                const idEmpresa = this.usuarioService.obterIdUsuarioLogado();
-                const empresa = this.usuarioService.obterEmpresa(idEmpresa);
-    
-                if (empresa) {
-                    const vagas = this.empresaService.obterVagasDaEmpresa(idEmpresa);
-    
-                    const vaga = vagas.find((v) => v.id === idVaga);
-    
-                    if (vaga) {
-                        if (vaga.competencias && vaga.competencias.length > idCompetencia) {
-                            vaga.competencias[idCompetencia].idCompetencia = novoNome;
-                            vaga.competencias[idCompetencia].nivel = novoNivel;
-    
-                            this.empresaService.atualizarVagaDaEmpresa(idEmpresa, vagas);
-    
-                            nomeElement.value = '';
-                            nivelElement.value = '1';
-    
-                            this.CompetenciaEmEdicaoIndex = null;
-    
-                            this.exibirCompetenciasDaVaga(idVaga);
-                        }
-                    }
-                }
+        const competenciaHtml = this.pegarValoresDoFormulario();
+        if (this.idVaga != null) {
+            const competenciaEditada = this.controller.buscarCompetenciaPorId(this.idVaga, this.CompetenciaEmEdicaoIndex);
+
+            if (competenciaEditada) {
+                competenciaEditada.idCompetencia = competenciaHtml.idCompetencia
+                competenciaEditada.nivel = competenciaHtml.nivel
+
+                this.controller.atualizarCompetencia(competenciaEditada);
+                this.limparCamposDoFormulario()
+                this.exibirCompetenciasDaVaga(this.idVaga);
+                this.idVaga = "";
             }
         }
     }
-    
 
-    preencherCamposDeEdicao(competenciaIndex: number) {
+
+    preencherCamposDeEdicao(competenciaIndex: number, idCompetencia: string) {
         const competenciasList = document.getElementById('competencias-vaga-list');
 
         if (competenciaIndex >= 0 && competenciasList) {
@@ -136,14 +126,13 @@ class VagaCompetenciaView{
 
                 const nivelOption = nivelElement.querySelector(`option[value="${nivel}"]`) as HTMLSelectElement;
                 nivelElement.value = nivelOption.value;
-
-                this.CompetenciaEmEdicaoIndex = competenciaIndex;
+                this.CompetenciaEmEdicaoIndex = idCompetencia;
             }
         }
     }
 
     exibirCompetenciasDaVaga(idVaga: string) {
-        const competencias = this.empresaService.obterCompetenciasDaVaga(idVaga);
+        const competencias = this.controller.listarCompetencias(idVaga);
         const competenciasList = document.getElementById('competencias-vaga-list');
 
         if (competenciasList) {
@@ -168,7 +157,8 @@ class VagaCompetenciaView{
                 if (editarButton) {
                     editarButton.addEventListener('click', (event) => {
                         const rowIndex = Array.from(competenciasList.children).indexOf(row);
-                        this.preencherCamposDeEdicao(rowIndex);
+                        const idCompetencia = competencia.id
+                        this.preencherCamposDeEdicao(rowIndex, idCompetencia);
                     });
                 }
 
@@ -176,7 +166,7 @@ class VagaCompetenciaView{
                 if (excluirButton) {
                     excluirButton.addEventListener('click', () => {
                         const idCompetencia = competencia.id
-                        this.empresaService.excluirCompetenciaDaVaga(idVaga, idCompetencia)
+                        this.controller.excluirCompetencia(idVaga, idCompetencia)
                         this.exibirCompetenciasDaVaga(idVaga);
                     });
                 }

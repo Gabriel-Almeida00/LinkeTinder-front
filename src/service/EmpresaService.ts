@@ -168,7 +168,6 @@ class EmpresaService {
 
         if (empresa) {
             const vaga = empresa.vagas.find((v) => v.id === vagaId);
-
             if (vaga) {
                 const competencia = vaga.competencias.find((c) => c.id === competenciaId);
                 return competencia || null;
