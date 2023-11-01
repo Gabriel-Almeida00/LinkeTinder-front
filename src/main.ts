@@ -1,4 +1,5 @@
 import './View/login';
+import './api/competencia/competenciaApi'
 import CandidatoUI from './Controler/candidatoUI';
 import EmpresaUI from './Controler/empresaUI';
 import CandidatoService from './service/candidato/CandidatoService';
@@ -51,8 +52,6 @@ candidatoView.exibirInformacoesCandidatoNoHTML();
 const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaController(candidatoCompetenciaService, usuarioService)
 const perfilCandidatoCompetenciaView = new PerfilCandidatoCompetenciaView(perfilCandidatoCompetenciaController )
 perfilCandidatoCompetenciaView.exibirCompetenciasDoCandidato();
-
-
 
 
 

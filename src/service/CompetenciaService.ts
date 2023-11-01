@@ -1,35 +1,48 @@
+import CompetenciaApi from "../api/competencia/competenciaApi";
 import Competencia from "../modelo/Competencia";
 
 class CompetenciaService{
-    private competencias: Competencia[] = [];
+    private api: CompetenciaApi;
 
-    constructor() {
-        this.competencias.push(new Competencia('Java'));
-        this.competencias.push(new Competencia('Python'));
-        this.competencias.push(new Competencia('C#'));
-    }
+  constructor() {
+    this.api = new CompetenciaApi();
+  }
 
-    adicionarCompetencia(nome: string): Competencia {
-        const competencia = new Competencia(nome);
-        this.competencias.push(competencia);
-        return competencia;
-    }
+  async adicionarCompetencia(nome: string): Promise<Competencia> {
+    const response = await this.api.criarCompetencia(nome);
+      return response.data;
+  }
 
-    obterCompetenciaPorId(idCompetencia: string): Competencia | undefined {
-        return this.competencias.find(competencia => competencia.id === idCompetencia);
-    }
-
-    listarCompetencias(): Competencia[] {
-        return this.competencias;
-    }
-
-    removerCompetencia(idCompetencia: string): boolean {
-        const index = this.competencias.findIndex(competencia => competencia.id === idCompetencia);
-        if (index !== -1) {
-            this.competencias.splice(index, 1);
-            return true;
-        }
+  async atualizarCompetencia(id: number, nome: string): Promise<boolean>{
+    try{
+        const response = await this.api.atualizarCompetencia(id, nome)
+        return true;
+    } catch {
         return false;
     }
+  }
+
+  async obterCompetenciaPorId(idCompetencia: number): Promise<Competencia | undefined> {
+    try {
+          const response = await this.api.buscarCompetenciaPorId(idCompetencia);
+          return response.data;
+      } catch {
+          return undefined;
+      }
+  }
+
+  async listarCompetencias(): Promise<Competencia[]> {
+    const response = await this.api.listarCompetencias();
+      return response.data;
+  }
+
+  async removerCompetencia(idCompetencia: number): Promise<boolean> {
+    try {
+          await this.api.excluirCompetencia(idCompetencia);
+          return true;
+      } catch {
+          return false;
+      }
+  }
 }
 export default CompetenciaService
