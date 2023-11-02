@@ -106,8 +106,7 @@ export class CandidatoUI {
            senhaInput.value,
            sobrenomeInput.value,
            dataNascimento,
-           cpfInput.value,
-           TipoUsuario.Candidato
+           cpfInput.value
         );
     }
     
@@ -117,7 +116,7 @@ export class CandidatoUI {
         if (novoCandidato) {
             this.candidatoService.adicionarCandidato(novoCandidato);
             this.limparCamposDoFormulario();
-            window.location.href = '../../paginas/login/login.html';
+           window.location.href = '../../paginas/login/login.html';
         }
     }
     

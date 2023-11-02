@@ -99,9 +99,7 @@ class UsuarioService implements IUsuarioService{
             usuario.senha,
             usuario.sobrenome,
             new Date(usuario.dataNascimento),
-            usuario.cpf,
-            TipoUsuario.Candidato
-        );
+            usuario.cpf        );
         candidato.setId(usuario.id);
         return candidato;
     }

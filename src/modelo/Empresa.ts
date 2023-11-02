@@ -16,7 +16,7 @@ class Empresa extends Pessoa {
         cnpj: string,
         tipoUsuario: TipoUsuario.Empresa
     ) {
-        super(nome, email, pais, cep, descricao, senha, tipoUsuario);
+        super(nome, email, pais, cep, descricao, senha);
         this.cnpj = cnpj;
         this.vagas = [];
     }

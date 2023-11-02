@@ -10,7 +10,6 @@ class Pessoa {
      cep: string;
      descricao: string;
      senha: string;
-     tipoUsuario: TipoUsuario
 
     constructor(
         nome: string,
@@ -19,7 +18,6 @@ class Pessoa {
         cep: string,
         descricao: string,
         senha: string,
-        tipoUsuario: TipoUsuario
     ) {
     
         this.nome = nome;
@@ -28,7 +26,6 @@ class Pessoa {
         this.cep = cep;
         this.descricao = descricao;
         this.senha = senha;
-        this.tipoUsuario = tipoUsuario
     }
 }
 export default Pessoa;

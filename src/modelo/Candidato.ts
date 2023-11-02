@@ -26,9 +26,8 @@ class Candidato extends Pessoa {
     sobrenome: string,
     dataNascimento: Date,
     cpf: string,
-    tipoUsuario: TipoUsuario.Candidato
   ) {
-    super(nome, email, pais, cep, descricao, senha, tipoUsuario);
+    super(nome, email, pais, cep, descricao, senha);
     this.sobrenome = sobrenome;
     this.dataNascimento = dataNascimento;
     this.cpf = cpf;

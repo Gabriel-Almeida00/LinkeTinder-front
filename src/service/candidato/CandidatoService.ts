@@ -31,8 +31,12 @@ class CandidatoService implements ICandidatoService {
 
 
       async adicionarCandidato(candidato: Candidato): Promise<void> {
-        await this.api.criarCandidato(candidato);
+        try{
+            await this.api.criarCandidato(candidato);
+        } catch (error) {
+            console.error('Erro ao criar candidato:', error); 
       }
+    }
 
       async atualizarCandidato(id: number, candidato: Candidato): Promise<boolean>{
         try{
