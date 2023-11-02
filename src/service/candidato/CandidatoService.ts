@@ -5,60 +5,54 @@ import VagaCompetencia from "../../modelo/VagaCompetencia";
 
 import CandidatoDTO from "../../modelo/dto/CandidatoDTO";
 import ICandidatoService from "./ICandidatoService";
-import LocalStorage from "../../data/LocalStorage";
+import CandidatoApi from "../../api/candidato/candidatoApi";
 
 class CandidatoService implements ICandidatoService {
-    private candidatos: Candidato[] = [];
-    private localStorage: LocalStorage<Candidato>;
+   private api: CandidatoApi;
 
-    constructor(localStorage: LocalStorage<Candidato>) {
-        this.localStorage = localStorage;
-        this.carregarCandidatosDoLocalStorage();
+    constructor() {
+       this.api = new CandidatoApi();
     }
 
-    private salvarCandidatosNoLocalStorage(): void {
-        this.localStorage.salvarDados(this.candidatos);
-    }
+   
+    async listarCandidatos(): Promise<Candidato[]> {
+        const response = await this.api.listarCandidatos();
+          return response.data;
+      }
 
-    private carregarCandidatosDoLocalStorage(): void {
-        const candidatosJson = this.localStorage.carregarDados();
-        if (candidatosJson.length > 0) {
-            this.candidatos = candidatosJson;
+      async obterCandidatoPorId(idCandidato: number): Promise<Candidato | undefined> {
+        try {
+              const response = await this.api.buscarCandidatoPorId(idCandidato);
+              return response.data;
+          } catch {
+              return undefined;
+          }
+      }
+
+
+      async adicionarCandidato(candidato: Candidato): Promise<void> {
+        await this.api.criarCandidato(candidato);
+      }
+
+      async atualizarCandidato(id: number, candidato: Candidato): Promise<boolean>{
+        try{
+            const response = await this.api.atualizarCandidato(id, candidato)
+            return true;
+        } catch {
+            return false;
         }
-    }
+      }
 
-    listarCandidatos(): Candidato[] {
-        return this.candidatos;
-    }
+      async excluirCandidato(idCandidato: number): Promise<boolean> {
+        try {
+              await this.api.excluirCandidato(idCandidato);
+              return true;
+          } catch {
+              return false;
+          }
+      }
 
-    listarCandidatosDTO(): CandidatoDTO[] {
-        return this.candidatos.map(candidato => new CandidatoDTO(
-            candidato.id,
-            candidato.nome,
-            candidato.descricao,
-            candidato.competencias,
-            candidato.experiencias,
-            candidato.formacoes
-        ));
-    }
-
-
-    cadastrarCandidato(candidato: Candidato): void {
-        this.candidatos.push(candidato);
-        this.salvarCandidatosNoLocalStorage();
-    }
-
-    atualizarCandidatoNoLocalStorage(candidatoAtualizado: Candidato): void {
-        const candidatos = this.localStorage.carregarDados();
-        const indice = candidatos.findIndex((candidato) => candidato.id === candidatoAtualizado.id);
-
-        if (indice !== -1) {
-            candidatos[indice] = candidatoAtualizado;
-            this.localStorage.salvarDados(candidatos);
-        }
-    }
-
-    calcularAfinidadeCompetencias(candidato: CandidatoDTO, requisitos: VagaCompetencia[]): number {
+    calcularAfinidadeCompetencias(candidato: Candidato, requisitos: VagaCompetencia[]): number {
         let afinidade = 0;
         for (const requisito of requisitos) {
             const competenciaCandidato = candidato.competencias
@@ -72,7 +66,7 @@ class CandidatoService implements ICandidatoService {
         return afinidade;
     }
 
-    calcularAfinidadeExperiencia(candidato: CandidatoDTO, nivelExperiencia: number): number {
+    calcularAfinidadeExperiencia(candidato: Candidato, nivelExperiencia: number): number {
         const experienciaCandidato = candidato.experiencias.find(
             (experiencia) => experiencia.nivel === nivelExperiencia
         );
@@ -80,14 +74,14 @@ class CandidatoService implements ICandidatoService {
     }
 
 
-    calcularAfinidadeFormacao(candidato: CandidatoDTO, nivelFormacao: number): number {
+    calcularAfinidadeFormacao(candidato: Candidato, nivelFormacao: number): number {
         const formacaoCandidato = candidato.formacoes.find(
             (formacao) => formacao.nivel === nivelFormacao
         );
         return formacaoCandidato ? 3 : 0;
     }
 
-    calcularAfinidadeVaga(candidato: CandidatoDTO, vaga: Vaga): number {
+    calcularAfinidadeVaga(candidato: Candidato, vaga: Vaga): number {
         const afinidadeCompetencias = this.calcularAfinidadeCompetencias(candidato, vaga.competencias);
         const afinidadeExperiencia = this.calcularAfinidadeExperiencia(candidato, vaga.experienciaMinima);
         const afinidadeFormacao = this.calcularAfinidadeFormacao(candidato, vaga.formacaoMinima);
@@ -99,7 +93,7 @@ class CandidatoService implements ICandidatoService {
         return afinidadePercentual;
     }
 
-    calcularAfinidadeCandidatoComVaga(candidato: CandidatoDTO, vagas: Vaga[]): number {
+    calcularAfinidadeCandidatoComVaga(candidato: Candidato, vagas: Vaga[]): number {
         if (vagas.length === 0) {
             return 0;
         }

@@ -38,7 +38,7 @@ class Candidato extends Pessoa {
     this.formacoes = []
     this.experiencias = []
   }
-  setId(id: string): void {
+  setId(id: number): void {
     this.id = id
   }
 }

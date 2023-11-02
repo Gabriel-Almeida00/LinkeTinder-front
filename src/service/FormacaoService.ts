@@ -9,7 +9,7 @@ class FormacaoService{
         this.localStorageService = new LocalStorageService<Candidato>('candidatos');
     }
 
-    obterFormacaoDoCandidatoPorId(candidatoId: string, formacaoId: string){
+    obterFormacaoDoCandidatoPorId(candidatoId: number, formacaoId: string){
         const candidatos = this.localStorageService.carregarDados();
         const candidato = candidatos.find((c) => c.id === candidatoId);
     
@@ -21,13 +21,13 @@ class FormacaoService{
         return null;
     }
 
-    obterFormacoesDoCandidato(candidatoId: string): Formacao[] {
+    obterFormacoesDoCandidato(candidatoId: number): Formacao[] {
         const candidatos = this.localStorageService.carregarDados();
         const candidato = candidatos.find((c) => c.id === candidatoId);
         return candidato?.formacoes || [];
     }
 
-    adicionarFormacaoAoCandidato(candidatoId: string, novaFormacao: Formacao): void {
+    adicionarFormacaoAoCandidato(candidatoId: number, novaFormacao: Formacao): void {
         const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
 
@@ -37,7 +37,7 @@ class FormacaoService{
         }
     }
 
-    atualizarFormacoesDoCandidato(candidatoId: string, formacaoAtualizada: Formacao): void {
+    atualizarFormacoesDoCandidato(candidatoId: number, formacaoAtualizada: Formacao): void {
         const candidatos = this.localStorageService.carregarDados();
         const candidato = candidatos.find((c) => c.id === candidatoId);
 
@@ -50,7 +50,7 @@ class FormacaoService{
         }
     }
 
-    excluirFormacaoDoCandidato(candidatoId: string, formacaoId: string): void {
+    excluirFormacaoDoCandidato(candidatoId: number, formacaoId: string): void {
         const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
 

@@ -1,5 +1,4 @@
 import './View/login';
-import './api/competencia/competenciaApi'
 import CandidatoUI from './Controler/candidatoUI';
 import EmpresaUI from './Controler/empresaUI';
 import CandidatoService from './service/candidato/CandidatoService';
@@ -19,12 +18,11 @@ import ExperienciaService from './service/ExperienciaService';
 import CandidatoFormacaoView from './View/Candidato/CandidatoFormacaoView';
 import CandidatoFormacaoController from './Controler/Candidato/CandidatoFormacaoController';
 import FormacaoService from './service/FormacaoService';
-import VagaCompetenciaView from './View/Empresa/VagaCompetenciaView';
-import VagaCompetenciaController from './Controler/Empresa/VagaCompetenciaController';
+
 
 const localStorage = new LocalStorage<Candidato>('candidatos');
 
-const candidatoService = new CandidatoService(localStorage);
+const candidatoService = new CandidatoService();
 const candidatoCompetenciaService = new CandidatoCompetenciaService(localStorage)
 const usuarioService = new UsuarioService();
 const empresaService = new EmpresaService();
@@ -60,8 +58,8 @@ empresaUi.associarEventosInformacoesVaga();
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    const dadosCompetencias = candidatoUI.obterContagemCompetencias();
+document.addEventListener('DOMContentLoaded', async () => {
+    const dadosCompetencias = await candidatoUI.obterContagemCompetencias();
     candidatoUI.listarCandidatos();
     candidatoUI.criarGraficoCompetencias(dadosCompetencias);
     candidatoUI.associarEventosInformacoesCandidato();

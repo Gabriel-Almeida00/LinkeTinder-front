@@ -3,7 +3,7 @@ import TipoUsuario from './enum/TipoUsuario';
 
 
 class Pessoa {
-     id: string;
+     id!: number;
      nome: string;
      email: string;
      pais: string;
@@ -21,7 +21,7 @@ class Pessoa {
         senha: string,
         tipoUsuario: TipoUsuario
     ) {
-        this.id = uuidv4();
+    
         this.nome = nome;
         this.email = email;
         this.pais = pais;

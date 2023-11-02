@@ -3,8 +3,8 @@ import VagaCurtida from "./VagaCurtida";
 import { v4 as uuidv4 } from 'uuid';
 
 class Vaga {
-     id: string;
-     idEmpresa: string;
+     id!: number;
+     idEmpresa: number;
      nome: string;
      descricao: string;
      cidade: string;
@@ -14,14 +14,14 @@ class Vaga {
      curtida: VagaCurtida[];
 
     constructor(
-        idEmpresa: string,
+        idEmpresa: number,
         nome: string,
         descricao: string,
         cidade: string,
         formacaoMinima: number,
         experienciaMinima: number
     ) {
-        this.id = uuidv4();
+      
         this.idEmpresa = idEmpresa;
         this.nome = nome;
         this.descricao = descricao;

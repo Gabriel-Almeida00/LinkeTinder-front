@@ -21,7 +21,7 @@ class Empresa extends Pessoa {
         this.vagas = [];
     }
 
-    setId(id: string):void{
+    setId(id: number):void{
         this.id = id
     }
 }

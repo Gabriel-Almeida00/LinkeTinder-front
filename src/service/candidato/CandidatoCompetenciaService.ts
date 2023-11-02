@@ -10,7 +10,7 @@ class CandidatoCompetenciaService implements ICandidatoCompetenciaService {
         this.localStorageService = localStorageService;
     }
 
-    obterCompetenciaDoCandidatoPorId(candidatoId: string, competenciaId: string): CandidatoCompetencia | null {
+    obterCompetenciaDoCandidatoPorId(candidatoId: number, competenciaId: string): CandidatoCompetencia | null {
         const candidatos = this.localStorageService.carregarDados();
         const candidato = candidatos.find((c) => c.id === candidatoId);
     
@@ -23,7 +23,7 @@ class CandidatoCompetenciaService implements ICandidatoCompetenciaService {
     }
     
 
-    obterCompetenciasDoCandidato(idCandidato: string): CandidatoCompetencia[] {
+    obterCompetenciasDoCandidato(idCandidato: number): CandidatoCompetencia[] {
         const candidatos = this.localStorageService.carregarDados();
 
         const candidatoEncontrado = candidatos.find((candidato) => candidato.id === idCandidato);
@@ -35,7 +35,7 @@ class CandidatoCompetenciaService implements ICandidatoCompetenciaService {
         return [];
     }
 
-    adicionarCompetenciaAoCandidato(candidatoId: string, novaCompetencia: CandidatoCompetencia): void {
+    adicionarCompetenciaAoCandidato(candidatoId: number, novaCompetencia: CandidatoCompetencia): void {
         const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((candidato) => candidato.id === candidatoId);
 
@@ -47,7 +47,7 @@ class CandidatoCompetenciaService implements ICandidatoCompetenciaService {
         }
     }
 
-    atualizarCompetenciaDoCandidato(candidatoId: string, competenciaAtualizada: CandidatoCompetencia): void {
+    atualizarCompetenciaDoCandidato(candidatoId: number, competenciaAtualizada: CandidatoCompetencia): void {
         const candidatos = this.localStorageService.carregarDados();
         const candidato = candidatos.find((c) => c.id === candidatoId);
     
@@ -61,7 +61,7 @@ class CandidatoCompetenciaService implements ICandidatoCompetenciaService {
     }
     
 
-    excluirCompetenciaDoCandidato(candidatoId: string, competenciaId: string): void {
+    excluirCompetenciaDoCandidato(candidatoId: number, competenciaId: string): void {
         const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((candidato) => candidato.id === candidatoId);
 

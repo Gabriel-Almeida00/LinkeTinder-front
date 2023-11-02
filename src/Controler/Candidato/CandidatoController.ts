@@ -13,11 +13,11 @@ class CandidatoController {
 
     pegarInformacoesDoCandidato() {
         const idCanddato = this.usuarioService.obterIdUsuarioLogado()
-        return this.usuarioService.obterCandidato(idCanddato)
+        return this.candidatoService.obterCandidatoPorId(idCanddato)
     }
 
     atualizarInformacoesCandidato(candidato: Candidato) {
-        this.candidatoService.atualizarCandidatoNoLocalStorage(candidato);
+      return this.candidatoService.atualizarCandidato(candidato.id, candidato);
     }
 }
 export default CandidatoController

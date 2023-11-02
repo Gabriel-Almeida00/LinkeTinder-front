@@ -1,5 +1,4 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import Competencia from '../../modelo/Competencia';
 
 class CompetenciaApi {
   private api;

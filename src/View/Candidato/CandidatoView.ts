@@ -8,7 +8,7 @@ class CandidatoView {
         this.configurarEventListeners();
     }
 
-    private configurarEventListeners(){
+    private configurarEventListeners() {
         const salvarButton = document.getElementById('salvar-button');
         if (salvarButton) {
             salvarButton.addEventListener('click', () => {
@@ -17,7 +17,7 @@ class CandidatoView {
         }
     }
 
-    pegarValoresDoFormulario(){
+    pegarValoresDoFormulario() {
         const elements = {
             nome: document.getElementById('nomeCandidato') as HTMLInputElement,
             sobrenome: document.getElementById('sobrenomeCandidato') as HTMLInputElement,
@@ -48,63 +48,68 @@ class CandidatoView {
             telefone: elements.telefone.value,
             senha: elements.senha.value
         };
-    
+
         return candidato;
     }
 
-  
-    
-     setElementValueById(id: string, value: string | null) {
+
+
+    setElementValueById(id: string, value: string | null) {
         const element = document.getElementById(id);
         if (element instanceof HTMLInputElement) {
             element.value = value || '';
         }
     }
-    
-     formatAndSetDateElementValue(id: string, date: Date | null) {
+
+    formatAndSetDateElementValue(id: string, date: Date | null) {
         const element = document.getElementById(id);
         if (element instanceof HTMLInputElement && date) {
             const formattedDate = date.toISOString().split('T')[0];
             element.value = formattedDate;
         }
     }
-    
-   
 
-    exibirInformacoesCandidatoNoHTML() {
-        const candidato = this.controller.pegarInformacoesDoCandidato();
 
-        this.setElementValueById('nomeCandidato', candidato.nome);
-        this.setElementValueById('sobrenomeCandidato', candidato.sobrenome);
-        this.formatAndSetDateElementValue('dataNascimentoCandidato', new Date(candidato.dataNascimento));
-        this.setElementValueById('emailCandidato', candidato.email);
-        this.setElementValueById('paisCandidato', candidato.pais);
-        this.setElementValueById('cepCandidato', candidato.cep);
-        this.setElementValueById('cpfCandidato', candidato.cpf);
-        this.setElementValueById('linkedinCandidato', candidato.redeSocial);
-        this.setElementValueById('descricaoCandidato', candidato.descricao);
-        this.setElementValueById('telefoneCandidato', candidato.telefone);
-        this.setElementValueById('senhaCandidato', candidato.senha);
+
+    async exibirInformacoesCandidatoNoHTML() {
+        const candidato = await this.controller.pegarInformacoesDoCandidato();
+
+        if (candidato) {
+            this.setElementValueById('nomeCandidato', candidato.nome);
+            this.setElementValueById('sobrenomeCandidato', candidato.sobrenome);
+            this.formatAndSetDateElementValue('dataNascimentoCandidato', new Date(candidato.dataNascimento));
+            this.setElementValueById('emailCandidato', candidato.email);
+            this.setElementValueById('paisCandidato', candidato.pais);
+            this.setElementValueById('cepCandidato', candidato.cep);
+            this.setElementValueById('cpfCandidato', candidato.cpf);
+            this.setElementValueById('linkedinCandidato', candidato.redeSocial);
+            this.setElementValueById('descricaoCandidato', candidato.descricao);
+            this.setElementValueById('telefoneCandidato', candidato.telefone);
+            this.setElementValueById('senhaCandidato', candidato.senha);
+        } else {
+            console.log("não foi possível encontrar informações candidatos")
+        }
     }
 
-    salvarInformacoesCandidato() {
-        const candidato = this.controller.pegarInformacoesDoCandidato();
+    async salvarInformacoesCandidato() {
+        const candidato = await this.controller.pegarInformacoesDoCandidato();
         const candidatoAtualizado = this.pegarValoresDoFormulario();
 
-        candidato.nome = candidatoAtualizado.nome;
-        candidato.sobrenome = candidatoAtualizado.sobrenome;
-        candidato.dataNascimento = candidatoAtualizado.dataNascimento;
-        candidato.email = candidatoAtualizado.email;
-        candidato.pais = candidatoAtualizado.pais;
-        candidato.cep = candidatoAtualizado.cep;
-        candidato.cpf = candidatoAtualizado.cpf;
-        candidato.redeSocial = candidatoAtualizado.redeSocial;
-        candidato.descricao = candidatoAtualizado.descricao;
-        candidato.telefone = candidatoAtualizado.telefone;
-        candidato.senha = candidatoAtualizado.senha;
-       
+        if(candidato){
+            candidato.nome = candidatoAtualizado.nome;
+            candidato.sobrenome = candidatoAtualizado.sobrenome;
+            candidato.dataNascimento = candidatoAtualizado.dataNascimento;
+            candidato.email = candidatoAtualizado.email;
+            candidato.pais = candidatoAtualizado.pais;
+            candidato.cep = candidatoAtualizado.cep;
+            candidato.cpf = candidatoAtualizado.cpf;
+            candidato.redeSocial = candidatoAtualizado.redeSocial;
+            candidato.descricao = candidatoAtualizado.descricao;
+            candidato.telefone = candidatoAtualizado.telefone;
+            candidato.senha = candidatoAtualizado.senha;
 
-        this.controller.atualizarInformacoesCandidato(candidato);
+            this.controller.atualizarInformacoesCandidato(candidato);
+        }
     }
 
 } export default CandidatoView;

@@ -69,7 +69,7 @@ class EmpresaService {
         }
     }
 
-    obterVagasDaEmpresa(idEmpresa: string): Vaga[] {
+    obterVagasDaEmpresa(idEmpresa: number): Vaga[] {
         const empresas = this.localStorageService.carregarDados();
         const vagasEncontradas = empresas.find((empresa) => empresa.id === idEmpresa);
 
@@ -79,7 +79,7 @@ class EmpresaService {
         return [];
     }
 
-    adicionarVagaAEmpresa(idEmpresa: string, vaga: Vaga): void {
+    adicionarVagaAEmpresa(idEmpresa: number, vaga: Vaga): void {
         const empresas = this.localStorageService.carregarDados();
         const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
 
@@ -90,7 +90,7 @@ class EmpresaService {
         }
     }
 
-    atualizarVagaDaEmpresa(idEmpresa: string, NovasVagas: Vaga[]): void {
+    atualizarVagaDaEmpresa(idEmpresa: number, NovasVagas: Vaga[]): void {
         const empresas = this.localStorageService.carregarDados();
         const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
 
@@ -100,7 +100,7 @@ class EmpresaService {
         }
     }
 
-    excluirVagaDaEmpresa(idEmpresa: string, idVaga: string) {
+    excluirVagaDaEmpresa(idEmpresa: number, idVaga: number) {
         const empresas = this.localStorageService.carregarDados();
         const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
 
@@ -115,7 +115,7 @@ class EmpresaService {
         }
     }
 
-    adicionarCompetenciaAVaga(idEmpresa: string, idVaga: string, novaCompetencia: VagaCompetencia): void {
+    adicionarCompetenciaAVaga(idEmpresa: number, idVaga: number, novaCompetencia: VagaCompetencia): void {
         const empresas = this.localStorageService.carregarDados();
         const empresa = empresas.find((e) => e.id === idEmpresa);
 
@@ -129,7 +129,7 @@ class EmpresaService {
         }
     }
 
-    atualizarCompetenciaDaVaga(idEmpresa: string, idVaga: string, competenciaAtualizada: VagaCompetencia): void {
+    atualizarCompetenciaDaVaga(idEmpresa: number, idVaga: number, competenciaAtualizada: VagaCompetencia): void {
         const empresas = this.localStorageService.carregarDados();
         const empresa = empresas.find((e) => e.id === idEmpresa);
 
@@ -144,7 +144,7 @@ class EmpresaService {
     }
 
 
-    excluirCompetenciaDaVaga(idEmpresa: string, idVaga: string, idCompetencia: string) {
+    excluirCompetenciaDaVaga(idEmpresa: number, idVaga: number, idCompetencia: string) {
         const empresas = this.localStorageService.carregarDados();
         const empresa = empresas.find((e) => e.id === idEmpresa);
 
@@ -162,7 +162,7 @@ class EmpresaService {
         }
     }
 
-    obterCompetenciaDaVagaPorId(empresaId: string, vagaId: string, competenciaId: string): VagaCompetencia | null {
+    obterCompetenciaDaVagaPorId(empresaId: number, vagaId: number, competenciaId: string): VagaCompetencia | null {
         const empresas = this.localStorageService.carregarDados();
         const empresa = empresas.find((e) => e.id === empresaId);
 
@@ -180,7 +180,7 @@ class EmpresaService {
     }
 
 
-    obterCompetenciasDaVaga(idEmpresa: string, idVaga: string): VagaCompetencia[] {
+    obterCompetenciasDaVaga(idEmpresa: number, idVaga: number): VagaCompetencia[] {
         const empresas = this.localStorageService.carregarDados();
         const empresa = empresas.find((e) => e.id === idEmpresa);
 

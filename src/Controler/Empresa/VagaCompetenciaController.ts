@@ -12,12 +12,12 @@ class VagaCompetenciaController {
 
     }
 
-    buscarCompetenciaPorId(idVaga: string, idCompetencia: string) {
+    buscarCompetenciaPorId(idVaga: number, idCompetencia: string) {
         const idEmpresa = this.usuarioService.obterIdUsuarioLogado();
         return this.empresaService.obterCompetenciaDaVagaPorId(idEmpresa, idVaga, idCompetencia);
     }
 
-    listarCompetencias(idVaga: string) {
+    listarCompetencias(idVaga: number) {
         const idEmpresa = this.usuarioService.obterIdUsuarioLogado();
         return this.empresaService.obterCompetenciasDaVaga(idEmpresa, idVaga);
     }
@@ -33,7 +33,7 @@ class VagaCompetenciaController {
         this.empresaService.atualizarCompetenciaDaVaga(idEmpresa, competenciaAtualizada.idVaga, competenciaAtualizada);
     }
 
-    excluirCompetencia(idVaga: string,idCompetencia: string) {
+    excluirCompetencia(idVaga: number,idCompetencia: string) {
         const idEmpresa = this.usuarioService.obterIdUsuarioLogado();
         this.empresaService.excluirCompetenciaDaVaga(idEmpresa,idVaga, idCompetencia);
     }

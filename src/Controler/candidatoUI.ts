@@ -34,9 +34,9 @@ export class CandidatoUI {
     }
 
     private onDOMContentLoaded(): void {
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             this.listarCandidatos();
-            const dadosCompetencias = this.obterContagemCompetencias();
+            const dadosCompetencias = await this.obterContagemCompetencias();
             this.criarGraficoCompetencias(dadosCompetencias);
             this.associarEventosInformacoesCandidato();
         });
@@ -115,7 +115,7 @@ export class CandidatoUI {
         const novoCandidato = this.obterValoresDosCampos();
         
         if (novoCandidato) {
-            this.candidatoService.cadastrarCandidato(novoCandidato);
+            this.candidatoService.adicionarCandidato(novoCandidato);
             this.limparCamposDoFormulario();
             window.location.href = '../../paginas/login/login.html';
         }
@@ -132,8 +132,8 @@ export class CandidatoUI {
     }
     
     
-    listarCandidatos(): void {
-        const candidatosDTO = this.candidatoService.listarCandidatosDTO();
+    async listarCandidatos(): Promise<void> {
+        const candidatosDTO = await this.candidatoService.listarCandidatos();
         const listaCandidatos = document.getElementById('lista-candidatos') as HTMLUListElement;
     
         listaCandidatos.innerHTML = '';
@@ -144,7 +144,7 @@ export class CandidatoUI {
         });
     }
     
-    private criarCandidatoElement(candidatoDTO: CandidatoDTO, index: number): HTMLElement {
+    private criarCandidatoElement(candidatoDTO: Candidato, index: number): HTMLElement {
         const li = document.createElement('li');
         li.setAttribute("class", "candidato-item");
         li.setAttribute("data-index", index.toString());
@@ -169,7 +169,7 @@ export class CandidatoUI {
         return li;
     }
     
-    private obterAfinidadesHtml(candidatoDTO: CandidatoDTO, vagas: Vaga[]): string {
+    private obterAfinidadesHtml(candidatoDTO: Candidato, vagas: Vaga[]): string {
         let afinidadesHtml = '';
         vagas.forEach(vaga => {
             const afinidade = this.candidatoService.calcularAfinidadeCandidatoComVaga(candidatoDTO, [vaga]);
@@ -178,7 +178,7 @@ export class CandidatoUI {
         return afinidadesHtml;
     }
     
-    private obterInformacoesCandidatoHtml(candidatoDTO: CandidatoDTO): string {
+    private obterInformacoesCandidatoHtml(candidatoDTO: Candidato): string {
         return `
             <p class="formacao-candidato">Formação: ${this.obterFormacoesTexto(candidatoDTO.formacoes)}</p>
             <p class="experiencia-candidato">Experiência: ${this.obterExperienciasTexto(candidatoDTO.experiencias)}</p>
@@ -198,13 +198,13 @@ export class CandidatoUI {
     }
     
     
-    associarEventosInformacoesCandidato() {
+    async associarEventosInformacoesCandidato() {
         const listaCandidatos = document.getElementById("lista-candidatos");
-        const candidatosInfos = this.candidatoService.listarCandidatosDTO();
+        const candidatosInfos = await this.candidatoService.listarCandidatos();
     
         if (listaCandidatos) {
             listaCandidatos.addEventListener("mouseover", (event) => {
-                this.mostrarInformacoesCandidato(event, candidatosInfos);
+                return this.mostrarInformacoesCandidato(event, candidatosInfos);
             });
     
             listaCandidatos.addEventListener("mouseout", (event) => {
@@ -213,7 +213,7 @@ export class CandidatoUI {
         }
     }
     
-    mostrarInformacoesCandidato(event: MouseEvent, candidatosInfos: CandidatoDTO[]) {
+    mostrarInformacoesCandidato(event: MouseEvent, candidatosInfos: Candidato[]) {
         const candidatoItem = this.encontrarCandidatoItem(event.target as HTMLElement);
         if (candidatoItem) {
             const index = parseInt(candidatoItem.getAttribute("data-index") || "");
@@ -248,10 +248,10 @@ export class CandidatoUI {
         return null;
     }
     
-    obterContagemCompetencias(): { [competencia: string]: number } {
+    async obterContagemCompetencias(): Promise<{ [competencia: string]: number; }> {
         const competenciasCount: { [competencia: string]: number } = {};
     
-        this.candidatoService.listarCandidatos().forEach(candidato => {
+        (await this.candidatoService.listarCandidatos()).forEach(candidato => {
             candidato.competencias.forEach(competencia => {
                 const nomeCompetencia = competencia.nivel;
                 if (!competenciasCount[nomeCompetencia]) {

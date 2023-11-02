@@ -9,7 +9,7 @@ class ExperienciaService {
         this.localStorageService = new LocalStorageService<Candidato>('candidatos');
     }
 
-    obterExperienciaDoCanddatoPorId(candidatoId: string, experienciaId: string): Experiencia | null{
+    obterExperienciaDoCanddatoPorId(candidatoId: number, experienciaId: string): Experiencia | null{
          const candidatos = this.localStorageService.carregarDados();
         const candidato = candidatos.find((c) => c.id === candidatoId);
     
@@ -21,13 +21,13 @@ class ExperienciaService {
         return null;
     }
 
-    obterExperienciasDoCandidato(candidatoId: string): Experiencia[] {
+    obterExperienciasDoCandidato(candidatoId: number): Experiencia[] {
         const candidatos = this.localStorageService.carregarDados();
         const candidato = candidatos.find((c) => c.id === candidatoId);
         return candidato?.experiencias || [];
     }
 
-    adicionarExperienciaAoCandidato(candidatoId: string, novaExperiencia: Experiencia): void {
+    adicionarExperienciaAoCandidato(candidatoId: number, novaExperiencia: Experiencia): void {
         const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
 
@@ -37,7 +37,7 @@ class ExperienciaService {
         }
     }
 
-    atualizarExperienciasDoCandidato(candidatoId: string, experienciaAtualizada: Experiencia): void {
+    atualizarExperienciasDoCandidato(candidatoId: number, experienciaAtualizada: Experiencia): void {
         const candidatos = this.localStorageService.carregarDados();
         const candidato = candidatos.find((c) => c.id === candidatoId);
 
@@ -50,7 +50,7 @@ class ExperienciaService {
         }
     }
 
-    excluirExperienciaDoCandidato(candidatoId: string, experienciaId: string): void {
+    excluirExperienciaDoCandidato(candidatoId: number, experienciaId: string): void {
         const candidatos = this.localStorageService.carregarDados();
         const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
 

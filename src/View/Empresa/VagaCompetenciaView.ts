@@ -4,7 +4,7 @@ import VagaCompetencia from "../../modelo/VagaCompetencia";
 class VagaCompetenciaView {
     private controller: VagaCompetenciaController;
     private CompetenciaEmEdicaoIndex!: string;
-    private idVaga!: string;
+    private idVaga!: number;
 
     constructor(controller: VagaCompetenciaController) {
         this.controller = controller;
@@ -35,7 +35,7 @@ class VagaCompetenciaView {
                     button.addEventListener('click', () => {
                         const vagaId = button.getAttribute('data-competencia-id');
                         if (vagaId !== null) {
-                            this.idVaga = vagaId;
+                            this.idVaga = parseInt(vagaId);
                             const competenciasVagaContainer = document.getElementById(`competencias-vaga-container`);
                                 this.exibirCompetenciasDaVaga(this.idVaga)
                             if (competenciasVagaContainer && this.idVaga) {
@@ -103,7 +103,7 @@ class VagaCompetenciaView {
                 this.controller.atualizarCompetencia(competenciaEditada);
                 this.limparCamposDoFormulario()
                 this.exibirCompetenciasDaVaga(this.idVaga);
-                this.idVaga = "";
+                this.idVaga = 0;
             }
         }
     }
@@ -131,7 +131,7 @@ class VagaCompetenciaView {
         }
     }
 
-    exibirCompetenciasDaVaga(idVaga: string) {
+    exibirCompetenciasDaVaga(idVaga: number) {
         const competencias = this.controller.listarCompetencias(idVaga);
         const competenciasList = document.getElementById('competencias-vaga-list');
 
