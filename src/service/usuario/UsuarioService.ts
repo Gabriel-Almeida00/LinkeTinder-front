@@ -23,7 +23,7 @@ class UsuarioService implements IUsuarioService{
 
 
     obterIdUsuarioLogado(): number {
-        const idUsuarioLogadoJson = localStorage.getItem('usuarioLogado');
+        const idUsuarioLogadoJson = localStorage.getItem('usuarioId');
         return idUsuarioLogadoJson ? JSON.parse(idUsuarioLogadoJson) : null;
     }
 

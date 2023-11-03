@@ -1,4 +1,3 @@
-import './View/login';
 import CandidatoUI from './Controler/candidatoUI';
 import EmpresaUI from './Controler/empresaUI';
 import CandidatoService from './service/candidato/CandidatoService';
@@ -18,6 +17,7 @@ import ExperienciaService from './service/ExperienciaService';
 import CandidatoFormacaoView from './View/Candidato/CandidatoFormacaoView';
 import CandidatoFormacaoController from './Controler/Candidato/CandidatoFormacaoController';
 import FormacaoService from './service/FormacaoService';
+import LoginView from './View/Login/LoginView';
 
 
 const localStorage = new LocalStorage<Candidato>('candidatos');
@@ -51,7 +51,7 @@ const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaContr
 const perfilCandidatoCompetenciaView = new PerfilCandidatoCompetenciaView(perfilCandidatoCompetenciaController )
 perfilCandidatoCompetenciaView.exibirCompetenciasDoCandidato();
 
-
+const loginView = new LoginView()
 
 empresaUi.listarVagas();
 empresaUi.associarEventosInformacoesVaga();

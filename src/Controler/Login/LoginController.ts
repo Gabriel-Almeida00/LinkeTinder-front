@@ -1,3 +1,4 @@
+import LoginDTO from "../../modelo/dto/LoginDTO";
 import LoginService from "../../service/login/LoginService";
 
 class LoginController{

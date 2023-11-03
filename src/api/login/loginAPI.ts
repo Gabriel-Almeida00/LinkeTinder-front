@@ -1,4 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
+import LoginDTO from '../../modelo/dto/LoginDTO';
 
 class LoginApi {
   private api;
