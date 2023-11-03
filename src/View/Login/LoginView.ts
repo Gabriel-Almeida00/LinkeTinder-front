@@ -40,7 +40,6 @@ class LoginView {
     }
 
     login(){
-        console.log("chegou aqui")
         const tipoUsuario = this.pegarTipousuario();
         const login = this.pegarValoresDoFormulario();
 

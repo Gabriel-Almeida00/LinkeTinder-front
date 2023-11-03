@@ -22,7 +22,6 @@ class CandidatoView {
             nome: document.getElementById('nomeCandidato') as HTMLInputElement,
             sobrenome: document.getElementById('sobrenomeCandidato') as HTMLInputElement,
             dataNascimento: document.getElementById('dataNascimentoCandidato') as HTMLInputElement,
-            email: document.getElementById('emailCandidato') as HTMLInputElement,
             pais: document.getElementById('paisCandidato') as HTMLInputElement,
             cep: document.getElementById('cepCandidato') as HTMLInputElement,
             cpf: document.getElementById('cpfCandidato') as HTMLInputElement,
@@ -39,7 +38,6 @@ class CandidatoView {
             nome: elements.nome.value,
             sobrenome: elements.sobrenome.value,
             dataNascimento: data,
-            email: elements.email.value,
             pais: elements.pais.value,
             cep: elements.cep.value,
             cpf: elements.cpf.value,
@@ -56,10 +54,15 @@ class CandidatoView {
 
     setElementValueById(id: string, value: string | null) {
         const element = document.getElementById(id);
-        if (element instanceof HTMLInputElement) {
-            element.value = value || '';
+        if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+            if (element instanceof HTMLInputElement) {
+                element.value = value || '';
+            } else if (element instanceof HTMLTextAreaElement) {
+                element.textContent = value || '';
+            }
         }
     }
+    
 
     formatAndSetDateElementValue(id: string, date: Date | null) {
         const element = document.getElementById(id);
@@ -73,12 +76,12 @@ class CandidatoView {
 
     async exibirInformacoesCandidatoNoHTML() {
         const candidato = await this.controller.pegarInformacoesDoCandidato();
+        
 
         if (candidato) {
             this.setElementValueById('nomeCandidato', candidato.nome);
             this.setElementValueById('sobrenomeCandidato', candidato.sobrenome);
             this.formatAndSetDateElementValue('dataNascimentoCandidato', new Date(candidato.dataNascimento));
-            this.setElementValueById('emailCandidato', candidato.email);
             this.setElementValueById('paisCandidato', candidato.pais);
             this.setElementValueById('cepCandidato', candidato.cep);
             this.setElementValueById('cpfCandidato', candidato.cpf);
@@ -99,7 +102,6 @@ class CandidatoView {
             candidato.nome = candidatoAtualizado.nome;
             candidato.sobrenome = candidatoAtualizado.sobrenome;
             candidato.dataNascimento = candidatoAtualizado.dataNascimento;
-            candidato.email = candidatoAtualizado.email;
             candidato.pais = candidatoAtualizado.pais;
             candidato.cep = candidatoAtualizado.cep;
             candidato.cpf = candidatoAtualizado.cpf;
@@ -108,6 +110,8 @@ class CandidatoView {
             candidato.telefone = candidatoAtualizado.telefone;
             candidato.senha = candidatoAtualizado.senha;
 
+            console.log(candidato.descricao)
+            console.log(candidatoAtualizado.descricao)
             this.controller.atualizarInformacoesCandidato(candidato);
         }
     }

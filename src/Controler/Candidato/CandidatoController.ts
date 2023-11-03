@@ -17,7 +17,8 @@ class CandidatoController {
     }
 
     atualizarInformacoesCandidato(candidato: Candidato) {
-      return this.candidatoService.atualizarCandidato(candidato.id, candidato);
+        const idCanddato = this.usuarioService.obterIdUsuarioLogado()
+      return this.candidatoService.atualizarCandidato(idCanddato, candidato);
     }
 }
 export default CandidatoController
