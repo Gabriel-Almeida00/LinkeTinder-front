@@ -218,8 +218,8 @@ class EmpresaService {
 
         vaga.competencias.forEach(requisito => {
             const competenciaCandidato = candidato.competencias.find(
-                competencia => competencia.nivel === requisito.nivel);
-            if (competenciaCandidato && competenciaCandidato.nivel === requisito.nivel) {
+                competencia => competencia.idNivelCompetencia === requisito.nivel);
+            if (competenciaCandidato && competenciaCandidato.idNivelCompetencia === requisito.nivel) {
                 afinidade += 3;
             }
         });

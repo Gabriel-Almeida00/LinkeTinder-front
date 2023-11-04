@@ -3,64 +3,63 @@ import Vaga from "../../modelo/Vaga";
 import VagaCompetencia from "../../modelo/VagaCompetencia";
 
 
-import CandidatoDTO from "../../modelo/dto/CandidatoDTO";
 import ICandidatoService from "./ICandidatoService";
 import CandidatoApi from "../../api/candidato/candidatoApi";
 
 class CandidatoService implements ICandidatoService {
-   private api: CandidatoApi;
+    private api: CandidatoApi;
 
     constructor() {
-       this.api = new CandidatoApi();
+        this.api = new CandidatoApi();
     }
 
-   
+
     async listarCandidatos(): Promise<Candidato[]> {
         const response = await this.api.listarCandidatos();
-          return response.data;
-      }
-
-      async obterCandidatoPorId(idCandidato: number): Promise<Candidato | undefined> {
-        try {
-              const response = await this.api.buscarCandidatoPorId(idCandidato);
-              return response.data;
-          } catch {
-              return undefined;
-          }
-      }
-
-
-      async adicionarCandidato(candidato: Candidato): Promise<void> {
-        try{
-            await this.api.criarCandidato(candidato);
-        } catch (error) {
-            console.error('Erro ao criar candidato:', error); 
-      }
+        return response.data;
     }
 
-      async atualizarCandidato(id: number, candidato: Candidato): Promise<boolean>{
-        try{
+    async obterCandidatoPorId(idCandidato: number): Promise<Candidato | undefined> {
+        try {
+            const response = await this.api.buscarCandidatoPorId(idCandidato);
+            return response.data;
+        } catch {
+            return undefined;
+        }
+    }
+
+
+    async adicionarCandidato(candidato: Candidato): Promise<void> {
+        try {
+            await this.api.criarCandidato(candidato);
+        } catch (error) {
+            console.error('Erro ao criar candidato:', error);
+        }
+    }
+
+    async atualizarCandidato(id: number, candidato: Candidato): Promise<boolean> {
+        try {
             const response = await this.api.atualizarCandidato(id, candidato)
             return true;
         } catch {
             return false;
         }
-      }
+    }
 
-      async excluirCandidato(idCandidato: number): Promise<boolean> {
+    async excluirCandidato(idCandidato: number): Promise<boolean> {
         try {
-              await this.api.excluirCandidato(idCandidato);
-              return true;
-          } catch {
-              return false;
-          }
-      }
+            await this.api.excluirCandidato(idCandidato);
+            return true;
+        } catch {
+            return false;
+        }
+    }
 
     calcularAfinidadeCompetencias(candidato: Candidato, requisitos: VagaCompetencia[]): number {
         let afinidade = 0;
         for (const requisito of requisitos) {
             const competenciaCandidato = candidato.competencias
-                .find((competencia) => competencia.nivel === requisito.nivel
+                .find((competencia) => competencia.idNivelCompetencia === requisito.nivel
                 );
 
             if (competenciaCandidato) {

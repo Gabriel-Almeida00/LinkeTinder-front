@@ -23,7 +23,7 @@ import LoginView from './View/Login/LoginView';
 const localStorage = new LocalStorage<Candidato>('candidatos');
 
 const candidatoService = new CandidatoService();
-const candidatoCompetenciaService = new CandidatoCompetenciaService(localStorage)
+const candidatoCompetenciaService = new CandidatoCompetenciaService()
 const usuarioService = new UsuarioService();
 const empresaService = new EmpresaService();
 const experienciaService = new ExperienciaService()
@@ -47,7 +47,7 @@ const candidatoController = new CandidatoController(candidatoService, usuarioSer
 const candidatoView = new CandidatoView(candidatoController);
 candidatoView.exibirInformacoesCandidatoNoHTML();
 
-const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaController(candidatoCompetenciaService, usuarioService)
+const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaController()
 const perfilCandidatoCompetenciaView = new PerfilCandidatoCompetenciaView(perfilCandidatoCompetenciaController )
 perfilCandidatoCompetenciaView.exibirCompetenciasDoCandidato();
 

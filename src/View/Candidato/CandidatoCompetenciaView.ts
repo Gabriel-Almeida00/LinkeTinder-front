@@ -1,13 +1,18 @@
 import PerfilCandidatoCompetenciaController from "../../Controler/Candidato/CandidatoCompetenciaController";
+import CompetenciaDTO from "../../modelo/dto/CompetenciaDTO";
+import CompetenciaService from "../../service/CompetenciaService";
 
 
 class PerfilCandidatoCompetenciaView {
     private controller: PerfilCandidatoCompetenciaController;
-    private competenciaEmEdicaoIndex: string | null = null;
+    private competenciaService: CompetenciaService;
+    private competenciaEmEdicaoIndex: number | null = null;
 
     constructor(controller: PerfilCandidatoCompetenciaController) {
         this.controller = controller;
+        this.competenciaService = new CompetenciaService();
         this.configurarEventListeners();
+        this.listarCompetenciasNoSelect();
     }
 
     private configurarEventListeners() {
@@ -26,22 +31,39 @@ class PerfilCandidatoCompetenciaView {
         }
     }
 
+    async listarCompetenciasNoSelect(){
+        const competencias = await this.competenciaService.listarCompetencias();
+        const selectElement = document.getElementById('competencias');
+
+        if(selectElement){
+            selectElement.innerHTML = '';
+
+            competencias.forEach((competencia) => {
+                const option = document.createElement('option');
+                option.value = competencia.id; 
+                option.text = competencia.nome; 
+                selectElement.appendChild(option);
+            });
+        }
+    }
+
     pegarValoresDoFormulario() {
         const elements = {
-            name: document.getElementById('nomeCompetencia') as HTMLInputElement,
+            name: document.getElementById('competencias') as HTMLInputElement,
             nivel: document.getElementById('nivelCompetencia') as HTMLInputElement
         };
 
-        const competencia = {
-            name: elements.name.value.trim(),
-            nivel: parseInt(elements.nivel.value.trim())
-        };
-
+        const competencia = new CompetenciaDTO(
+           parseInt(elements.name.value.trim()),
+            parseInt(elements.nivel.value.trim())
+        )
+            
+        
         return competencia;
     }
 
     limparCamposDoFormulario() {
-        const nome = document.getElementById('nomeCompetencia') as HTMLInputElement;
+        const nome = document.getElementById('competencias') as HTMLInputElement;
         const nivel = document.getElementById('nivelCompetencia') as HTMLInputElement;
 
         nome.value = "";
@@ -50,18 +72,20 @@ class PerfilCandidatoCompetenciaView {
 
 
 
-    preencherCamposDeEdicao(competenciaId: string) {
-        const competencia = this.controller.buscarCompetenciaPorId(competenciaId);
+    async preencherCamposDeEdicao(competenciaId: number) {
+        const competencia = await this.controller.buscarCompetenciaPorId(competenciaId);
         const competenciaForm = document.getElementById('perfil-form');
 
         if (competenciaForm && competencia) {
-            const nomeCompetenciaInput = competenciaForm.querySelector("#nomeCompetencia") as HTMLInputElement;
+            const nomeCompetenciaInput = competenciaForm.querySelector("#competencias") as HTMLSelectElement;
             const nivelCompetenciaSelect = competenciaForm.querySelector("#nivelCompetencia") as HTMLSelectElement;
 
             if (nomeCompetenciaInput && nivelCompetenciaSelect) {
-                nomeCompetenciaInput.value = competencia.idCompetencia;
-                const nivelOption = nivelCompetenciaSelect.querySelector(`option[value="${competencia.nivel}"]`) as HTMLSelectElement;
+                const nomeOptions = nomeCompetenciaInput.querySelector(`option[value="${competencia.idCompetencia}"]`) as HTMLSelectElement;
+                const nivelOption = nivelCompetenciaSelect.querySelector(`option[value="${competencia.idNivelCompetencia}"]`) as HTMLSelectElement;
+
                 nivelCompetenciaSelect.value = nivelOption.value;
+                nomeCompetenciaInput.value = nomeOptions.value;
 
                 this.competenciaEmEdicaoIndex = competenciaId
             }
@@ -70,8 +94,8 @@ class PerfilCandidatoCompetenciaView {
 
 
 
-    exibirCompetenciasDoCandidato() {
-        const competencias = this.controller.listarCompetencia();
+    async exibirCompetenciasDoCandidato() {
+        const competencias = await this.controller.listarCompetencia();
         const competenciasList = document.getElementById('competencias-list');
 
         if (competenciasList) {
@@ -82,9 +106,9 @@ class PerfilCandidatoCompetenciaView {
                 const row = document.createElement('tr');
                 row.innerHTML =
                     `
-                <td>${competencia.idCompetencia}</td>
+                <td>${competencia.nome}</td>
                 <td>${competencia.nivel}</td>
-                <td style="display: none;" data-competencia-id="${competencia.idCompetencia}"></td>
+                <td style="display: none;" data-competencia-id="${competencia.id}"></td>
                 <td>
                     <button type="button" class="editar-button">Editar</button>
                     <button type="button" class="excluir-button">Excluir</button>
@@ -104,7 +128,7 @@ class PerfilCandidatoCompetenciaView {
                 const excluirButton = row.querySelector('.excluir-button');
                 if (excluirButton) {
                     excluirButton.addEventListener('click', () => {
-                        const competenciaId = competencia.idCompetencia;
+                        const competenciaId = competencia.id;
                         this.controller.excluirCompetencia(competenciaId);
 
                         this.exibirCompetenciasDoCandidato();
@@ -117,22 +141,24 @@ class PerfilCandidatoCompetenciaView {
    
     adicionarCompetencia() {
         const competencia = this.pegarValoresDoFormulario();
-        this.controller.adicionarCompetencias(competencia.name, competencia.nivel);
+        this.controller.adicionarCompetencias(competencia);
 
         this.limparCamposDoFormulario();
         this.exibirCompetenciasDoCandidato();
 
     }
 
-    EdidarCompetencia() {
-        const competenciaHtml = this.pegarValoresDoFormulario();
+    async EdidarCompetencia() {
+        const competenciaHtml =  this.pegarValoresDoFormulario();
 
         if (this.competenciaEmEdicaoIndex != null) {
-            const competenciaEditada = this.controller.buscarCompetenciaPorId(this.competenciaEmEdicaoIndex);
+            const competenciaEditada = await this.controller.buscarCompetenciaPorId(this.competenciaEmEdicaoIndex);
 
             if (competenciaEditada) {
-                competenciaEditada.idCompetencia = competenciaHtml.name
-                competenciaEditada.nivel = competenciaHtml.nivel
+                competenciaEditada.idCompetencia = competenciaHtml.nome
+                competenciaEditada.idNivelCompetencia = competenciaHtml.nivel
+
+                console.log(competenciaEditada)
 
                 this.controller.atualizarCompetencia(competenciaEditada);
                 this.limparCamposDoFormulario()

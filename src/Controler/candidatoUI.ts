@@ -190,7 +190,7 @@ export class CandidatoUI {
     }
     
     private obterCompetenciasTexto(competencias: CandidatoCompetencia[]): string {
-        return competencias.map(comp => `${comp.nivel} `).join(', ');
+        return competencias.map(comp => `${comp.idNivelCompetencia} `).join(', ');
     }
     
     
@@ -249,7 +249,7 @@ export class CandidatoUI {
     
         (await this.candidatoService.listarCandidatos()).forEach(candidato => {
             candidato.competencias.forEach(competencia => {
-                const nomeCompetencia = competencia.nivel;
+                const nomeCompetencia = competencia.idNivelCompetencia;
                 if (!competenciasCount[nomeCompetencia]) {
                     competenciasCount[nomeCompetencia] = 0;
                 }

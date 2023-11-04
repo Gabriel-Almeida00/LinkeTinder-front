@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="candidato-competencia.css">
     <title>Competências do Candidato</title>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -35,14 +37,16 @@
                         <tbody id="competencias-list">
                             <!-- Aqui serão inseridas as competências dinamicamente -->
                             <tr>
-                               
+
                             </tr>
                         </tbody>
                     </table>
                     <div class="input-group">
                         <div class="input-block">
-                            <label for="nomeCompetencia" class="form-label">Nome da Competência</label>
-                            <input type="text" id="nomeCompetencia" class="form-input" required>
+                            <label for="competencias" class="form-label">Competências</label>
+                            <select id="competencias" class="form-input">
+                                <!-- Opções da API serão adicionadas aqui dinamicamente -->
+                            </select>
                         </div>
                         <div class="input-block">
                             <label for="nivelCompetencia" class="form-label">Nível</label>
@@ -52,7 +56,8 @@
                                 <option value="3">Avançado</option>
                             </select>
                         </div>
-                        <button type="button" id="adicionar-competencia" class="add-button">Adicionar Competência</button>
+                        <button type="button" id="adicionar-competencia" class="add-button">Adicionar
+                            Competência</button>
                     </div>
                 </div>
                 <div class="button-container">
@@ -61,8 +66,9 @@
                 </div>
             </form>
         </main>
-        
+
     </div>
     <script src="/dist/app.min.js"></script>
 </body>
+
 </html>
