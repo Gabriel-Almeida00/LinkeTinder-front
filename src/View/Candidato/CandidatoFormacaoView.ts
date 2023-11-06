@@ -1,8 +1,9 @@
 import CandidatoFormacaoController from "../../Controler/Candidato/CandidatoFormacaoController";
+import Formacao from "../../modelo/Formacao";
 
 class CandidatoFormacaoView {
     private controller: CandidatoFormacaoController
-    private formacaoEmEdicaoIndex: string | null = null;
+    private formacaoEmEdicaoIndex: number | null = null;
 
     constructor(controller: CandidatoFormacaoController) {
         this.controller = controller;
@@ -34,12 +35,13 @@ class CandidatoFormacaoView {
             anoConclusao: document.getElementById('anoConclusaoFormacao') as HTMLInputElement
         };
 
-        const competencia = {
-            instituicao: elements.instituicao.value,
-            curso: elements.curso.value,
-            nivel: parseInt(elements.nivel.value),
-            anoConclusao: elements.anoConclusao.value
-        };
+        const competencia = new Formacao(
+            1,
+            elements.instituicao.value,
+            elements.curso.value,
+            parseInt(elements.nivel.value),
+            elements.anoConclusao.value
+        )
 
         return competencia;
     }
@@ -57,8 +59,8 @@ class CandidatoFormacaoView {
     }
 
 
-    preencherCamposDeEdicaoFormacao(formacaoId: string) {
-        const formacao = this.controller.buscarFormacaoPorId(formacaoId);
+    async preencherCamposDeEdicaoFormacao(formacaoId: number) {
+        const formacao = await this.controller.buscarFormacaoPorId(formacaoId);
         const formacaoForm = document.getElementById('perfil-form');
 
         if (formacaoForm && formacao) {
@@ -80,8 +82,8 @@ class CandidatoFormacaoView {
         }
     }
 
-    exibirFormacoesDoCandidato() {
-        const formacoes = this.controller.listarFormacao();
+    async exibirFormacoesDoCandidato() {
+        const formacoes = await this.controller.listarFormacao();
         const formacoesList = document.getElementById('formacoes-list');
 
         if (formacoesList) {
@@ -128,18 +130,18 @@ class CandidatoFormacaoView {
 
     adicionarFormacao() {
         const formacao = this.pegarValoresDoFormulario();
-        this.controller.adicionarFormacao(formacao.instituicao, formacao.curso, formacao.nivel, formacao.anoConclusao);
+        this.controller.adicionarFormacao(formacao);
 
         this.limparCamposDoFormulario();
         this.exibirFormacoesDoCandidato();
     }
 
 
-    editarFormacao() {
+    async editarFormacao() {
         const formacaoHtml = this.pegarValoresDoFormulario();
 
         if (this.formacaoEmEdicaoIndex != null) {
-            const formacaoEditada = this.controller.buscarFormacaoPorId(this.formacaoEmEdicaoIndex);
+            const formacaoEditada = await this.controller.buscarFormacaoPorId(this.formacaoEmEdicaoIndex);
             if (formacaoEditada) {
                 formacaoEditada.instituicao = formacaoHtml.instituicao
                 formacaoEditada.curso = formacaoHtml.curso

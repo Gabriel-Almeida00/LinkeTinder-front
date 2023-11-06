@@ -1,7 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
 
 class Formacao {
-   id: string;
+   id!: number;
    idCandidato: number;
    instituicao: string;
    curso: string;
@@ -9,7 +8,6 @@ class Formacao {
    anoConclusao: string;
 
   constructor(idCandidato: number, instituicao: string, curso: string, nivel: number, anoConclusao: string) {
-    this.id = uuidv4();
     this.idCandidato = idCandidato;
     this.instituicao = instituicao;
     this.curso = curso;

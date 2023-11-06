@@ -11,32 +11,28 @@ class CandidatoFormacaoController {
         this.formacaoService = formacaoService
     }
 
-    buscarFormacaoPorId(idCompetencia: string){
-        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        return this.formacaoService.obterFormacaoDoCandidatoPorId(idCandidato, idCompetencia);
+    buscarFormacaoPorId(idFormacao: number) {
+        return this.formacaoService.obterFormacaoDoCandidatoPorId(idFormacao);
     }
 
-    listarFormacao(){
+    listarFormacao() {
         const idCandidato = this.usuarioService.obterIdUsuarioLogado();
         return this.formacaoService.obterFormacoesDoCandidato(idCandidato);
     }
 
-    adicionarFormacao( instituicao: string, curso: string, nivel: number, anoConclusao: string){
+    adicionarFormacao(formacao: Formacao) {
         const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        const formacao = new Formacao(idCandidato, instituicao, curso, nivel, anoConclusao);
-
-        this.formacaoService.adicionarFormacaoAoCandidato(idCandidato, formacao);
+        formacao.idCandidato = idCandidato
+        this.formacaoService.adicionarFormacaoAoCandidato(formacao);
     }
 
     atualizarFormacao(formacao: Formacao): void {
-        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        this.formacaoService.atualizarFormacoesDoCandidato(idCandidato, formacao);
-}
+        this.formacaoService.atualizarFormacoesDoCandidato(formacao.id, formacao);
+    }
 
 
-    excluirFormacao(idCompetencia: string){
-        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        this.formacaoService.excluirFormacaoDoCandidato(idCandidato, idCompetencia);
+    excluirFormacao(idFormacao: number) {
+        this.formacaoService.excluirFormacaoDoCandidato(idFormacao);
     }
 }
 export default CandidatoFormacaoController

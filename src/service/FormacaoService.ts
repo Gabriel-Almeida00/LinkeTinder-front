@@ -1,67 +1,46 @@
-import Candidato from "../modelo/Candidato";
 import Formacao from "../modelo/Formacao";
-import LocalStorageService from "../data/LocalStorage";
+import CandidatoFormacaoApi from "../api/candidato/candidatoFormacaoApi";
 
 class FormacaoService{
-    private localStorageService: LocalStorageService<Candidato>;
+    private api: CandidatoFormacaoApi;
 
     constructor() {
-        this.localStorageService = new LocalStorageService<Candidato>('candidatos');
+        this.api = new CandidatoFormacaoApi();
     }
 
-    obterFormacaoDoCandidatoPorId(candidatoId: number, formacaoId: string){
-        const candidatos = this.localStorageService.carregarDados();
-        const candidato = candidatos.find((c) => c.id === candidatoId);
-    
-        if (candidato) {
-            const formacao = candidato.formacoes.find((c) => c.id === formacaoId);
-            return formacao || null;
-        }
-    
-        return null;
+    async obterFormacaoDoCandidatoPorId(id: number ): Promise<Formacao> {
+        const response = await this.api.buscarFormacaoPorId(id);
+        return await response.data
     }
 
-    obterFormacoesDoCandidato(candidatoId: number): Formacao[] {
-        const candidatos = this.localStorageService.carregarDados();
-        const candidato = candidatos.find((c) => c.id === candidatoId);
-        return candidato?.formacoes || [];
+    async obterFormacoesDoCandidato(candidatoId: number): Promise<Formacao[]> {
+       const response = await this.api.listarFormacoesDoCandidato(candidatoId)
+       return await response.data
     }
 
-    adicionarFormacaoAoCandidato(candidatoId: number, novaFormacao: Formacao): void {
-        const candidatos = this.localStorageService.carregarDados();
-        const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
-
-        if (candidatoIndex !== -1) {
-            candidatos[candidatoIndex].formacoes.push(novaFormacao);
-            this.localStorageService.salvarDados(candidatos);
-        }
+    async adicionarFormacaoAoCandidato( novaFormacao: Formacao):Promise<void> {
+       try{
+            await this.api.criarFormacao(novaFormacao)
+       } catch(error){
+        console.log("erro ao criar formação: ", error)
+       }
     }
 
-    atualizarFormacoesDoCandidato(candidatoId: number, formacaoAtualizada: Formacao): void {
-        const candidatos = this.localStorageService.carregarDados();
-        const candidato = candidatos.find((c) => c.id === candidatoId);
-
-         if (candidato) {
-            const formacaoIndex = candidato.formacoes.findIndex((comp) => comp.id === formacaoAtualizada.id);
-            if (formacaoIndex !== -1) {
-               candidato.formacoes[formacaoIndex] = formacaoAtualizada;
-                this.localStorageService.salvarDados(candidatos);
-            }
+    async atualizarFormacoesDoCandidato(id: number, formacaoAtualizada: Formacao): Promise<boolean> {
+        try {
+             await this.api.atualizarFormacao(id, formacaoAtualizada)
+            return true;
+        } catch {
+            return false;
         }
     }
 
-    excluirFormacaoDoCandidato(candidatoId: number, formacaoId: string): void {
-        const candidatos = this.localStorageService.carregarDados();
-        const candidatoIndex = candidatos.findIndex((c) => c.id === candidatoId);
-
-        if (candidatoIndex !== -1) {
-            const candidato = candidatos[candidatoIndex];
-            const formacaoIndex = candidato.formacoes.findIndex((f) => f.id === formacaoId);
-
-            if (formacaoIndex !== -1) {
-                candidato.formacoes.splice(formacaoIndex, 1);
-                this.localStorageService.salvarDados(candidatos);
-            }
+    async excluirFormacaoDoCandidato(id: number ): Promise<boolean> {
+        try {
+            await this.api.excluirFormacao(id);
+            return true;
+        } catch {
+            return false;
         }
     }
 }
