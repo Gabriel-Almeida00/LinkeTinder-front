@@ -1,6 +1,5 @@
 import VagaCompetencia from "./VagaCompetencia";
 import VagaCurtida from "./VagaCurtida";
-import { v4 as uuidv4 } from 'uuid';
 
 class Vaga {
      id!: number;

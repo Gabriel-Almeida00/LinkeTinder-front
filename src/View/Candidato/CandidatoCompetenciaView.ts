@@ -158,8 +158,6 @@ class PerfilCandidatoCompetenciaView {
                 competenciaEditada.idCompetencia = competenciaHtml.nome
                 competenciaEditada.idNivelCompetencia = competenciaHtml.nivel
 
-                console.log(competenciaEditada)
-
                 this.controller.atualizarCompetencia(competenciaEditada);
                 this.limparCamposDoFormulario()
                 this.exibirCompetenciasDoCandidato();

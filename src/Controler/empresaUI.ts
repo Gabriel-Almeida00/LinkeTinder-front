@@ -109,8 +109,8 @@ class EmpresaUI {
         }
     }
 
-    listarVagas(): void {
-        const vagas = this.vagaService.listarVagasDTO();
+    async listarVagas() {
+        const vagas = await this.vagaService.listarVagas();
         const listaVagas = document.getElementById('vagas') as HTMLUListElement;
     
         listaVagas.innerHTML = '';
@@ -148,9 +148,9 @@ class EmpresaUI {
     
 
 
-    associarEventosInformacoesVaga() {
+    async associarEventosInformacoesVaga() {
         const listaVagas = document.getElementById("vagas");
-        const vagasInfos = this.vagaService.listarVagasDTO();
+        const vagasInfos = await this.vagaService.listarVagas();
     
         if (listaVagas) {
             listaVagas.addEventListener("mouseover", (event) => {

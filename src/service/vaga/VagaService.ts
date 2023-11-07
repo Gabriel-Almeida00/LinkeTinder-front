@@ -1,93 +1,59 @@
-import LocalStorage from "../../data/LocalStorage";
-import Empresa from "../../modelo/Empresa";
 import VagaDTO from "../../modelo/dto/VagaDTO";
 import Vaga from "../../modelo/Vaga";
 import UsuarioService from "../usuario/UsuarioService";
 import Candidato from "../../modelo/Candidato";
+import VagaApi from "../../api/vaga/vagaApi";
 
 class VagaService {
-    private empresas: Empresa[] = []
-    private localStorageService: LocalStorage<Empresa>;
+    api: VagaApi
     usuarioService: UsuarioService;
 
     constructor() {
-        this.localStorageService = new LocalStorage<Empresa>('empresas');
+        this.api = new VagaApi
         this.usuarioService = new UsuarioService();
     }
 
-    private converterVagaParaDTO(vaga: Vaga): VagaDTO {
-        return new VagaDTO(
-            vaga.id,
-            vaga.nome,
-            vaga.descricao,
-            vaga.formacaoMinima,
-            vaga.experienciaMinima,
-            vaga.competencias
-        );
+    async listarVagas(): Promise<Vaga[]> {
+        const response = await this.api.listarVagas();
+        return response.data;
     }
 
-    listarVagasDTO(): VagaDTO[] {
-        const vagas: VagaDTO[] = [];
+    async buscarVagaDaEmpresaPorId(idEmpresa: number): Promise<Vaga> {
+        const response = await this.api.buscarVagaDaEmpresaPorId(idEmpresa);
+        return response.data;
+    }
 
-        this.empresas.forEach(empresa => {
-            empresa.vagas.forEach(vaga => {
-                const vagaDTO = this.converterVagaParaDTO(vaga);
-                vagas.push(vagaDTO);
-            });
-        });
-
-        return vagas;
+    async buscarVagasDaEmpresa(idEmpresa: number): Promise<Vaga[]> {
+        const response = await this.api.buscarVagasDaEmpresa(idEmpresa);
+        return response.data;
     }
 
 
-    obterVagasDaEmpresa(idEmpresa: number): Vaga[] {
-        const empresas = this.localStorageService.carregarDados();
-        const vagasEncontradas = empresas.find((empresa) => empresa.id === idEmpresa);
-
-        if (vagasEncontradas) {
-            return vagasEncontradas.vagas || [];
-        }
-        return [];
-    }
-
-    adicionarVagaAEmpresa(idEmpresa: number, vaga: Vaga): void {
-        const empresas = this.localStorageService.carregarDados();
-        const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
-
-        if (empresaIndex !== -1) {
-            const empresaExistente = empresas[empresaIndex];
-            empresaExistente.vagas.push(vaga);
-            this.localStorageService.salvarDados(empresas);
+    async adicionarVaga(vaga: Vaga): Promise<void> {
+        try {
+            await this.api.criarVaga(vaga);
+        } catch (error) {
+            console.error('Erro ao criar candidato:', error);
         }
     }
 
-    atualizarVagaDaEmpresa(idEmpresa: number, NovasVagas: Vaga[]): void {
-        const empresas = this.localStorageService.carregarDados();
-        const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
-
-        if (empresaIndex !== -1) {
-            empresas[empresaIndex].vagas = NovasVagas;
-            this.localStorageService.salvarDados(empresas);
+    async atualizarVaga(id: number, vaga: Vaga): Promise<boolean> {
+        try {
+            const response = await this.api.atualizarVaga(id, vaga)
+            return true;
+        } catch {
+            return false;
         }
     }
 
-    excluirVagaDaEmpresa(idEmpresa: number, idVaga: number) {
-        const empresas = this.localStorageService.carregarDados();
-        const empresaIndex = empresas.findIndex((empresa) => empresa.id === idEmpresa);
-
-        if (empresaIndex !== -1) {
-            const empresa = empresas[empresaIndex];
-            const vagaIndex = empresa.vagas.findIndex((vaga) => vaga.id === idVaga);
-
-            if (vagaIndex !== -1) {
-                empresa.vagas.splice(vagaIndex, 1);
-                this.localStorageService.salvarDados(empresas);
-            }
+    async excluirVaga(idEmpresa: number): Promise<boolean> {
+        try {
+            await this.api.excluirVaga(idEmpresa);
+            return true;
+        } catch {
+            return false;
         }
     }
-
-
-
 
     calcularAfinidadeVagaComCandidato(vaga: VagaDTO): number {
         const idCandidato = this.usuarioService.obterIdUsuarioLogado()
