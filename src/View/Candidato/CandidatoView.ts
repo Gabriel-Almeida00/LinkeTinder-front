@@ -110,8 +110,6 @@ class CandidatoView {
             candidato.telefone = candidatoAtualizado.telefone;
             candidato.senha = candidatoAtualizado.senha;
 
-            console.log(candidato.descricao)
-            console.log(candidatoAtualizado.descricao)
             this.controller.atualizarInformacoesCandidato(candidato);
         }
     }

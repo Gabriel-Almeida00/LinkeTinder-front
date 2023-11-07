@@ -1,5 +1,5 @@
-import Formacao from "../modelo/Formacao";
-import CandidatoFormacaoApi from "../api/candidato/candidatoFormacaoApi";
+import Formacao from "../../modelo/Formacao";
+import CandidatoFormacaoApi from "../../api/candidato/candidatoFormacaoApi";
 
 class FormacaoService{
     private api: CandidatoFormacaoApi;

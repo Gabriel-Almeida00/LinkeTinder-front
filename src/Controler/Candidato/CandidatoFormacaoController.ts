@@ -1,5 +1,5 @@
 import Formacao from "../../modelo/Formacao";
-import FormacaoService from "../../service/FormacaoService";
+import FormacaoService from "../../service/candidato/FormacaoService";
 import UsuarioService from "../../service/usuario/UsuarioService";
 
 class CandidatoFormacaoController {

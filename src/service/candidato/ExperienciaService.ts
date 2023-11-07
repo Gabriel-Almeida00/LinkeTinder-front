@@ -1,5 +1,5 @@
-import CandidatoExperienciaApi from "../api/candidato/candidatoExperienciaApi";
-import Experiencia from "../modelo/Experiencia";
+import CandidatoExperienciaApi from "../../api/candidato/candidatoExperienciaApi";
+import Experiencia from "../../modelo/Experiencia";
 
 class ExperienciaService {
     private api: CandidatoExperienciaApi;

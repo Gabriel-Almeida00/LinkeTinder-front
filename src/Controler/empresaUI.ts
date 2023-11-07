@@ -1,18 +1,21 @@
 import Empresa from "../modelo/Empresa";
-import EmpresaService from "../service/EmpresaService";
+import EmpresaService from "../service/empresa/EmpresaService";
 import UsuarioService from "../service/usuario/UsuarioService";
 import VagaDTO from "../modelo/dto/VagaDTO";
 import VagaCompetencia from "../modelo/VagaCompetencia";
 import TipoUsuario from "../modelo/enum/TipoUsuario";
+import VagaService from "../service/vaga/VagaService";
 
 
 class EmpresaUI {
     private empresaService: EmpresaService;
     private usuarioService: UsuarioService;
+    private vagaService: VagaService
 
     constructor(empresaService: EmpresaService, usuarioService: UsuarioService) {
         this.empresaService = empresaService;
         this.usuarioService = usuarioService;
+        this.vagaService = new VagaService
 
         this.adicionarEventoCadastrar();
         this.adicionarEventoCarregarPagina();
@@ -83,7 +86,6 @@ class EmpresaUI {
             descricaoInput.value,
             senhaInput.value,
             cnpjInput.value,
-            TipoUsuario.Empresa
         );
     }
 
@@ -101,14 +103,14 @@ class EmpresaUI {
         const novaEmpresa = this.obterValoresDosCampos();
 
         if (novaEmpresa) {
-            this.empresaService.cadastrarEmpresa(novaEmpresa);
+            this.empresaService.adicionarEmpresa(novaEmpresa);
             this.limparCamposDoFormulario();
             window.location.href = '../../paginas/login/login.html';
         }
     }
 
     listarVagas(): void {
-        const vagas = this.empresaService.listarVagasDTO();
+        const vagas = this.vagaService.listarVagasDTO();
         const listaVagas = document.getElementById('vagas') as HTMLUListElement;
     
         listaVagas.innerHTML = '';
@@ -126,7 +128,7 @@ class EmpresaUI {
     
         const competenciasTexto = this.formatarCompetencias(vaga.competencias);
     
-        const afinidade = this.empresaService.calcularAfinidadeVagaComCandidato(vaga);
+        const afinidade = this.vagaService.calcularAfinidadeVagaComCandidato(vaga);
     
         li.innerHTML = `
             <div class="informacoes-vaga hidden">
@@ -148,7 +150,7 @@ class EmpresaUI {
 
     associarEventosInformacoesVaga() {
         const listaVagas = document.getElementById("vagas");
-        const vagasInfos = this.empresaService.listarVagasDTO();
+        const vagasInfos = this.vagaService.listarVagasDTO();
     
         if (listaVagas) {
             listaVagas.addEventListener("mouseover", (event) => {

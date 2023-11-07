@@ -1,5 +1,5 @@
-import CompetenciaApi from "../api/competencia/competenciaApi";
-import Competencia from "../modelo/Competencia";
+import CompetenciaApi from "../../api/competencia/competenciaApi";
+import Competencia from "../../modelo/Competencia";
 
 class CompetenciaService{
     private api: CompetenciaApi;

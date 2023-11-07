@@ -121,7 +121,6 @@ class UsuarioService implements IUsuarioService{
             usuario.descricao,
             usuario.senha,
             usuario.cnpj,
-            TipoUsuario.Empresa
         );
         empresa.setId(usuario.id);
         return empresa;

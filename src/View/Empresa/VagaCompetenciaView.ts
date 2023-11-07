@@ -9,7 +9,6 @@ class VagaCompetenciaView {
     constructor(controller: VagaCompetenciaController) {
         this.controller = controller;
         this.configurarEventListeners();
-        console.log("chegou aqui ")
     }
 
     private configurarEventListeners() {

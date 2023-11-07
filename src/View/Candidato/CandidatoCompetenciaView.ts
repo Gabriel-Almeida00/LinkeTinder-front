@@ -1,6 +1,6 @@
 import PerfilCandidatoCompetenciaController from "../../Controler/Candidato/CandidatoCompetenciaController";
 import CompetenciaDTO from "../../modelo/dto/CompetenciaDTO";
-import CompetenciaService from "../../service/CompetenciaService";
+import CompetenciaService from "../../service/competencias/CompetenciaService";
 
 
 class PerfilCandidatoCompetenciaView {

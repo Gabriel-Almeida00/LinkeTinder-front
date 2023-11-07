@@ -13,6 +13,7 @@ class LoginController{
     }
 
     async loginEmpresa(login: LoginDTO): Promise<number>{
+        console.log(login)
         return await this.loginService.loginEmpresa(login)
     }
 }

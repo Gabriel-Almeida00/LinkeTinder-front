@@ -1,15 +1,18 @@
 import Vaga from "../../modelo/Vaga";
-import EmpresaService from "../../service/EmpresaService";
+import EmpresaService from "../../service/empresa/EmpresaService";
 import UsuarioService from "../../service/usuario/UsuarioService";
+import VagaService from "../../service/vaga/VagaService";
 
 class PerfilEmpresaVagasController {
     private usuarioService: UsuarioService;
     private empresaService: EmpresaService;
     private vagaEmEdicaoIndex: number | null = null;
+    private vagaService: VagaService
 
     constructor() {
         this.usuarioService = new UsuarioService();
         this.empresaService = new EmpresaService();
+        this.vagaService = new VagaService()
 
         const adicionarVagaButton = document.getElementById('cadastro-vaga-button') as HTMLButtonElement;
         if (adicionarVagaButton) {
@@ -56,7 +59,7 @@ class PerfilEmpresaVagasController {
             );
 
             empresa.vagas.push(novaVaga);
-            this.empresaService.adicionarVagaAEmpresa(idEmpresa, novaVaga);
+            this.vagaService.adicionarVagaAEmpresa(idEmpresa, novaVaga);
 
             nomeElement.value = '';
             descricaoElement.value = '';
@@ -99,7 +102,7 @@ class PerfilEmpresaVagasController {
                     vagaAtualizada.formacaoMinima = novoNivelFormacao;
                     vagaAtualizada.experienciaMinima = novoNivelExperiencia;
 
-                    this.empresaService.atualizarVagaDaEmpresa(idEmpresa, novasVagas);
+                    this.vagaService.atualizarVagaDaEmpresa(idEmpresa, novasVagas);
 
                     nomeElement.value = '';
                     descricaoElement.value = '';
@@ -156,7 +159,7 @@ class PerfilEmpresaVagasController {
         const empresa = this.usuarioService.obterEmpresa(idEmpresa);
 
         if (empresa) {
-            const vagas = this.empresaService.obterVagasDaEmpresa(idEmpresa);
+            const vagas = this.vagaService.obterVagasDaEmpresa(idEmpresa);
             const vagasList = document.getElementById('vagas-list');
 
             if (vagasList) {
@@ -197,7 +200,7 @@ class PerfilEmpresaVagasController {
                         excluirButton.addEventListener('click', () => {
                             const idVaga = vaga.id;
 
-                            this.empresaService.excluirVagaDaEmpresa(idEmpresa, idVaga);
+                            this.vagaService.excluirVagaDaEmpresa(idEmpresa, idVaga);
 
                             this.exibirVagasDaEmpresa();
                         });

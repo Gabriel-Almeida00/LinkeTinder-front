@@ -46,7 +46,8 @@ class LoginView {
         if(tipoUsuario == TipoUsuario.Candidato){
             this.controller.loginCandidato(login)
             this.redirecionarParaPerfil(tipoUsuario)
-        }else{
+        }else if(tipoUsuario == TipoUsuario.Empresa){
+            console.log(login)
             this.controller.loginEmpresa(login)
             this.redirecionarParaPerfil(tipoUsuario)
         }

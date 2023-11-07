@@ -19,13 +19,9 @@ class CandidatoService implements ICandidatoService {
         return response.data;
     }
 
-    async obterCandidatoPorId(idCandidato: number): Promise<Candidato | undefined> {
-        try {
-            const response = await this.api.buscarCandidatoPorId(idCandidato);
-            return response.data;
-        } catch {
-            return undefined;
-        }
+    async obterCandidatoPorId(idCandidato: number): Promise<Candidato> {
+        const response = await this.api.buscarCandidatoPorId(idCandidato);
+        return response.data;
     }
 
 
