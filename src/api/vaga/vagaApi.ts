@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import Candidato from "../../modelo/Candidato";
 import Vaga from "../../modelo/Vaga";
 
 class VagaApi{

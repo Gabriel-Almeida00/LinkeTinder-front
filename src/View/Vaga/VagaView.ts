@@ -1,13 +1,25 @@
 import PerfilEmpresaVagasController from "../../Controler/Empresa/PerfilEmpresaVagasController";
+import VagaCompetenciaController from "../../Controler/Empresa/VagaCompetenciaController";
 import Vaga from "../../modelo/Vaga";
+import VagaCompetencia from "../../modelo/VagaCompetencia";
+import CompetenciaService from "../../service/competencias/CompetenciaService";
 
 class VagaView {
+    private idVaga!: number;
     private vagaEmEdicaoIndex: number | null = null;
-    private controller: PerfilEmpresaVagasController
+    private CompetenciaEmEdicaoIndex!: number;
+    private competenciaService: CompetenciaService;
 
-    constructor() {
+    private controller: PerfilEmpresaVagasController
+    private controllerVaga: VagaCompetenciaController
+
+    constructor(controllerVaga: VagaCompetenciaController) {
+        this.controllerVaga = controllerVaga
         this.controller = new PerfilEmpresaVagasController()
+        this.competenciaService = new CompetenciaService()
         this.configurarEventListeners()
+        this.configurarEventListenersVaga()
+        this.listarCompetenciasNoSelect()
     }
 
     configurarEventListeners() {
@@ -22,6 +34,38 @@ class VagaView {
         if (atualizarButton) {
             atualizarButton.addEventListener('click', () => {
                 this.atualizarVaga();
+            });
+        }
+    }
+
+    private configurarEventListenersVaga() {
+        const adicionarVagaButton = document.getElementById('adicionar-competencia-vaga') as HTMLButtonElement;
+        if (adicionarVagaButton) {
+            adicionarVagaButton.addEventListener('click', () => {
+                 this.adicionarCompetencia();
+            });
+        }
+
+        const atualizarButton = document.getElementById('atualizar-competencia-vaga');
+        if (atualizarButton) {
+            atualizarButton.addEventListener('click', () => {
+                 this.atualizarCompetencia();
+            });
+        }
+    }
+
+    async listarCompetenciasNoSelect(){
+        const competencias = await this.competenciaService.listarCompetencias();
+        const selectElement = document.getElementById('competencias');
+
+        if(selectElement){
+            selectElement.innerHTML = '';
+
+            competencias.forEach((competencia) => {
+                const option = document.createElement('option');
+                option.value = competencia.id; 
+                option.text = competencia.nome; 
+                selectElement.appendChild(option);
             });
         }
     }
@@ -102,7 +146,7 @@ class VagaView {
             const nivelFormacaoElement = vagaForm.querySelector('#nivelFormacao') as HTMLSelectElement;
             const nivelExperienciaElement = vagaForm.querySelector('#nivelExperiencia') as HTMLSelectElement;
 
-            if(nomeElement && descricaoElement && cidadeElement && nivelExperienciaElement && nivelFormacaoElement){
+            if (nomeElement && descricaoElement && cidadeElement && nivelExperienciaElement && nivelFormacaoElement) {
                 nomeElement.value = vaga.nome
                 descricaoElement.value = vaga.descricao
                 cidadeElement.value = vaga.cidade
@@ -111,7 +155,7 @@ class VagaView {
                     .querySelector(`option[value="${vaga.experienciaMinima}"]`) as HTMLSelectElement;
                 const nivelFormacaoOption = nivelFormacaoElement
                     .querySelector(`option[value="${vaga.formacaoMinima}"]`) as HTMLSelectElement;
-               
+
                 nivelExperienciaElement.value = nivelExperienciaOption.value;
                 nivelFormacaoElement.value = nivelFormacaoOption.value
 
@@ -144,7 +188,7 @@ class VagaView {
                         <button type="button" class="excluir-button">Excluir</button>
                     </td>
                     <td>
-                        <button type="button" class="competencias-button" data-competencia-id="${vaga.id}">
+                        <button type="button" class="vaga-competencia-button" data-competencia-id="${vaga.id}">
                             Competências</button>
                     </td>
                     `;
@@ -169,8 +213,143 @@ class VagaView {
                         this.exibirVagasDaEmpresa();
                     });
                 }
+
+
+                const mostrarCompetencias = row.querySelector('.vaga-competencia-button');
+                if (mostrarCompetencias) {
+                    mostrarCompetencias.addEventListener('click', () => {
+                        const vagaId = mostrarCompetencias.getAttribute('data-competencia-id');
+                        if (vagaId !== null) {
+                            this.idVaga = parseInt(vagaId);
+                            const competenciasVagaContainer = document.getElementById(`competencias-vaga-container`);
+                            if (competenciasVagaContainer) {
+                                if (competenciasVagaContainer.style.display === 'none' || competenciasVagaContainer.style.display === '') {
+                                    competenciasVagaContainer.style.display = 'block';
+                                } else {
+                                    competenciasVagaContainer.style.display = 'none';
+                                }
+                                this.exibirCompetenciasDaVaga(this.idVaga);
+                            }
+                        }
+                    });
+                }
             }
         }
+
+    }
+
+    async exibirCompetenciasDaVaga(idVaga: number) {
+        const competencias = await this.controllerVaga.listarCompetencias(idVaga);
+        const competenciasList = document.getElementById('competencias-vaga-list');
+
+        if (competenciasList) {
+            competenciasList.innerHTML = '';
+
+            for (let index = 0; index < competencias.length; index++) {
+                const competencia = competencias[index];
+                const row = document.createElement('tr');
+                row.innerHTML =
+                    `
+                    <td>${competencia.nome}</td>
+                    <td>${competencia.nivel}</td>
+                    <td>
+                        <button type="button" class="editar-competencia-button">Editar</button>
+                        <button type="button" class="excluir-competencia-button">Excluir</button>
+                    </td>
+                    `;
+
+                competenciasList.appendChild(row);
+
+                const editarButton = row.querySelector('.editar-competencia-button');
+                if (editarButton) {
+                    editarButton.addEventListener('click', (event) => {
+                        const rowIndex = Array.from(competenciasList.children).indexOf(row);
+                        const idCompetencia = competencia.id
+                        this.preencherCamposDeEdicaoVaga(idCompetencia);
+                    });
+                }
+
+                const excluirButton = row.querySelector('.excluir-competencia-button');
+                if (excluirButton) {
+                    excluirButton.addEventListener('click', () => {
+                        const idCompetencia = competencia.id
+                        this.controllerVaga.excluirCompetencia(idCompetencia)
+                        this.exibirCompetenciasDaVaga(idVaga);
+                    });
+                }
+            }
+        }
+    }
+
+    async preencherCamposDeEdicaoVaga( idCompetencia: number) {
+        const competencia = await this.controllerVaga.buscarCompetenciaPorId(idCompetencia)
+        const competenciaForm = document.getElementById('form-vaga-competencia');
+
+        if(competencia && competenciaForm){
+            const nomeCompetenciaInput = competenciaForm.querySelector("#competencias") as HTMLSelectElement;
+            const nivelCompetenciaSelect = competenciaForm.querySelector("#nivelCompetencia") as HTMLSelectElement;
+
+            if (nomeCompetenciaInput && nivelCompetenciaSelect) {
+                const nomeOptions = nomeCompetenciaInput.querySelector(`option[value="${competencia.idCompetencia}"]`) as HTMLSelectElement;
+                const nivelOption = nivelCompetenciaSelect.querySelector(`option[value="${competencia.nivel}"]`) as HTMLSelectElement;
+
+                nivelCompetenciaSelect.value = nivelOption.value;
+                nomeCompetenciaInput.value = nomeOptions.value;
+
+                this.CompetenciaEmEdicaoIndex = competencia.id
+            }
+        }
+    }
+
+    pegarValoresDoFormularioVaga() {
+        const elements = {
+            name: document.getElementById('competencias') as HTMLInputElement,
+            nivel: document.getElementById('nivelCompetencia') as HTMLInputElement
+        };
+
+
+        const competencia = new VagaCompetencia(
+            this.idVaga,
+            parseInt(elements.name.value.trim()),
+            parseInt(elements.nivel.value.trim())
+        )
+
+        return competencia;
+    }
+
+
+    async atualizarCompetencia() {
+        const competenciaHtml = this.pegarValoresDoFormularioVaga();
+        if (this.idVaga != null) {
+            const competenciaEditada = await this.controllerVaga.buscarCompetenciaPorId( this.CompetenciaEmEdicaoIndex);
+
+            if (competenciaEditada) {
+                competenciaEditada.idCompetencia = competenciaHtml.idCompetencia
+                competenciaEditada.nivel = competenciaHtml.nivel
+
+                this.controllerVaga.atualizarCompetencia(competenciaEditada);
+                this.limparCamposDoFormulario()
+                this.exibirCompetenciasDaVaga(this.idVaga);
+                this.idVaga = 0;
+            }
+        }
+    }
+
+    limparCamposDoFormularioVaga() {
+        const nome = document.getElementById('competencias') as HTMLInputElement;
+        const nivel = document.getElementById('nivelCompetencia') as HTMLInputElement;
+
+        nome.value = "";
+        nivel.value = "";
+    }
+
+    adicionarCompetencia() {
+        const competencia = this.pegarValoresDoFormularioVaga();
+        competencia.idVaga = this.idVaga
+        this.controllerVaga.adicionarCompetencia(competencia);
+
+        this.limparCamposDoFormularioVaga();
+        this.exibirCompetenciasDaVaga(this.idVaga);
 
     }
 }

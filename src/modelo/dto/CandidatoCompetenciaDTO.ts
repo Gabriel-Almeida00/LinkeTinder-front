@@ -1,4 +1,4 @@
-class CandidatoCompetenciaDTO{
+class CompetenciaDTO{
     id: number;
     nome: string;
     nivel: string;
@@ -9,4 +9,4 @@ class CandidatoCompetenciaDTO{
         this.nivel = nivel;
     }
 }
-export default CandidatoCompetenciaDTO;
+export default CompetenciaDTO;

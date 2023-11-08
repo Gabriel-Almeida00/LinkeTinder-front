@@ -1,5 +1,3 @@
-import CandidatoUI from './Controler/candidatoUI';
-import EmpresaUI from './Controler/empresaUI';
 import CandidatoService from './service/candidato/CandidatoService';
 import EmpresaService from './service/empresa/EmpresaService';
 import UsuarioService from './service/usuario/UsuarioService';
@@ -19,6 +17,7 @@ import FormacaoService from './service/candidato/FormacaoService';
 import LoginView from './View/Login/LoginView';
 import PerfilEmpresaView from './View/Empresa/PerfilEmpresaView';
 import VagaView from './View/Vaga/VagaView';
+import VagaCompetenciaController from './Controler/Empresa/VagaCompetenciaController';
 
 
 const localStorage = new LocalStorage<Candidato>('candidatos');
@@ -30,12 +29,13 @@ const empresaService = new EmpresaService();
 const experienciaService = new ExperienciaService()
 const formacaoService = new FormacaoService();
 
+const vagaCompetenciaController = new VagaCompetenciaController(usuarioService)
 //const candidatoUI = new CandidatoUI(candidatoService, usuarioService);
 //const empresaUi = new EmpresaUI(empresaService, usuarioService);
 
 //const empresaView = new EmpresaView();
 
-const vagaView = new VagaView()
+const vagaView = new VagaView(vagaCompetenciaController)
 vagaView.exibirVagasDaEmpresa()
 
 const controller = new CandidatoFormacaoController(usuarioService, formacaoService)

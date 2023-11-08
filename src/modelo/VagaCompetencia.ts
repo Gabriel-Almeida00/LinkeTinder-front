@@ -1,14 +1,10 @@
-import { v4 as uuidv4 } from 'uuid';
-
-
 class VagaCompetencia{
-     id: string;
+     id!: number;
      idVaga: number;
-     idCompetencia: string;
+     idCompetencia: number;
      nivel: number;
 
-    constructor(idVaga: number, idCompetencia: string, nivel: number) {
-        this.id = uuidv4();
+    constructor(idVaga: number, idCompetencia: number, nivel: number) {
         this.idVaga = idVaga;
         this.idCompetencia = idCompetencia;
         this.nivel = nivel;
