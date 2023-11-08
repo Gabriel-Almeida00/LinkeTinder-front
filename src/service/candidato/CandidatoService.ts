@@ -5,6 +5,7 @@ import VagaCompetencia from "../../modelo/VagaCompetencia";
 
 import ICandidatoService from "./ICandidatoService";
 import CandidatoApi from "../../api/candidato/candidatoApi";
+import CandidatoDTO from "../../modelo/CandidatoDTO";
 
 class CandidatoService implements ICandidatoService {
     private api: CandidatoApi;
@@ -14,7 +15,7 @@ class CandidatoService implements ICandidatoService {
     }
 
 
-    async listarCandidatos(): Promise<Candidato[]> {
+    async listarCandidatos(): Promise<CandidatoDTO[]> {
         const response = await this.api.listarCandidatos();
         return response.data;
     }
@@ -51,11 +52,11 @@ class CandidatoService implements ICandidatoService {
         }
     }
 
-    calcularAfinidadeCompetencias(candidato: Candidato, requisitos: VagaCompetencia[]): number {
+    calcularAfinidadeCompetencias(candidato: CandidatoDTO, requisitos: VagaCompetencia[]): number {
         let afinidade = 0;
         for (const requisito of requisitos) {
             const competenciaCandidato = candidato.competencias
-                .find((competencia) => competencia.idNivelCompetencia === requisito.nivel
+                .find((competencia) => competencia.nivel === requisito.nivel
                 );
 
             if (competenciaCandidato) {
@@ -65,7 +66,7 @@ class CandidatoService implements ICandidatoService {
         return afinidade;
     }
 
-    calcularAfinidadeExperiencia(candidato: Candidato, nivelExperiencia: number): number {
+    calcularAfinidadeExperiencia(candidato: CandidatoDTO, nivelExperiencia: number): number {
         const experienciaCandidato = candidato.experiencias.find(
             (experiencia) => experiencia.nivel === nivelExperiencia
         );
@@ -73,14 +74,14 @@ class CandidatoService implements ICandidatoService {
     }
 
 
-    calcularAfinidadeFormacao(candidato: Candidato, nivelFormacao: number): number {
+    calcularAfinidadeFormacao(candidato: CandidatoDTO, nivelFormacao: number): number {
         const formacaoCandidato = candidato.formacoes.find(
             (formacao) => formacao.nivel === nivelFormacao
         );
         return formacaoCandidato ? 3 : 0;
     }
 
-    calcularAfinidadeVaga(candidato: Candidato, vaga: Vaga): number {
+    calcularAfinidadeVaga(candidato: CandidatoDTO, vaga: Vaga): number {
         const afinidadeCompetencias = this.calcularAfinidadeCompetencias(candidato, vaga.competencias);
         const afinidadeExperiencia = this.calcularAfinidadeExperiencia(candidato, vaga.experienciaMinima);
         const afinidadeFormacao = this.calcularAfinidadeFormacao(candidato, vaga.formacaoMinima);
@@ -92,7 +93,7 @@ class CandidatoService implements ICandidatoService {
         return afinidadePercentual;
     }
 
-    calcularAfinidadeCandidatoComVaga(candidato: Candidato, vagas: Vaga[]): number {
+    calcularAfinidadeCandidatoComVaga(candidato: CandidatoDTO, vagas: Vaga[]): number {
         if (vagas.length === 0) {
             return 0;
         }

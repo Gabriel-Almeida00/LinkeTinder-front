@@ -18,6 +18,9 @@ import LoginView from './View/Login/LoginView';
 import PerfilEmpresaView from './View/Empresa/PerfilEmpresaView';
 import VagaView from './View/Vaga/VagaView';
 import VagaCompetenciaController from './Controler/Empresa/VagaCompetenciaController';
+import CandidatoUI from './Controler/candidatoUI';
+import EmpresaUI from './Controler/empresaUI';
+import CandidatosCadastradosController from './Controler/Candidato/CandidatosCadastradosController';
 
 
 const localStorage = new LocalStorage<Candidato>('candidatos');
@@ -30,13 +33,15 @@ const experienciaService = new ExperienciaService()
 const formacaoService = new FormacaoService();
 
 const vagaCompetenciaController = new VagaCompetenciaController(usuarioService)
-//const candidatoUI = new CandidatoUI(candidatoService, usuarioService);
+const candidatoUI = new CandidatoUI(candidatoService, usuarioService);
 //const empresaUi = new EmpresaUI(empresaService, usuarioService);
 
-//const empresaView = new EmpresaView();
 
 const vagaView = new VagaView(vagaCompetenciaController)
 vagaView.exibirVagasDaEmpresa()
+
+const candidatosCadastradosController = new CandidatosCadastradosController(candidatoService, usuarioService)
+
 
 const controller = new CandidatoFormacaoController(usuarioService, formacaoService)
 const candidatoFormacaoVew = new CandidatoFormacaoView(controller)
@@ -59,12 +64,12 @@ perfilCandidatoCompetenciaView.exibirCompetenciasDoCandidato();
 
 const loginView = new LoginView()
 
-/*empresaUi.listarVagas();
-empresaUi.associarEventosInformacoesVaga();
+//empresaUi.listarVagas();
+//empresaUi.associarEventosInformacoesVaga();
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const dadosCompetencias = await candidatoUI.obterContagemCompetencias();
-    candidatoUI.listarCandidatos();
-    candidatoUI.criarGraficoCompetencias(dadosCompetencias);
-    candidatoUI.associarEventosInformacoesCandidato();
-});*/
+   // const dadosCompetencias = await candidatoUI.obterContagemCompetencias();
+   // candidatoUI.listarCandidatos();
+   // candidatosCadastradosController.criarGraficoCompetencias(dadosCompetencias);
+   // candidatosCadastradosController.associarEventosInformacoesCandidato();
+});
