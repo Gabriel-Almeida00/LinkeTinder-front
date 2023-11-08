@@ -5,7 +5,6 @@ import PerfilCandidatoCompetenciaController from './Controler/Candidato/Candidat
 import PerfilCandidatoCompetenciaView from './View/Candidato/CandidatoCompetenciaView';
 import CandidatoCompetenciaService from './service/candidato/CandidatoCompetenciaService';
 import Candidato from './modelo/Candidato';
-import LocalStorage from './data/LocalStorage';
 import CandidatoView from './View/Candidato/CandidatoView';
 import CandidatoController from './Controler/Candidato/CandidatoController';
 import CandidatoExperienciaView from './View/Candidato/CandidatoExperienciaView';
@@ -18,12 +17,10 @@ import LoginView from './View/Login/LoginView';
 import PerfilEmpresaView from './View/Empresa/PerfilEmpresaView';
 import VagaView from './View/Vaga/VagaView';
 import VagaCompetenciaController from './Controler/Empresa/VagaCompetenciaController';
-import CandidatoUI from './Controler/candidatoUI';
-import EmpresaUI from './Controler/empresaUI';
 import CandidatosCadastradosController from './Controler/Candidato/CandidatosCadastradosController';
+import CadastroCandidatoController from './Controler/Cadastro/CadastroCandidatoController';
 
 
-const localStorage = new LocalStorage<Candidato>('candidatos');
 
 const candidatoService = new CandidatoService();
 const candidatoCompetenciaService = new CandidatoCompetenciaService()
@@ -33,7 +30,7 @@ const experienciaService = new ExperienciaService()
 const formacaoService = new FormacaoService();
 
 const vagaCompetenciaController = new VagaCompetenciaController(usuarioService)
-const candidatoUI = new CandidatoUI(candidatoService, usuarioService);
+const cadastroCandidato = new CadastroCandidatoController(candidatoService)
 //const empresaUi = new EmpresaUI(empresaService, usuarioService);
 
 

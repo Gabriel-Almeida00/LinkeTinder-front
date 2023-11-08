@@ -1,20 +1,11 @@
-import Candidato from "../modelo/Candidato";
-import CandidatoService from "../service/candidato/CandidatoService";
-import Chart from 'chart.js/auto';
-import Formacao from "../modelo/Formacao";
-import Experiencia from "../modelo/Experiencia";
-import UsuarioService from "../service/usuario/UsuarioService";
-import Vaga from "../modelo/Vaga";
-import CandidatoCompetencia from "../modelo/CandidatoCompetencia";
+import Candidato from "../../modelo/Candidato";
+import CandidatoService from "../../service/candidato/CandidatoService";
 
-
-export class CandidatoUI {
+class CadastroCandidatoController{
     private candidatoService: CandidatoService;
-    private usuarioService: UsuarioService;
 
-    constructor(candidatoService: CandidatoService, usuarioService: UsuarioService) {
+    constructor(candidatoService: CandidatoService) {
         this.candidatoService = candidatoService;
-        this.usuarioService = usuarioService;
         this.setupEventListeners();
     }
 
@@ -28,8 +19,6 @@ export class CandidatoUI {
         }
     }
 
-   
-    
     private validarCPF(cpf: string): boolean {
         const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
         return cpfRegex.test(cpf);
@@ -117,8 +106,5 @@ export class CandidatoUI {
             elemento.value = '';
         });
     }
-    
-    
-   
-}
-export default CandidatoUI;
+} 
+export default CadastroCandidatoController;
