@@ -6,12 +6,15 @@ import VagaCompetencia from "../../modelo/VagaCompetencia";
 import ICandidatoService from "./ICandidatoService";
 import CandidatoApi from "../../api/candidato/candidatoApi";
 import CandidatoDTO from "../../modelo/CandidatoDTO";
+import CadastroAPi from "../../api/candidato/cadastroApi";
 
 class CandidatoService implements ICandidatoService {
     private api: CandidatoApi;
+    private apiCadastro: CadastroAPi
 
     constructor() {
         this.api = new CandidatoApi();
+        this.apiCadastro = new CadastroAPi();
     }
 
 
@@ -28,7 +31,7 @@ class CandidatoService implements ICandidatoService {
 
     async adicionarCandidato(candidato: Candidato): Promise<void> {
         try {
-            await this.api.criarCandidato(candidato);
+            await this.apiCadastro.criarCandidato(candidato);
         } catch (error) {
             console.error('Erro ao criar candidato:', error);
         }
