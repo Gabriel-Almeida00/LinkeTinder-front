@@ -4,7 +4,6 @@ import UsuarioService from './service/usuario/UsuarioService';
 import PerfilCandidatoCompetenciaController from './Controler/Candidato/CandidatoCompetenciaController';
 import PerfilCandidatoCompetenciaView from './View/Candidato/CandidatoCompetenciaView';
 import CandidatoCompetenciaService from './service/candidato/CandidatoCompetenciaService';
-import Candidato from './modelo/Candidato';
 import CandidatoView from './View/Candidato/CandidatoView';
 import CandidatoController from './Controler/Candidato/CandidatoController';
 import CandidatoExperienciaView from './View/Candidato/CandidatoExperienciaView';
@@ -20,6 +19,7 @@ import VagaCompetenciaController from './Controler/Empresa/VagaCompetenciaContro
 import CandidatosCadastradosController from './Controler/Candidato/CandidatosCadastradosController';
 import CadastroCandidatoController from './Controler/Cadastro/CadastroCandidatoController';
 import VagasCadastradasController from './Controler/Empresa/VagasCadastradasController';
+import CadastroEmpresaController from './Controler/Cadastro/CadastroEmpresaController';
 
 
 
@@ -32,7 +32,7 @@ const formacaoService = new FormacaoService();
 
 const vagaCompetenciaController = new VagaCompetenciaController(usuarioService)
 const cadastroCandidato = new CadastroCandidatoController(candidatoService)
-//const empresaUi = new EmpresaUI(empresaService, usuarioService);
+const cadastroEmpresa = new CadastroEmpresaController(empresaService)
 
 
 const vagaView = new VagaView(vagaCompetenciaController)
@@ -62,12 +62,4 @@ perfilCandidatoCompetenciaView.exibirCompetenciasDoCandidato();
 
 const loginView = new LoginView()
 
-//empresaUi.listarVagas();
-//empresaUi.associarEventosInformacoesVaga();
 
-document.addEventListener('DOMContentLoaded', async () => {
-   // const dadosCompetencias = await candidatoUI.obterContagemCompetencias();
-   // candidatoUI.listarCandidatos();
-   // candidatosCadastradosController.criarGraficoCompetencias(dadosCompetencias);
-   // candidatosCadastradosController.associarEventosInformacoesCandidato();
-});

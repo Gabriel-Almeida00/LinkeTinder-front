@@ -1,18 +1,11 @@
-import Empresa from "../modelo/Empresa";
-import EmpresaService from "../service/empresa/EmpresaService";
-import VagaDTO from "../modelo/dto/VagaDTO";
-import VagaCompetencia from "../modelo/VagaCompetencia";
-import VagaService from "../service/vaga/VagaService";
-import CompetenciaCandidatoDTO from "../modelo/dto/CompetenciaCandidatoDTO";
+import Empresa from "../../modelo/Empresa";
+import EmpresaService from "../../service/empresa/EmpresaService";
 
-
-class EmpresaUI {
+class CadastroEmpresaController{
     private empresaService: EmpresaService;
-    private vagaService: VagaService
 
     constructor(empresaService: EmpresaService) {
         this.empresaService = empresaService;
-        this.vagaService = new VagaService
 
         this.adicionarEventoCadastrar();
     }
@@ -83,7 +76,7 @@ class EmpresaUI {
 
     private limparCamposDoFormulario(): void {
         const camposParaLimpar = ['nomeEmpresa', 'emailEmpresa', 'cepEmpresa', 'cnpjEmpresa',
-         'paisEmpresa', 'estadoEmpresa', 'descricaoEmpresa', 'senhaEmpresa'];
+         'paisEmpresa',  'descricaoEmpresa', 'senhaEmpresa'];
 
         camposParaLimpar.forEach((campo) => {
             const elemento = document.getElementById(campo) as HTMLInputElement;
@@ -95,13 +88,12 @@ class EmpresaUI {
         const novaEmpresa = this.obterValoresDosCampos();
 
         if (novaEmpresa) {
+            console.log(novaEmpresa)
             this.empresaService.adicionarEmpresa(novaEmpresa);
             this.limparCamposDoFormulario();
             window.location.href = '../../paginas/login/login.html';
         }
     }
 
-  
 }
-
-export default EmpresaUI;
+export default CadastroEmpresaController
