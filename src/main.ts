@@ -19,6 +19,7 @@ import VagaView from './View/Vaga/VagaView';
 import VagaCompetenciaController from './Controler/Empresa/VagaCompetenciaController';
 import CandidatosCadastradosController from './Controler/Candidato/CandidatosCadastradosController';
 import CadastroCandidatoController from './Controler/Cadastro/CadastroCandidatoController';
+import VagasCadastradasController from './Controler/Empresa/VagasCadastradasController';
 
 
 
@@ -38,7 +39,7 @@ const vagaView = new VagaView(vagaCompetenciaController)
 vagaView.exibirVagasDaEmpresa()
 
 const candidatosCadastradosController = new CandidatosCadastradosController(candidatoService, usuarioService)
-
+const vagasCadastradasController = new VagasCadastradasController()
 
 const controller = new CandidatoFormacaoController(usuarioService, formacaoService)
 const candidatoFormacaoVew = new CandidatoFormacaoView(controller)
