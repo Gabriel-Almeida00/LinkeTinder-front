@@ -1,5 +1,5 @@
 import Experiencia from "../../modelo/Experiencia";
-import ExperienciaService from "../../service/ExperienciaService";
+import ExperienciaService from "../../service/candidato/ExperienciaService";
 import UsuarioService from "../../service/usuario/UsuarioService";
 
 class PerfilCandidatoExperienciaController {
@@ -11,9 +11,8 @@ class PerfilCandidatoExperienciaController {
         this.experienciaService = experienciaService
     }
 
-    obterExperienciaPorId(idExperiencia: string){
-        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        return this.experienciaService.obterExperienciaDoCanddatoPorId(idCandidato,idExperiencia);
+    obterExperienciaPorId(idExperiencia: number){
+        return this.experienciaService.obterExperienciaDoCandidatoPorId(idExperiencia);
     }
 
     listarExperiencias() {
@@ -21,21 +20,19 @@ class PerfilCandidatoExperienciaController {
         return this.experienciaService.obterExperienciasDoCandidato(idCandidato);
     }
 
-    adicionarExperiencia(cargo: string, empresa: string, nivel: number) {
+    adicionarExperiencia(experiencia: Experiencia) {
         const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        const experiencia = new Experiencia(idCandidato, cargo, empresa, nivel )
-
-        this.experienciaService.adicionarExperienciaAoCandidato(idCandidato, experiencia);
+        experiencia.idCandidato = idCandidato
+        this.experienciaService.adicionarExperienciaAoCandidato( experiencia);
     }
 
     atualizarExperiencia(experiencia: Experiencia){
-        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        this.experienciaService.atualizarExperienciasDoCandidato(idCandidato, experiencia)
+        console.log(experiencia)
+        this.experienciaService.atualizarExperienciaDoCandidato( experiencia.id, experiencia)
     }
 
-    excluirExperiencia(idExperiencia: string) {
-        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        this.experienciaService.excluirExperienciaDoCandidato(idCandidato, idExperiencia);
+    excluirExperiencia(idExperiencia: number) {
+        this.experienciaService.excluirExperienciaDoCandidato(idExperiencia);
     }
 
 

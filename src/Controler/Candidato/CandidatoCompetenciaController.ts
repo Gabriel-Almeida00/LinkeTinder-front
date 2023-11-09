@@ -1,42 +1,39 @@
 import CandidatoCompetencia from "../../modelo/CandidatoCompetencia";
 import UsuarioService from "../../service/usuario/UsuarioService";
-import ICandidatoCompetenciaService from "../../service/candidato/ICandidatoCompetenciaService";
+import CandidatoCompetenciaService from "../../service/candidato/CandidatoCompetenciaService";
+import CompetenciaDTO from "../../modelo/dto/CompetenciaDTO";
 
 class PerfilCandidatoCompetenciaController {
-    private candidatoCompetenciaService: ICandidatoCompetenciaService;
+    private candidatoCompetenciaService: CandidatoCompetenciaService;
     private usuarioService: UsuarioService;
- 
-    constructor( candidatoCompetenciaService: ICandidatoCompetenciaService, usuarioService: UsuarioService,) {
-        this.candidatoCompetenciaService = candidatoCompetenciaService;
-        this.usuarioService = usuarioService;
+
+    constructor() {
+        this.candidatoCompetenciaService = new CandidatoCompetenciaService()
+        this.usuarioService = new UsuarioService()
     }
 
-    buscarCompetenciaPorId(idCompetencia: string){
-        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        return this.candidatoCompetenciaService.obterCompetenciaDoCandidatoPorId(idCandidato, idCompetencia);
+    buscarCompetenciaPorId(idCompetencia: number) {
+        return this.candidatoCompetenciaService.buscarCompetenciaDoCandidatoPorId(idCompetencia);
     }
 
-    listarCompetencia(){
+    listarCompetencia() {
         const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        return this.candidatoCompetenciaService.obterCompetenciasDoCandidato(idCandidato);
+        return this.candidatoCompetenciaService.listarCompetenciasDoCandidato(idCandidato);
     }
 
-    adicionarCompetencias(nome: string, nivel:number){
+    adicionarCompetencias(competencia: CompetenciaDTO) {
         const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        const competencia = new CandidatoCompetencia(idCandidato, nome, nivel);
-
-        this.candidatoCompetenciaService.adicionarCompetenciaAoCandidato(idCandidato, competencia);
+        const candidatoCompetencia = new CandidatoCompetencia(idCandidato, competencia.nome, competencia.nivel)
+        this.candidatoCompetenciaService.adicionarCompetencia(candidatoCompetencia);
     }
 
     atualizarCompetencia(competenciaAtualizada: CandidatoCompetencia): void {
-        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        this.candidatoCompetenciaService.atualizarCompetenciaDoCandidato(idCandidato, competenciaAtualizada);
-}
+        this.candidatoCompetenciaService.atualizarCompetencia(competenciaAtualizada.id, competenciaAtualizada);
+    }
 
 
-    excluirCompetencia(idCompetencia: string){
-        const idCandidato = this.usuarioService.obterIdUsuarioLogado();
-        this.candidatoCompetenciaService.excluirCompetenciaDoCandidato(idCandidato, idCompetencia);
+    excluirCompetencia(idCompetencia: number) {
+        this.candidatoCompetenciaService.excluirCompetencia( idCompetencia);
     }
 }
 export default PerfilCandidatoCompetenciaController

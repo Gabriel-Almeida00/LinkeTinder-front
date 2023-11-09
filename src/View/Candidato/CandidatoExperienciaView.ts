@@ -1,8 +1,9 @@
 import PerfilCandidatoExperienciaController from "../../Controler/Candidato/CandidatoExperienciaController";
+import Experiencia from "../../modelo/Experiencia";
 
 class CandidatoExperienciaView {
     private controller: PerfilCandidatoExperienciaController;
-    private experienciaEmEdicaoIndex: string | null = null;
+    private experienciaEmEdicaoIndex: number | null = null;
 
     constructor(controller: PerfilCandidatoExperienciaController) {
         this.controller = controller;
@@ -32,13 +33,14 @@ class CandidatoExperienciaView {
             nivel: document.getElementById('nivelExperiencia') as HTMLInputElement
         };
 
-        const competencia = {
-            cargo: elements.cargo.value.trim(),
-            empresa: elements.empresa.value,
-            nivel: parseInt(elements.nivel.value.trim())
-        };
+        const experiencia = new Experiencia(
+            1,
+            elements.cargo.value.trim(),
+            elements.empresa.value,
+            parseInt(elements.nivel.value.trim())
+        )
 
-        return competencia;
+        return experiencia;
     }
 
     limparCamposDoFormulario() {
@@ -52,8 +54,8 @@ class CandidatoExperienciaView {
         nivelElement.value = "";
     }
 
-    preencherCamposDeEdicaoExperiencia(experienciaId: string) {
-        const experiencia = this.controller.obterExperienciaPorId(experienciaId);
+    async preencherCamposDeEdicaoExperiencia(experienciaId: number) {
+        const experiencia = await this.controller.obterExperienciaPorId(experienciaId);
         const experienciaForm = document.getElementById('perfil-form');
 
         if (experiencia && experienciaForm) {
@@ -72,8 +74,8 @@ class CandidatoExperienciaView {
         }
     }
 
-    exibirExperienciaDoCandidato() {
-        const experiencias = this.controller.listarExperiencias();
+    async exibirExperienciaDoCandidato() {
+        const experiencias = await this.controller.listarExperiencias();
         const experienciasList = document.getElementById('experiencias-list');
 
         if (experienciasList) {
@@ -119,17 +121,17 @@ class CandidatoExperienciaView {
 
     adicionarExperiencia() {
         const experiencia = this.pegarValoresDoFormulario();
-        this.controller.adicionarExperiencia(experiencia.cargo, experiencia.empresa, experiencia.nivel);
+        this.controller.adicionarExperiencia(experiencia);
 
         this.limparCamposDoFormulario();
         this.exibirExperienciaDoCandidato();
     }
 
-    editarExperiencia() {
+    async editarExperiencia() {
         const experienciaHtml = this.pegarValoresDoFormulario();
 
         if (this.experienciaEmEdicaoIndex != null) {
-            const experienciaEditada = this.controller.obterExperienciaPorId(this.experienciaEmEdicaoIndex);
+            const experienciaEditada = await this.controller.obterExperienciaPorId(this.experienciaEmEdicaoIndex);
 
             if (experienciaEditada) {
                 experienciaEditada.cargo = experienciaHtml.cargo

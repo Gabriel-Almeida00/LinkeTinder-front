@@ -14,14 +14,13 @@ class Empresa extends Pessoa {
         descricao: string,
         senha: string,
         cnpj: string,
-        tipoUsuario: TipoUsuario.Empresa
     ) {
-        super(nome, email, pais, cep, descricao, senha, tipoUsuario);
+        super(nome, email, pais, cep, descricao, senha);
         this.cnpj = cnpj;
         this.vagas = [];
     }
 
-    setId(id: string):void{
+    setId(id: number):void{
         this.id = id
     }
 }

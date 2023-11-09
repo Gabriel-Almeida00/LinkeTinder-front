@@ -1,10 +1,8 @@
 class CompetenciaDTO{
-     id: string;
-     nome: string;
-     nivel: string;
+     nome: number;
+     nivel: number;
 
-    constructor(id: string, nome: string, nivel: string) {
-        this.id = id;
+    constructor( nome: number, nivel: number) {
         this.nome = nome;
         this.nivel = nivel;
     }

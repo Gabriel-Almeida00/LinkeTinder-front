@@ -1,40 +1,45 @@
-import './View/login';
-import CandidatoUI from './Controler/candidatoUI';
-import EmpresaUI from './Controler/empresaUI';
 import CandidatoService from './service/candidato/CandidatoService';
-import EmpresaService from './service/EmpresaService';
+import EmpresaService from './service/empresa/EmpresaService';
 import UsuarioService from './service/usuario/UsuarioService';
-import EmpresaView from './View/Empresa/View';
 import PerfilCandidatoCompetenciaController from './Controler/Candidato/CandidatoCompetenciaController';
 import PerfilCandidatoCompetenciaView from './View/Candidato/CandidatoCompetenciaView';
 import CandidatoCompetenciaService from './service/candidato/CandidatoCompetenciaService';
-import Candidato from './modelo/Candidato';
-import LocalStorage from './data/LocalStorage';
 import CandidatoView from './View/Candidato/CandidatoView';
 import CandidatoController from './Controler/Candidato/CandidatoController';
 import CandidatoExperienciaView from './View/Candidato/CandidatoExperienciaView';
 import PerfilCandidatoExperienciaController from './Controler/Candidato/CandidatoExperienciaController';
-import ExperienciaService from './service/ExperienciaService';
+import ExperienciaService from './service/candidato/ExperienciaService';
 import CandidatoFormacaoView from './View/Candidato/CandidatoFormacaoView';
 import CandidatoFormacaoController from './Controler/Candidato/CandidatoFormacaoController';
-import FormacaoService from './service/FormacaoService';
-import VagaCompetenciaView from './View/Empresa/VagaCompetenciaView';
+import FormacaoService from './service/candidato/FormacaoService';
+import LoginView from './View/Login/LoginView';
+import PerfilEmpresaView from './View/Empresa/PerfilEmpresaView';
+import VagaView from './View/Vaga/VagaView';
 import VagaCompetenciaController from './Controler/Empresa/VagaCompetenciaController';
+import CandidatosCadastradosController from './Controler/Candidato/CandidatosCadastradosController';
+import CadastroCandidatoController from './Controler/Cadastro/CadastroCandidatoController';
+import VagasCadastradasController from './Controler/Empresa/VagasCadastradasController';
+import CadastroEmpresaController from './Controler/Cadastro/CadastroEmpresaController';
 
-const localStorage = new LocalStorage<Candidato>('candidatos');
 
-const candidatoService = new CandidatoService(localStorage);
-const candidatoCompetenciaService = new CandidatoCompetenciaService(localStorage)
+
+const candidatoService = new CandidatoService();
+const candidatoCompetenciaService = new CandidatoCompetenciaService()
 const usuarioService = new UsuarioService();
 const empresaService = new EmpresaService();
 const experienciaService = new ExperienciaService()
 const formacaoService = new FormacaoService();
 
-const candidatoUI = new CandidatoUI(candidatoService, usuarioService);
-const empresaUi = new EmpresaUI(empresaService, usuarioService);
+const vagaCompetenciaController = new VagaCompetenciaController(usuarioService)
+const cadastroCandidato = new CadastroCandidatoController(candidatoService)
+const cadastroEmpresa = new CadastroEmpresaController(empresaService)
 
-const empresaView = new EmpresaView();
 
+const vagaView = new VagaView(vagaCompetenciaController)
+vagaView.exibirVagasDaEmpresa()
+
+const candidatosCadastradosController = new CandidatosCadastradosController(candidatoService, usuarioService)
+const vagasCadastradasController = new VagasCadastradasController()
 
 const controller = new CandidatoFormacaoController(usuarioService, formacaoService)
 const candidatoFormacaoVew = new CandidatoFormacaoView(controller)
@@ -48,22 +53,13 @@ const candidatoController = new CandidatoController(candidatoService, usuarioSer
 const candidatoView = new CandidatoView(candidatoController);
 candidatoView.exibirInformacoesCandidatoNoHTML();
 
-const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaController(candidatoCompetenciaService, usuarioService)
+const perfilEmpresaView = new PerfilEmpresaView()
+perfilEmpresaView.exibirInformacoesEmpresaNoHTML()
+
+const perfilCandidatoCompetenciaController = new PerfilCandidatoCompetenciaController()
 const perfilCandidatoCompetenciaView = new PerfilCandidatoCompetenciaView(perfilCandidatoCompetenciaController )
 perfilCandidatoCompetenciaView.exibirCompetenciasDoCandidato();
 
+const loginView = new LoginView()
 
 
-
-
-empresaUi.listarVagas();
-empresaUi.associarEventosInformacoesVaga();
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const dadosCompetencias = candidatoUI.obterContagemCompetencias();
-    candidatoUI.listarCandidatos();
-    candidatoUI.criarGraficoCompetencias(dadosCompetencias);
-    candidatoUI.associarEventosInformacoesCandidato();
-});

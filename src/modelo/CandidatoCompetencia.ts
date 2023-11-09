@@ -2,16 +2,16 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 class CandidatoCompetencia {
-     id: string;
-     idCandidato: string;
-     idCompetencia: string;
-     nivel: number;
+     id!: number;
+     idCandidato: number;
+     idCompetencia: number;
+     idNivelCompetencia: number;
 
-    constructor(idCandidato: string, idCompetencia: string, nivel: number) {
-        this.id = uuidv4();
+    constructor( idCandidato: number, idCompetencia: number, idNivelCompetencia: number) {
+    
         this.idCandidato = idCandidato;
         this.idCompetencia = idCompetencia;
-        this.nivel = nivel;
+        this.idNivelCompetencia = idNivelCompetencia;
     }
 }
 export default CandidatoCompetencia;

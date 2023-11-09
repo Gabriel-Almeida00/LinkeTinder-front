@@ -22,12 +22,12 @@ class UsuarioService implements IUsuarioService{
     }
 
 
-    obterIdUsuarioLogado(): string {
-        const idUsuarioLogadoJson = localStorage.getItem('usuarioLogado');
+    obterIdUsuarioLogado(): number {
+        const idUsuarioLogadoJson = localStorage.getItem('usuarioId');
         return idUsuarioLogadoJson ? JSON.parse(idUsuarioLogadoJson) : null;
     }
 
-    obterCandidato(idCandidato: string): Candidato {
+    obterCandidato(idCandidato: number): Candidato {
         const candidatosJson = localStorage.getItem('candidatos');
 
         if (candidatosJson) {
@@ -42,7 +42,7 @@ class UsuarioService implements IUsuarioService{
 
     }
 
-    obterEmpresa(idEmpresa: string): Empresa {
+    obterEmpresa(idEmpresa: number): Empresa {
         const empresaJson = localStorage.getItem('empresas')
 
         if(empresaJson){
@@ -99,9 +99,7 @@ class UsuarioService implements IUsuarioService{
             usuario.senha,
             usuario.sobrenome,
             new Date(usuario.dataNascimento),
-            usuario.cpf,
-            TipoUsuario.Candidato
-        );
+            usuario.cpf        );
         candidato.setId(usuario.id);
         return candidato;
     }
@@ -123,14 +121,13 @@ class UsuarioService implements IUsuarioService{
             usuario.descricao,
             usuario.senha,
             usuario.cnpj,
-            TipoUsuario.Empresa
         );
         empresa.setId(usuario.id);
         return empresa;
     }
     
 
-    setUsuarioLogado(idUsuario: string): void {
+    setUsuarioLogado(idUsuario: number): void {
         localStorage.setItem('usuarioLogado', JSON.stringify(idUsuario));
     }
 }

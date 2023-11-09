@@ -3,14 +3,13 @@ import TipoUsuario from './enum/TipoUsuario';
 
 
 class Pessoa {
-     id: string;
+     id!: number;
      nome: string;
      email: string;
      pais: string;
      cep: string;
      descricao: string;
      senha: string;
-     tipoUsuario: TipoUsuario
 
     constructor(
         nome: string,
@@ -19,16 +18,14 @@ class Pessoa {
         cep: string,
         descricao: string,
         senha: string,
-        tipoUsuario: TipoUsuario
     ) {
-        this.id = uuidv4();
+    
         this.nome = nome;
         this.email = email;
         this.pais = pais;
         this.cep = cep;
         this.descricao = descricao;
         this.senha = senha;
-        this.tipoUsuario = tipoUsuario
     }
 }
 export default Pessoa;

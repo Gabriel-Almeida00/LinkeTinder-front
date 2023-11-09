@@ -1,9 +1,10 @@
 import Candidato from "../../modelo/Candidato";
-import CandidatoDTO from "../../modelo/dto/CandidatoDTO";
+import CandidatoDTO from "../../modelo/CandidatoDTO";
 
 interface ICandidatoService{
-    listarCandidatos(): Candidato[];
-    listarCandidatosDTO(): CandidatoDTO[];
-    cadastrarCandidato(candidato: Candidato): void;
-    atualizarCandidatoNoLocalStorage(candidatoAtualizado: Candidato): void;
+    listarCandidatos(): Promise<CandidatoDTO[]>;
+    obterCandidatoPorId(idCandidato: number): Promise<Candidato | undefined> ;
+    adicionarCandidato(candidato: Candidato): Promise<void>;
+    atualizarCandidato(id: number, candidato: Candidato): Promise<boolean>;
+    excluirCandidato(idCandidato: number): Promise<boolean>
 }export default ICandidatoService

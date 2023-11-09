@@ -1,41 +1,37 @@
 import VagaCompetencia from "../../modelo/VagaCompetencia";
-import EmpresaService from "../../service/EmpresaService";
+import EmpresaService from "../../service/empresa/EmpresaService";
 import UsuarioService from "../../service/usuario/UsuarioService";
+import VagaCompetenciaService from "../../service/vaga/VagaCompetenciaService";
 
 class VagaCompetenciaController {
-    private empresaService: EmpresaService;
     private usuarioService: UsuarioService;
+    private vagaCompetenciaService: VagaCompetenciaService
 
-    constructor(empresaService: EmpresaService, usuarioService: UsuarioService) {
-        this.empresaService = empresaService;
+    constructor(usuarioService: UsuarioService) {
         this.usuarioService = usuarioService;
-
+        this.vagaCompetenciaService = new VagaCompetenciaService
     }
 
-    buscarCompetenciaPorId(idVaga: string, idCompetencia: string) {
-        const idEmpresa = this.usuarioService.obterIdUsuarioLogado();
-        return this.empresaService.obterCompetenciaDaVagaPorId(idEmpresa, idVaga, idCompetencia);
+    buscarCompetenciaPorId(idCompetencia: number) {
+        return this.vagaCompetenciaService.buscarCompetenciaPorId(idCompetencia);
     }
 
-    listarCompetencias(idVaga: string) {
-        const idEmpresa = this.usuarioService.obterIdUsuarioLogado();
-        return this.empresaService.obterCompetenciasDaVaga(idEmpresa, idVaga);
+    listarCompetencias(idVaga: number) {
+        return this.vagaCompetenciaService.listarCompetencias(idVaga);
     }
 
 
     adicionarCompetencia(competencia: VagaCompetencia) {
-         const idEmpresa = this.usuarioService.obterIdUsuarioLogado();
-         this.empresaService.adicionarCompetenciaAVaga(idEmpresa, competencia.idVaga, competencia);
+
+         this.vagaCompetenciaService.criarCompetencia(competencia);
     }
 
     atualizarCompetencia(competenciaAtualizada: VagaCompetencia) {
-        const idEmpresa = this.usuarioService.obterIdUsuarioLogado();
-        this.empresaService.atualizarCompetenciaDaVaga(idEmpresa, competenciaAtualizada.idVaga, competenciaAtualizada);
+        this.vagaCompetenciaService.atualizarCompetencia(competenciaAtualizada.id, competenciaAtualizada);
     }
 
-    excluirCompetencia(idVaga: string,idCompetencia: string) {
-        const idEmpresa = this.usuarioService.obterIdUsuarioLogado();
-        this.empresaService.excluirCompetenciaDaVaga(idEmpresa,idVaga, idCompetencia);
+    excluirCompetencia(idCompetencia: number) {
+        this.vagaCompetenciaService.excluirCandidato(idCompetencia);
     }
 }
 export default VagaCompetenciaController;

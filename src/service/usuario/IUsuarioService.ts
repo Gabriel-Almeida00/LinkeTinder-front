@@ -5,9 +5,9 @@ import TipoUsuario from "../../modelo/enum/TipoUsuario";
 
 interface IUsuarioService{
     login(email: string, senha: string, userType: TipoUsuario): Pessoa | null;
-    obterIdUsuarioLogado(): string;
-    obterCandidato(idCandidato: string): Candidato;
-    obterEmpresa(idEmpresa: string): Empresa;
+    obterIdUsuarioLogado(): number;
+    obterCandidato(idCandidato: number): Candidato;
+    obterEmpresa(idEmpresa: number): Empresa;
     getUsuariosPorTipo(userType: TipoUsuario): Pessoa[];
-    setUsuarioLogado(idUsuario: string): void ;
+    setUsuarioLogado(idUsuario: number): void ;
 } export default IUsuarioService

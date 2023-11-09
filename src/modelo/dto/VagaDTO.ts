@@ -1,26 +1,29 @@
 import VagaCompetencia from '../VagaCompetencia';
+import CompetenciaCandidatoDTO from './CompetenciaCandidatoDTO';
+import ExperienciaVagaDTO from './ExperienciaVagaDTO';
+import FormacaoVagaDTO from './FormacaoVagaDTO';
 
 export default class VagaDTO {
-     id: string;
+     id: number;
      nome: string;
      descricao: string;
-     formacaoMinima: number;
-     experienciaMinima: number;
-     competencias: VagaCompetencia[];
+     formacao: FormacaoVagaDTO;
+     experiencia: ExperienciaVagaDTO;
+     competencias: CompetenciaCandidatoDTO[];
 
     constructor(
-        id: string,
+        id: number,
         nome: string,
         descricao: string,
-        formacaoMinima: number,
-        experienciaMinima: number,
-        competencias: VagaCompetencia[]
+        formacao: FormacaoVagaDTO,
+        experiencia: ExperienciaVagaDTO,
+        competencias: CompetenciaCandidatoDTO[]
     ) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        this.formacaoMinima = formacaoMinima;
-        this.experienciaMinima = experienciaMinima;
+        this.formacao = formacao;
+        this.experiencia = experiencia;
         this.competencias = competencias;
     }
 }

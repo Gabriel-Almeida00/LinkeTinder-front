@@ -53,30 +53,35 @@
                 </tbody>
             </table>
         
-            <div class="cadastro-competencia-container">
-                <h2>Cadastrar Competência na Vaga</h2>
-                <div class="input-group">
-                    <div class="input-block">
-                        <label for="idCompetenciaVaga" class="form-label">Nome</label>
-                        <input type="text" id="idCompetenciaVaga" class="form-input" required>
+            <form id="form-vaga-competencia" class="cadastro-form">
+                <div class="cadastro-competencia-container">
+                    <h2>Cadastrar Competência na Vaga</h2>
+                    <div class="input-group">
+                        <div class="input-block">
+                            <label for="competencias" class="form-label">Competências</label>
+                                <select id="competencias" class="form-input">
+                                    <!-- Opções da API serão adicionadas aqui dinamicamente -->
+                                </select>
+                        </div>
+                        <div class="input-block">
+                            <label for="nivelCompetencia" class="form-label">Nível</label>
+                            <select id="nivelCompetencia" class="form-input">
+                                <option value="1">Básico</option>
+                                <option value="2">Intermediário</option>
+                                <option value="3">Avançado</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="input-block">
-                        <label for="nivelCompetencia" class="form-label">Nível</label>
-                        <select id="nivelCompetencia" class="form-input">
-                            <option value="1">Básico</option>
-                            <option value="2">Intermediário</option>
-                            <option value="3">Avançado</option>
-                        </select>
-                    </div>
+                    <button type="button" id="adicionar-competencia-vaga" class="add-button">Adicionar </button>
+                    <button type="button" id="atualizar-competencia-vaga" class="add-button">Atualizar </button>
                 </div>
-                <button type="button" id="adicionar-competencia-vaga" class="add-button">Adicionar </button>
-                <button type="button" id="atualizar-competencia-vaga" class="add-button">Atualizar </button>
-            </div>
+            </form>
+            
         </div>
 
         <div class="cadastro-container">
             <h1>Cadastro de Vagas</h1>
-            <form class="cadastro-form">
+            <form id="form-vaga" class="cadastro-form">
                 <div class="input-group">
                     <div class="input-block">
                         <label for="nomeVaga" class="form-label">Nome</label>
@@ -116,7 +121,7 @@
                 </div>
                 <div class="button-container">
                     <button id="cadastro-vaga-button" type="submit" class="submit-button">Cadastrar Vaga</button>
-                    <button id="atualizar-vaga-button" type="submit" class="submit-button">Atualizar Vaga</button>
+                    <button id="atualizar-vaga-button" type="button" class="submit-button">Atualizar Vaga</button>
                 </div>
             </form>
         </div>

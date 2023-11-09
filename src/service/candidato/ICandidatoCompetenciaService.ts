@@ -1,11 +1,12 @@
 import CandidatoCompetencia from "../../modelo/CandidatoCompetencia";
+import CandidatoCompetenciaDTO from "../../modelo/dto/CandidatoCompetenciaDTO";
 
 interface ICandidatoCompetenciaService {
-    obterCompetenciaDoCandidatoPorId(candidatoId: string, competenciaId: string): CandidatoCompetencia | null;
-    obterCompetenciasDoCandidato(idCandidato: string): CandidatoCompetencia[];
-    adicionarCompetenciaAoCandidato(candidatoId: string, novaCompetencia: CandidatoCompetencia): void;
-    atualizarCompetenciaDoCandidato(candidatoId: string, competenciaAtualizada: CandidatoCompetencia): void;
-    excluirCompetenciaDoCandidato(candidatoId: string, competenciaId: string): void;
+    listarCompetenciasDoCandidato(id: number): Promise<CandidatoCompetenciaDTO[]>
+    buscarCompetenciaDoCandidatoPorId(id: number): Promise<CandidatoCompetencia>
+    adicionarCompetencia(competencia: CandidatoCompetencia): Promise<void> 
+    atualizarCompetencia(id: number, competencia: CandidatoCompetencia): Promise<boolean> 
+    excluirCompetencia(id: number): Promise<boolean> 
 }
 
 export default ICandidatoCompetenciaService;

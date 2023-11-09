@@ -3,58 +3,52 @@ import Vaga from "../../modelo/Vaga";
 import VagaCompetencia from "../../modelo/VagaCompetencia";
 
 
-import CandidatoDTO from "../../modelo/dto/CandidatoDTO";
 import ICandidatoService from "./ICandidatoService";
-import LocalStorage from "../../data/LocalStorage";
+import CandidatoApi from "../../api/candidato/candidatoApi";
+import CandidatoDTO from "../../modelo/CandidatoDTO";
 
 class CandidatoService implements ICandidatoService {
-    private candidatos: Candidato[] = [];
-    private localStorage: LocalStorage<Candidato>;
+    private api: CandidatoApi;
 
-    constructor(localStorage: LocalStorage<Candidato>) {
-        this.localStorage = localStorage;
-        this.carregarCandidatosDoLocalStorage();
+    constructor() {
+        this.api = new CandidatoApi();
     }
 
-    private salvarCandidatosNoLocalStorage(): void {
-        this.localStorage.salvarDados(this.candidatos);
+
+    async listarCandidatos(): Promise<CandidatoDTO[]> {
+        const response = await this.api.listarCandidatos();
+        return response.data;
     }
 
-    private carregarCandidatosDoLocalStorage(): void {
-        const candidatosJson = this.localStorage.carregarDados();
-        if (candidatosJson.length > 0) {
-            this.candidatos = candidatosJson;
+    async obterCandidatoPorId(idCandidato: number): Promise<Candidato> {
+        const response = await this.api.buscarCandidatoPorId(idCandidato);
+        return response.data;
+    }
+
+
+    async adicionarCandidato(candidato: Candidato): Promise<void> {
+        try {
+            await this.api.criarCandidato(candidato);
+        } catch (error) {
+            console.error('Erro ao criar candidato:', error);
         }
     }
 
-    listarCandidatos(): Candidato[] {
-        return this.candidatos;
+    async atualizarCandidato(id: number, candidato: Candidato): Promise<boolean> {
+        try {
+            const response = await this.api.atualizarCandidato(id, candidato)
+            return true;
+        } catch {
+            return false;
+        }
     }
 
-    listarCandidatosDTO(): CandidatoDTO[] {
-        return this.candidatos.map(candidato => new CandidatoDTO(
-            candidato.id,
-            candidato.nome,
-            candidato.descricao,
-            candidato.competencias,
-            candidato.experiencias,
-            candidato.formacoes
-        ));
-    }
-
-
-    cadastrarCandidato(candidato: Candidato): void {
-        this.candidatos.push(candidato);
-        this.salvarCandidatosNoLocalStorage();
-    }
-
-    atualizarCandidatoNoLocalStorage(candidatoAtualizado: Candidato): void {
-        const candidatos = this.localStorage.carregarDados();
-        const indice = candidatos.findIndex((candidato) => candidato.id === candidatoAtualizado.id);
-
-        if (indice !== -1) {
-            candidatos[indice] = candidatoAtualizado;
-            this.localStorage.salvarDados(candidatos);
+    async excluirCandidato(idCandidato: number): Promise<boolean> {
+        try {
+            await this.api.excluirCandidato(idCandidato);
+            return true;
+        } catch {
+            return false;
         }
     }
 
