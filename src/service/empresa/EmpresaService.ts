@@ -6,13 +6,16 @@ import Candidato from "../../modelo/Candidato";
 
 import VagaCompetencia from "../../modelo/VagaCompetencia";
 import EmpresaApi from "../../api/empresa/empresaApi";
+import CadastroAPi from "../../api/candidato/cadastroApi";
 
 class EmpresaService {
     private api: EmpresaApi;
+    private apiCadastro : CadastroAPi
     
 
     constructor() {
         this.api = new EmpresaApi();
+        this.apiCadastro = new CadastroAPi()
     }
 
 
@@ -29,7 +32,7 @@ class EmpresaService {
 
     async adicionarEmpresa(empresa: Empresa): Promise<void> {
         try {
-            await this.api.criarEmpresa(empresa);
+            await this.apiCadastro.criarEmpresa(empresa);
         } catch (error) {
             console.error('Erro ao criar candidato:', error);
         }

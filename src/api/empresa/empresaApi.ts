@@ -23,9 +23,6 @@ class EmpresaApi{
         return this.api.get(`linketinder/empresa/${id}`);
       }
     
-      criarEmpresa(empresa: Empresa): Promise<AxiosResponse> {
-        return this.api.post('linketinder/empresa', empresa);
-      }
     
       atualizarEmpresa(id: number, empresa: Empresa): Promise<AxiosResponse> {
         return this.api.put(`linketinder/empresa/${id}`, empresa);

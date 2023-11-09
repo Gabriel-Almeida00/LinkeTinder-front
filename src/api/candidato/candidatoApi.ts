@@ -23,9 +23,7 @@ class CandidatoApi{
         return this.api.get(`linketinder/candidatos/${id}`);
       }
     
-      criarCandidato(candidato: Candidato): Promise<AxiosResponse> {
-        return this.api.post('linketinder/candidatos', candidato);
-      }
+    
     
       atualizarCandidato(id: number, candidato: Candidato): Promise<AxiosResponse> {
         return this.api.put(`linketinder/candidatos/${id}`, candidato);
